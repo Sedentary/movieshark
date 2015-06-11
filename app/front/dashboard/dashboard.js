@@ -13,13 +13,9 @@ angular.module('movieshark.dashboard', ['ngRoute', 'infinite-scroll'])
   $scope.movies = [];
   $scope.currentOffset = 1;
 
-  $scope.nextOffset = function () {
-    $http.get('http://eztvapi.re/shows/' + $scope.currentOffset)
-        .success(updateMovies);
-  };
-
-  var updateMovies = function (newMovies) {
-    $scope.movies.concat(newMovies);
-    $scope.currentOffset++;
-  };
+  $http.get('http://localhost:3000/shows/' + $scope.currentOffset)
+        .success(function (newMovies) {
+        $scope.movies = newMovies;
+        $scope.currentOffset++;
+      });
 }]);
