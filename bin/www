@@ -34,6 +34,7 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
+  'use strict';
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -54,13 +55,13 @@ function normalizePort(val) {
  */
 
 function onError(error) {
+  'use strict';
   if (error.syscall !== 'listen') {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = typeof port === 'string' ? 'Pipe ' + port
+                                      : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -82,9 +83,9 @@ function onError(error) {
  */
 
 function onListening() {
+  'use strict';
   var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  var bind = typeof addr === 'string' ? 'pipe ' + addr
+                                      : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }

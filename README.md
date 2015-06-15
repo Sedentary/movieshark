@@ -1,12 +1,11 @@
 # Movieshark
 
-#### Install dependencies
-> npm install
+#### Quick Start
+> npm install mongodb
 #
-> bower install
-
-#### Starting
+> mongod --dbpath ./data/db
+#
 > npm start
 
 #### Access
-> http://localhost:3000/
+> http://localhost:3000/beer
