@@ -1,4 +1,4 @@
-# faccat-crud
+# Movieshark
 
 #### Install dependencies
 > npm install
@@ -7,4 +7,4 @@
 > npm start
 
 #### Access
-> http://localhost:3000/beer
+> http://localhost:3000/
