@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+
+    .row
+        h2.page-header New Beer
+
+    form.col-lg-6(method="POST", action="/beer")
+
+        .form-group
+            label(class='col-lg-3', for="name") Name
+            input.form-control(id="name", name="name", type="text")
+
+        .form-group
+            label(class='col-lg-3', for="description") Description
+            textarea.form-control(id="description", name="description")
+
+        .form-group
+            label(class='col-lg-3', for="abv") Abv
+            input.form-control(id="abv", name="abv", type="number", step="0.01")
+
+        .col-lg-12
+
+            button.btn.btn-primary(type="submit") Save
+            a.btn.btn-default(href="/beer", role="button") Cancel

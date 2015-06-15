@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+
+    .row
+        h2.page-header Edit Beer - #{beer.name}
+
+    form.col-lg-6(method="POST", action="/beer")
+
+        input(type="hidden" name="_method" value="PUT")
+        input(type="hidden" name="_id" value="#{beer._id}")
+
+        .form-group
+            label(class='col-lg-3', for="name") Name
+            input.form-control(id="name", name="name", type="text", required, value="#{beer.name}")
+
+        .form-group
+            label(class='col-lg-3', for="description") Description
+            textarea.form-control(id="description", name="description") #{beer.description}
+
+        .form-group
+            label(class='col-lg-3', for="abv") Abv
+            input.form-control(id="abv", name="abv", type="number", step="0.01", value="#{beer.abv}")
+
+        .col-lg-12
+            input.btn.btn-primary(type='submit', value='Save')
+            a.btn.btn-default(href="/beer", role="button") Cancel
