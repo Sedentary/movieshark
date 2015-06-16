@@ -11,6 +11,7 @@
     "fontawesome": "~4.3.0",
     "html5-boilerplate": "~5.2.0",
     "webtorrent-io": "~0.41.0",
-    "videojs": "~4.12.9"
+    "videojs": "~4.12.9",
+    "Justified-Gallery": "~3.5.4"
   }
 }
