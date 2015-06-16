@@ -1,0 +1,44 @@
+extends ../layout
+block javascripts
+block content
+    // Page Header
+    .row
+        .col-lg-12
+            h1.page-header
+                | Movies&nbsp
+                small Category
+
+    each movie in movies
+        // Movies Row
+        .col-md-3.portfolio-item
+            a(href='#')
+                img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
+            h3
+            a(href='/movies') #{movie.title}
+
+    //hr
+    //// Pagination
+    //.row.text-center
+    //    .col-lg-12
+    //        ul.pagination
+    //            li
+    //                a(href='#') &laquo;
+    //            |
+    //            li.active
+    //                a(href='#') 1
+    //            |
+    //            li
+    //                a(href='#') 2
+    //            |
+    //            li
+    //                a(href='#') 3
+    //            |
+    //            li
+    //                a(href='#') 4
+    //            |
+    //            li
+    //                a(href='#') 5
+    //            |
+    //            li
+    //                a(href='#') &raquo;
+    //hr

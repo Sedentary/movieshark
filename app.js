@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
 // mongoose
-require('./config/mongoose');
+//require('./config/mongoose');
 
 var app = express();
 
@@ -37,6 +37,5 @@ app.use(express.static(path.join(__dirname, 'app/public')));
 
 // routes
 require('./config/routes')(app);
-
 
 module.exports = app;

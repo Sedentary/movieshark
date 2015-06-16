@@ -4,9 +4,9 @@ module.exports = function (app) {
 
   'use strict';
 
-  var beer = require('../app/routes/beer');
+  var dashboard = require('../app/routes/dashboard');
 
-  app.use('/beer', beer);
+  app.use('/', dashboard);
 
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {
