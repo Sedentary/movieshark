@@ -9,6 +9,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var log = require('winston');
 
 // mongoose
 //require('./config/mongoose');
@@ -37,5 +38,10 @@ app.use(express.static(path.join(__dirname, 'app/public')));
 
 // routes
 require('./config/routes')(app);
+
+app.set('port', process.env.PORT || 3000);
+var server = app.listen(app.get('port'), function(){
+    log.info(("Express server worker listening on port " + app.get('port')))
+});
 
 module.exports = app;
