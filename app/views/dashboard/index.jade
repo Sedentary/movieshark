@@ -12,10 +12,8 @@ block content
         if index % 4 == 0
             .row
         .col-md-3.portfolio-item
-            a(href='#')
-            img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
-            h3
-            a(href='/movies') #{movie.title}
+            a(href="/movies/#{movie.slug}")
+                img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
 
     hr
     // Pagination
