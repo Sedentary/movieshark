@@ -6,4 +6,6 @@ var controller = require('../controllers/dashboard');
 
 router.get('/', controller.index);
 
+router.get('/:show', controller.index);
+
 module.exports = router;

@@ -1,37 +1,27 @@
 extends ../layout
-block javascripts
+
 block content
-    // Page Header
+    mixin pagination
+        .row.text-center
+            .col-lg-12
+                include ../includes/pagination
+
     .row
         .col-lg-12
             h1.page-header
                 | Movies&nbsp
                 small Category
 
+    +pagination
+    hr
+
     each movie, index in movies
         if index % 4 == 0
             .row
         .col-md-3.portfolio-item
-            a(href="/movies/#{movie.slug}")
+            a(href="/movies/#{movie._id}")
                 img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
 
     hr
-    // Pagination
-    .row.text-center
-        .col-lg-12
-            ul.pagination
-                li
-                    a(href='#') &laquo;
-                li.active
-                    a(href='#') 1
-                li
-                    a(href='#') 2
-                li
-                    a(href='#') 3
-                li
-                    a(href='#') 4
-                li
-                    a(href='#') 5
-                li
-                    a(href='#') &raquo;
+    +pagination
     hr
