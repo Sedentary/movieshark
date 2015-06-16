@@ -4,12 +4,13 @@
 
 var async = require('async');
 var request = require('request');
+var provider = require('../services/provider');
 
 exports.index = function (req, res, next) {
   var current = req.params.page || 1;
   async.parallel({
     movies: function (cb) {
-      var uri = 'http://eztvapi.re/shows/' + current;
+      var uri = provider.serie('shows/' + current);
       request
         .get({
           uri: uri
@@ -25,7 +26,7 @@ exports.index = function (req, res, next) {
     pagination: function (cb) {
       request
         .get({
-          uri: 'http://eztvapi.re/shows'
+          uri: provider.serie('shows')
         }, function (err, response, body) {
           if (err)
             return cb(err);
@@ -50,7 +51,7 @@ exports.show = function (req, res, next) {
 
   async.parallel({
     movie: function (cb) {
-      var uri = 'http://eztvapi.re/show/' + id;
+      var uri = provider.serie('show/' + id);
       request
         .get({
           uri: uri
