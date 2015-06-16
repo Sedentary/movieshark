@@ -1,0 +1,18 @@
+extends ../layout
+block stylesheets
+    link(rel='stylesheet', href='/bower_components/videojs/dist/video-js/video-js.css')
+
+block content
+    input(type="hidden" id="magnet" value="#{movie.episodes[0].torrents['0'].url}")
+
+    video#video.video-js.vjs-default-skin(controls='', preload='none', width='640', height='264', poster='#{movie.images.banner}', data-setup='{}')
+        p.vjs-no-js
+            | To view this video please enable JavaScript, and consider upgrading to a web browser that
+            a(href='http://videojs.com/html5-video-support/', target='_blank') supports HTML5 video
+
+block javascripts
+    script(src='/bower_components/webtorrent-io/webtorrent.min.js')
+    script(src='/bower_components/videojs/dist/video-js/video.js')
+    script(type='text/javascript').
+        videojs.options.flash.swf = 'video-js.swf';
+    script(src='/javascript/videoStream.js')

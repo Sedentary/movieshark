@@ -4,9 +4,11 @@ module.exports = function (app) {
 
   'use strict';
 
-  var dashboard = require('../app/routes/dashboard');
+  var dashboard = require('../app/routes/dashboard'),
+    movie = require('../app/routes/movie');
 
   app.use('/', dashboard);
+  app.use('/movie', movie);
 
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {
@@ -31,7 +33,7 @@ module.exports = function (app) {
 
   // production error handler
   // no stacktraces leaked to user
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
