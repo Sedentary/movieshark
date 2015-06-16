@@ -14,9 +14,8 @@ exports.index = function (req, res, next) {
         .get({
           uri: uri
         }, function (err, response, body) {
-          if (err) {
+          if (err)
             return cb(err);
-          }
 
           var data = body ? JSON.parse(body) : [];
 
@@ -28,17 +27,15 @@ exports.index = function (req, res, next) {
         .get({
           uri: 'http://eztvapi.re/shows'
         }, function (err, response, body) {
-          if (err) {
+          if (err)
             return cb(err);
-          }
 
           return cb(null, JSON.parse(body));
         });
     }
   }, function (err, results) {
-    if (err) {
+    if (err)
       return next(err);
-    }
 
     return res.render('dashboard/index', {
       movies: results.movies,

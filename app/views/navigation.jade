@@ -1,13 +1,16 @@
-nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
-    .container
-        // Brand and toggle get grouped for better mobile display
+nav.navbar.navbar-default.navbar-fixed-top
+    .container-fluid
         .navbar-header
-            a.navbar-brand(href='/') Movieshark
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+            span.sr-only Movieshark
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
 
-//if lt IE 7
-    p.browsehappy
-        | You are using an
-        strong outdated
-        |  browser. Please
-        a(href='http://browsehappy.com/') upgrade your browser
-        |  to improve your experience.
+          a.navbar-brand(href='/') Movieshark
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/movie') Movies
+            li
+              a(href='/serie') Series
