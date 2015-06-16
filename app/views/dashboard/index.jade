@@ -19,9 +19,13 @@ block content
     hr
 
     #gallery
-        each movie, index in movies
-            a(href="/movie/#{movie._id}")
+        each movie in series
+            a(href="/serie/#{movie._id}/show")
                 img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
+
+        each movie in movies
+            a(href="/movie/#{movie._id}/show")
+                img.img-responsive(src='#{movie.medium_cover_image}', alt='#{movie.title}')
 
         //if index % 4 == 0
         //    .row
