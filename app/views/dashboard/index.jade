@@ -20,7 +20,7 @@ block content
 
     #gallery
         each movie, index in movies
-            a(href="/movie/#{movie._id}")
+            a(href="/serie/#{movie._id}/show")
                 img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
 
         //if index % 4 == 0
