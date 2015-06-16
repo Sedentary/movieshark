@@ -15,7 +15,9 @@ exports.index = function (req, res, next) {
         .get({
             uri: uri,
             qs: {
-                q: current
+                q: current,
+                sort_by: 'rating',
+                order_by: 'desc',
             }
         }, function (err, response, body) {
             if (err)
