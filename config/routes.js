@@ -5,10 +5,10 @@ module.exports = function (app) {
   'use strict';
 
   var dashboard = require('../app/routes/dashboard');
-  var movie = require('../app/routes/movie');
+  var serie = require('../app/routes/serie');
 
 
-  app.use('/movie', movie);
+  app.use('/serie', serie);
   app.use('/', dashboard);
 
   // catch 404 and forward to error handler

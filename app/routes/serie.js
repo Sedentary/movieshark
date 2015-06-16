@@ -2,7 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
-var controller = require('../controllers/movie');
+var controller = require('../controllers/serie');
 
 router.get('/', controller.index);
 
