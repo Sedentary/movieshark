@@ -3,6 +3,10 @@
 [![Code Climate](https://codeclimate.com/github/Sedentary/movieshark/badges/gpa.svg)](https://codeclimate.com/github/Sedentary/movieshark)
 
 #### Quick Start
+> npm install
+#
+> bower install
+#
 > npm start
 
 #### Access
