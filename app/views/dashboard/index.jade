@@ -19,13 +19,15 @@ block content
     hr
 
     #gallery
-        each movie in series
-            a(href="/serie/#{movie._id}/show")
-                img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
+        if series
+            each movie in series
+                a(href="/serie/#{movie._id}/show")
+                    img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
 
-        each movie in movies
-            a(href="/movie/#{movie._id}/show")
-                img.img-responsive(src='#{movie.medium_cover_image}', alt='#{movie.title}')
+        if movies
+            each movie in movies
+                a(href="/movie/#{movie._id}/show")
+                    img.img-responsive(src='#{movie.medium_cover_image}', alt='#{movie.title}')
 
         //if index % 4 == 0
         //    .row
