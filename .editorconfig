@@ -24,6 +24,6 @@ indent_style = space
 indent_size = 2
 
 # Indentation override for jade
-[*.jade]
+[**.jade]
 indent_style = space
 indent_size = 4
