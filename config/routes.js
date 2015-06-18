@@ -6,10 +6,12 @@ module.exports = function (app) {
 
   var dashboard = require('../app/routes/dashboard');
   var serie = require('../app/routes/serie');
+  var series = require('../app/routes/series');
   var stream = require('../app/routes/stream');
 
 
   app.use('/serie', serie);
+  app.use('/series', series);
   app.use('/stream', stream);
   app.use('/', dashboard);
 

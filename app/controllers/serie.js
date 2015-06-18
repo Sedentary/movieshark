@@ -55,14 +55,17 @@ exports.show = function (req, res, next) {
         if (err)
             return next(err);
 
-        var data = JSON.parse(body);
-
-        var poster = data.images.banner;
-        var url = data.episodes[0].torrents['480p'].url;
-
-        return res.render('movie/stream', {
-            magnet : url,
-            poster: poster
-        });
+        var movie = JSON.parse(body);
+        var episode = movie.episodes[req.params.index || 0];
+        var data = {
+            id: movie._id,
+            title: movie.title,
+            synopsis: movie.synopsis,
+            poster: movie.images.banner,
+            magnet: episode.torrents['480p'].url,
+            episode: episode,
+            episodes: movie.episodes
+        }
+        return res.render('movie/stream', data);
     });
 };

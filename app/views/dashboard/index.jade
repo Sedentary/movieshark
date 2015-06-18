@@ -21,7 +21,7 @@ block content
     #gallery
         if series
             each movie in series
-                a(href="/serie/#{movie._id}/show")
+                a(href="/serie/#{movie._id}")
                     img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
 
         if movies
