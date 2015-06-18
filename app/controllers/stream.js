@@ -14,16 +14,16 @@ exports.index = function (req, res, next) {
 
     var engine = torrentStream(magnet);
 
-    engine.on('ready', function() {
+    engine.on('ready', function () {
 
-        async.each(engine.files, function(file, cb) {
+        async.each(engine.files, function (file, cb) {
             log.info('filename:', file.name);
 
             var total = file.length;
 
             // Get the filename
             var movieFileName = file.name;
-            
+
             var contentType = {
                 type: 'video/mp4',
                 convert: false
@@ -48,7 +48,7 @@ exports.index = function (req, res, next) {
                 var chunksize = (end - start) + 1;
 
                 res.status(206);
-                res.set('Content-Range',  'bytes ' + start + '-' + end + '/' + total);
+                res.set('Content-Range', 'bytes ' + start + '-' + end + '/' + total);
                 res.set('Accept-Ranges', 'bytes');
                 res.set('Content-Length', chunksize);
                 res.set('Content-Type', contentType.type);
@@ -75,19 +75,19 @@ exports.index = function (req, res, next) {
 
                     ffmpeg(stream)
                         .preset('flashvideo')
-                        .on('start', function(commandLine) {
+                        .on('start', function (commandLine) {
                             log.info('STARTED: ', commandLine);
                         })
-                        .on('progress', function(progress) {
+                        .on('progress', function (progress) {
                             log.info('PROGRESS: ', progress);
                         })
-                        .on('error', function(err) {
+                        .on('error', function (err) {
                             log.error(err.message);
                         })
-                        .on('end', function() {
-                            lof.info('Processing finished!');
+                        .on('end', function () {
+                            log.info('Processing finished!');
                         })
-                        .pipe(res)
+                        .pipe(res);
                 } else {
                     stream.pipe(res);
                 }
@@ -101,4 +101,12 @@ exports.index = function (req, res, next) {
             cb();
         });
     });
-}
+
+    engine.on('download', function (fragment) {
+        console.log('Downloading ' + fragment + ' fragment...');
+    });
+
+    engine.on('upload', function (fragment, offset, length) {
+        console.log('Uploading ' + fragment + ' fragment...');
+    });
+};

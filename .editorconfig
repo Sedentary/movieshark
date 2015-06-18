@@ -2,7 +2,7 @@
 root = true
 
 # Set default charset
-[*.{js,json,jade}]
+[*]
 charset = utf-8
 
 # Indentation override for js
@@ -10,7 +10,7 @@ charset = utf-8
 indent_style = space
 indent_size = 4
 
-[public/js/**.js]
+[app/public/javascript/**.js]
 indent_style = space
 indent_size = 2
 
