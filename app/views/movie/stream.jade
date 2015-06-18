@@ -9,11 +9,10 @@ block content
         source(src="/stream?#{magnet}" type='video/mp4')
         source(src="/stream?#{magnet}" type='video/webm')
         source(src="/stream?#{magnet}" type='video/ogg')
+        source(src="/stream?#{magnet}" type='video/avi')
         p.vjs-no-js
             | To view this video please enable JavaScript, and consider upgrading to a web browser that
             a(href='http://videojs.com/html5-video-support/', target='_blank') supports HTML5 video
-
-    button#play Play
 
 block javascripts
     script(src='/bower_components/webtorrent-io/webtorrent.min.js')

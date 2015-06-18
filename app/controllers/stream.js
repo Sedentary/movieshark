@@ -3,7 +3,7 @@
 'use strict';
 
 var fs = require('fs');
-var torrentStream = require('torrent-stream')
+var torrentStream = require('torrent-stream');
 
 exports.index = function (req, res, next) {
     var magnet = req.url.replace('/?', '');
@@ -19,11 +19,11 @@ exports.index = function (req, res, next) {
             // Get the filename
             var movieFileName = file.name;
             
-            var contentType = "video/mp4";
+            var contentType = 'video/mp4';
             if (movieFileName.indexOf('.ogg') !== -1) {
-                contentType = "video/ogg";
+                contentType = 'video/ogg';
             } else if (movieFileName.indexOf('.webm') !== -1) {
-                contentType = "video/webm";
+                contentType = 'video/webm';
             }
 
             // Chunks based streaming
@@ -36,25 +36,23 @@ exports.index = function (req, res, next) {
                 var start = parseInt(partialstart, 10);
                 var end = partialend ? parseInt(partialend, 10) : total - 1;
                 var chunksize = (end - start) + 1;
-                console.log('RANGE: ' + start + ' - ' + end + ' = ' + chunksize);
 
                 res.status(206);
                 res.set('Content-Range',  'bytes ' + start + '-' + end + '/' + total);
                 res.set('Accept-Ranges', 'bytes');
                 res.set('Content-Length', chunksize);
                 res.set('Content-Type', contentType);
-                res.openedFile = file;
+                // res.openedFile = file;
                 var stream = file.createReadStream({
                     start: start,
                     end: end
                 });
                 stream.pipe(res);
             } else {
-                console.log('ALL: ' + total);
                 res.status(200);
                 res.set('Content-Length', total);
                 res.set('Content-Type', contentType);
-                res.openedFile = file;
+                // res.openedFile = file;
                 file.createReadStream().pipe(res);
             }
         });
