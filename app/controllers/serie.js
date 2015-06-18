@@ -4,10 +4,7 @@
 
 var async = require('async');
 var request = require('request');
-var WebTorrent = require('webtorrent');
-var BinaryServer = require('binaryjs').BinaryServer;
 var provider = require('../services/provider');
-var server = require('../../app').listen();
 
 exports.index = function (req, res, next) {
   var current = req.params.page || 1;
@@ -60,37 +57,12 @@ exports.show = function (req, res, next) {
 
         var data = JSON.parse(body);
 
+        var poster = data.images.banner;
         var url = data.episodes[0].torrents['480p'].url;
 
-        
-
-        // return res.render('movie/stream', { movie: data });
+        return res.render('movie/stream', {
+            magnet : url,
+            poster: poster
+        });
     });
 };
-
-exports.stream = function (req, res, next) {
-    var client = new WebTorrent();
-
-    client.add(req.body.magnet, function (torrent) {
-        // Got torrent metadata!
-        console.log('Torrent info hash:', torrent.infoHash)
-
-        // Let's say the first file is a webm (vp8) or mp4 (h264) video...
-        var file = torrent.files[0]
-
-        var bs = BinaryServer({ server: server });
-
-        // Wait for new user connections
-        bs.on('connection', function(client){
-            // Incoming stream from browsers
-            client.on('stream', function(stream, meta) {
-                stream.pipe(file.createReadStream());
-
-                // Send progress back
-                stream.on('data', function(data){
-                    stream.write({rx: data.length / meta.size});
-                });
-            });
-        });
-    })
-}

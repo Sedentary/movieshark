@@ -3,17 +3,21 @@ block stylesheets
     link(rel='stylesheet', href='/bower_components/videojs/dist/video-js/video-js.css')
 
 block content
-    input(type="hidden" id="magnet" value="#{movie.episodes[0].torrents['0'].url}")
+    input(type="hidden" id="magnet" value="#{magnet}")
 
-    video#video.video-js.vjs-default-skin(controls='', preload='none', width='640', height='264', poster='#{movie.images.banner}', data-setup='{}')
+    video#video.video-js.vjs-default-skin(controls='', preload='none', width='640', height='264', poster='#{poster}')
+        source(src="/stream?#{magnet}" type='video/mp4')
+        source(src="/stream?#{magnet}" type='video/webm')
+        source(src="/stream?#{magnet}" type='video/ogg')
         p.vjs-no-js
             | To view this video please enable JavaScript, and consider upgrading to a web browser that
             a(href='http://videojs.com/html5-video-support/', target='_blank') supports HTML5 video
+
+    button#play Play
 
 block javascripts
     script(src='/bower_components/webtorrent-io/webtorrent.min.js')
     script(src='/bower_components/videojs/dist/video-js/video.js')
     script(type='text/javascript').
         videojs.options.flash.swf = 'video-js.swf';
-    script(src='/javascript/videoStream.js')
-    script(src='//cdn.binaryjs.com/0/binary.js')
+        videojs('video');

@@ -6,9 +6,11 @@ module.exports = function (app) {
 
   var dashboard = require('../app/routes/dashboard');
   var serie = require('../app/routes/serie');
+  var stream = require('../app/routes/stream');
 
 
   app.use('/serie', serie);
+  app.use('/stream', stream);
   app.use('/', dashboard);
 
   // catch 404 and forward to error handler
