@@ -4,6 +4,7 @@
 
 var log = require('winston');
 var async = require('async');
+var fs = require('fs');
 var torrentStream = require('torrent-stream');
 var ffmpeg = require('fluent-ffmpeg');
 var Transcoder = require('stream-transcoder');
@@ -72,21 +73,21 @@ exports.index = function (req, res, next) {
                     //     })
                     //     .stream().pipe(res);
 
-                    // ffmpeg(stream)
-                    //     .on('start', function(commandLine) {
-                    //         log.info('Started: ' + commandLine);
-                    //     })
-                    //     .on('progress', function(progress) {
-                    //         log.info('Processing: ' + progress.percent + '% done');
-                    //     })
-                    //     .on('error', function(err) {
-                    //         log.error(err.message);
-                    //     })
-                    //     .on('end', function() {
-                    //         lof.info('Processing finished!');
-                    //     })
-                    //     .output(res)
-                    //     .run();
+                    ffmpeg(stream)
+                        .preset('flashvideo')
+                        .on('start', function(commandLine) {
+                            log.info('STARTED: ', commandLine);
+                        })
+                        .on('progress', function(progress) {
+                            log.info('PROGRESS: ', progress);
+                        })
+                        .on('error', function(err) {
+                            log.error(err.message);
+                        })
+                        .on('end', function() {
+                            lof.info('Processing finished!');
+                        })
+                        .pipe(res)
                 } else {
                     stream.pipe(res);
                 }
