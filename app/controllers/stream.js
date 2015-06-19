@@ -6,8 +6,6 @@ var log = require('winston');
 var async = require('async');
 var fs = require('fs');
 var torrentStream = require('torrent-stream');
-var ffmpeg = require('fluent-ffmpeg');
-var Transcoder = require('stream-transcoder');
 
 exports.index = function (req, res, next) {
     var magnet = req.url.replace('/?', '');
@@ -59,35 +57,7 @@ exports.index = function (req, res, next) {
                 });
 
                 if (contentType.convert) {
-                    log.info('CONVERT');
-
-                    // new Transcoder(stream)
-                    //     .videoCodec('h264')
-                    //     .format('mp4')
-                    //     .videoBitrate(800 * 1000)
-                    //     .on('progress', function (progress) {
-                    //         log.info('progress: ', progress.progress);
-                    //     })
-                    //     .on('finish', function () {
-                    //         log.info('finished');
-                    //     })
-                    //     .stream().pipe(res);
-
-                    ffmpeg(stream)
-                        .preset('flashvideo')
-                        .on('start', function (commandLine) {
-                            log.info('STARTED: ', commandLine);
-                        })
-                        .on('progress', function (progress) {
-                            log.info('PROGRESS: ', progress);
-                        })
-                        .on('error', function (err) {
-                            log.error(err.message);
-                        })
-                        .on('end', function () {
-                            log.info('Processing finished!');
-                        })
-                        .pipe(res);
+                    //TODO show error
                 } else {
                     stream.pipe(res);
                 }

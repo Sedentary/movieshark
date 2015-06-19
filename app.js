@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'app/public')));
 // routes
 require('./config/routes')(app);
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 var server = app.listen(app.get('port'), function () {
     log.info(("Express server worker listening on port " + app.get('port')));
 });
