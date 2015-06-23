@@ -7,25 +7,23 @@ var async = require('async');
 var fs = require('fs');
 var torrentStream = require('torrent-stream');
 
-exports.index = function (req, res, next) {
-    var magnet = req.url.replace('/?', '');
-
-    var engine = torrentStream(magnet);
+exports.index = function (req, res) {
+    var magnet = req.url.replace('/?', ''),
+        engine = torrentStream(magnet);
 
     engine.on('ready', function () {
 
         async.each(engine.files, function (file, cb) {
             log.info('filename:', file.name);
 
-            var total = file.length;
-
+            var total = file.length,
             // Get the filename
-            var movieFileName = file.name;
+                movieFileName = file.name,
+                contentType = {
+                    type: 'video/mp4',
+                    convert: false
+                };
 
-            var contentType = {
-                type: 'video/mp4',
-                convert: false
-            };
             if (movieFileName.indexOf('.ogg') !== -1) {
                 contentType.type = 'video/ogg';
             } else if (movieFileName.indexOf('.webm') !== -1) {
