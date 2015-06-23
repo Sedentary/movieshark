@@ -1,19 +1,17 @@
 {
   "name": "movieshark",
-  "description": "A starter project for AngularJS",
-  "version": "1.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
+  "description": "",
+  "version": "0.0.1",
+  "homepage": "",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "1.2.x",
-    "angular-route": "1.2.x",
-    "angular-loader": "1.2.x",
-    "angular-mocks": "~1.2.x",
-    "html5-boilerplate": "~4.3.0",
     "bootstrap": "3.3.4",
     "jquery": "~2.1.4",
     "fontawesome": "~4.3.0",
-    "ngInfiniteScroll": "~1.2.1"
+    "html5-boilerplate": "~5.2.0",
+    "webtorrent-io": "~0.41.0",
+    "videojs": "~4.12.9",
+    "Justified-Gallery": "~3.5.4"
   }
 }

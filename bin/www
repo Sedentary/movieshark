@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+var log = require('winston');
+var debug = require('debug')('faccat-crud:server');
+
+// Include the cluster module
+var cluster = require('cluster');
+
+var cpuCount = require('os').cpus().length;
+
+cluster.setupMaster({exec: 'app.js'});
+
+for (var i = 0; i < cpuCount; i++) 
+  cluster.fork();
+
+// Listen for dying workers
+cluster.on('exit', function (worker) {
+    // Replace the dead worker, we're not sentimental
+    log.info('Worker ' + worker.id + ' died :(');
+    cluster.fork();
+});

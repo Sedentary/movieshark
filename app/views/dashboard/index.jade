@@ -1,0 +1,44 @@
+extends ../layout
+
+block stylesheets
+    link(rel='stylesheet', href='/bower_components/Justified-Gallery/dist/css/justifiedGallery.css')
+
+block content
+    mixin pagination
+        .row.text-center
+            .col-lg-12
+                include ../includes/pagination
+
+    .row
+        .col-lg-12
+            h1.page-header
+                | Movies&nbsp
+                small Category
+
+    +pagination
+    hr
+
+    #gallery
+        if series
+            each movie in series
+                a(href="/serie/#{movie._id}")
+                    img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
+
+        if movies
+            each movie in movies
+                a(href="/movie/#{movie._id}/show")
+                    img.img-responsive(src='#{movie.medium_cover_image}', alt='#{movie.title}')
+
+        //if index % 4 == 0
+        //    .row
+        //.col-md-3.portfolio-item
+        //    a(href="/movie/#{movie._id}")
+        //        img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
+
+    hr
+    +pagination
+    hr
+
+block javascripts
+    script(src='/bower_components/Justified-Gallery/dist/js/jquery.justifiedGallery.min.js')
+    script(src='/javascript/gallery.js')
