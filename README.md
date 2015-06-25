@@ -5,8 +5,6 @@
 #### Quick Start
 > npm install
 #
-> bower install
-#
 > npm start
 
 #### Access
