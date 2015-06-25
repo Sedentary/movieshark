@@ -42,32 +42,61 @@ exports.index = function (req, res, next) {
 };
 
 exports.show = function (req, res, next) {
-    request
-        .get({
-            url: provider.movie('movie_details.json'),
-            json: true,
-            qs: {
-                movie_id: req.params.id,
-                with_images: true,
-                with_cast: true
-            }
-        }, function (err, response, body) {
-            if (err)
-                return next(err);
+    var movie_id = req.params.id;
 
-            var movie = body.data;
-            var magnet = torrent.magnetize({
-                name: movie.title_long,
-                hash: movie.torrents[0].hash
-            })
-            var data = {
-                title: movie.title,
-                synopsis: movie.description_full,
-                poster: movie.images.large_screenshot_image1,
-                magnet: magnet,
-                rating: movie.rating
-            }
+    async.parallel({
+        movie : function (cb) {
+            request
+                .get({
+                    url: provider.movie('movie_details.json'),
+                    json: true,
+                    qs: {
+                        movie_id: movie_id,
+                        with_images: true,
+                        with_cast: true
+                    }
+                }, function (err, response, body) {
+                    if (err)
+                        return cb(err);
 
-            return res.render('movie/stream', data);
+                    return cb(null, body.data)                    
+                });
+        },
+        comments : function (cb) {
+            request
+                .get({
+                    url: provider.movie('movie_comments.json'),
+                    json: true,
+                    qs: {
+                        movie_id: movie_id
+                    }
+                }, function (err, response, body) {
+                    if (err)
+                        return cb(err);
+                    var data = body.data;
+                    return cb(null, {
+                        list: data.comments,
+                        count: data.comment_count
+                    });
+                });
+        }
+    }, function (err, results) {
+        if (err)
+            return next(err);
+
+        var movie = results.movie;
+        var magnet = torrent.magnetize({
+            name: movie.title_long,
+            hash: movie.torrents[0].hash
         });
+
+        return res.render('movie/stream', {
+            title: movie.title,
+            synopsis: movie.description_full,
+            poster: movie.images.large_screenshot_image1,
+            magnet: magnet,
+            rating: movie.rating,
+            comments: results.comments
+        });
+    });
 };

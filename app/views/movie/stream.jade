@@ -3,6 +3,7 @@ extends ../layout
 block stylesheets
     link(rel='stylesheet', href='/bower_components/videojs/dist/video-js/video-js.css')
     link(rel='stylesheet', href='/stylesheets/stream.css')
+    link(rel='stylesheet', href='/stylesheets/movie.css')
 
 block javascripts
     script(src='/bower_components/webtorrent-io/webtorrent.min.js')
@@ -25,3 +26,19 @@ block content
                 p.vjs-no-js
                     | To view this video please enable JavaScript, and consider upgrading to a web browser that
                     a(href='http://videojs.com/html5-video-support/', target='_blank') supports HTML5 video
+    
+    .row
+        section.col-md-12.comments
+            !{comments.count} comments 
+            each comment in comments.list
+                article.comment
+                    header
+                        div.comment__img
+                            img(src="#{comment.small_user_avatar_image}")
+                        div.comment__media
+                            span.comment__username #{comment.username}
+                            span.comment__date
+                                strong Posted
+                                !{moment(comment.date_added).fromNow()}
+                    p.comment__body !{comment.comment_text}
+                hr

@@ -1,0 +1,47 @@
+.comments {
+  margin-top: 3em;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.comment {
+  margin-top: 1em;
+}
+
+.comment__img {
+  display: inline-block;
+}
+
+.comment__img img {
+  height: 45px;
+  margin-top: -16px;
+}
+
+.comment__media {
+  display: inline-block;
+  width: 200px;
+  margin-left: 1em;
+}
+
+.comment__media span {
+  display: block;
+}
+
+.comment__username {
+  color: #333;
+  font-size: 15px;
+}
+
+.comment__date {
+  color: #666;
+  font-size: 12px;
+}
+
+.comment__date strong {
+  margin-right: .5em;
+}
+
+.comment__body {
+  margin: 2em 0;
+  color: #666;
+}

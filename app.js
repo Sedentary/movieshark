@@ -10,11 +10,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var log = require('winston');
+var moment = require('moment');
 
 // mongoose
 //require('./config/mongoose');
 
 var app = express();
+
+app.locals.moment = moment;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
