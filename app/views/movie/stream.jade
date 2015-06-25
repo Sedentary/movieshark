@@ -28,8 +28,8 @@ block content
                     a(href='http://videojs.com/html5-video-support/', target='_blank') supports HTML5 video
     
     .row
-        section.col-md-12.comments
-            !{comments.count} comments 
+        section.col-md-6.comments
+            h3 #{comments.count} comments 
             each comment in comments.list
                 article.comment
                     header
@@ -42,3 +42,11 @@ block content
                                 !{moment(comment.date_added).fromNow()}
                     p.comment__body !{comment.comment_text}
                 hr
+        section.col-md-6.suggestions
+            h3 Related movies
+            each suggestion, index in suggestions
+                if index % 2 == 0
+                    hr.col-md-12
+                .col-md-6
+                    a(href="/movie/#{suggestion.id}")
+                        img.img-responsive(src='#{suggestion.medium_cover_image}', alt='#{suggestion.title}')

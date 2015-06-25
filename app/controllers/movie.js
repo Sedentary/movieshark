@@ -79,6 +79,21 @@ exports.show = function (req, res, next) {
                         count: data.comment_count
                     });
                 });
+        },
+        suggestions : function (cb) {
+            request
+                .get({
+                    url: provider.movie('movie_suggestions.json'),
+                    json: true,
+                    qs: {
+                        movie_id: movie_id
+                    }
+                }, function (err, response, body) {
+                    if (err)
+                        return cb(err);
+
+                    return cb(null, body.data.movie_suggestions);
+                });
         }
     }, function (err, results) {
         if (err)
@@ -96,7 +111,8 @@ exports.show = function (req, res, next) {
             poster: movie.images.large_screenshot_image1,
             magnet: magnet,
             rating: movie.rating,
-            comments: results.comments
+            comments: results.comments,
+            suggestions: results.suggestions
         });
     });
 };

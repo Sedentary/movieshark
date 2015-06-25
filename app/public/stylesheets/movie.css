@@ -1,7 +1,11 @@
 .comments {
-  margin-top: 3em;
   max-height: 500px;
   overflow-y: auto;
+}
+
+.comments h3 {
+  color: #666;
+  margin-bottom: 2em;
 }
 
 .comment {
@@ -43,5 +47,9 @@
 
 .comment__body {
   margin: 2em 0;
+  color: #666;
+}
+
+.suggestions {
   color: #666;
 }

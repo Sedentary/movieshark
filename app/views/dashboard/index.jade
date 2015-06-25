@@ -23,9 +23,9 @@ block content
                     img.img-responsive(src='#{movie.medium_cover_image}', alt='#{movie.title}')
 
         if series
-            each movie in series
-                a(href="/serie/#{movie._id}")
-                    img.img-responsive(src='#{movie.images.poster}', alt='#{movie.title}')
+            each serie in series
+                a(href="/serie/#{serie._id}")
+                    img.img-responsive(src='#{serie.images.poster}', alt='#{serie.title}')
 
     hr
     +pagination
