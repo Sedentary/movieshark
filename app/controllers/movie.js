@@ -64,7 +64,8 @@ exports.show = function (req, res, next) {
                 title: movie.title,
                 synopsis: movie.description_full,
                 poster: movie.images.large_screenshot_image1,
-                magnet: magnet
+                magnet: magnet,
+                rating: movie.rating
             }
 
             return res.render('movie/stream', data);

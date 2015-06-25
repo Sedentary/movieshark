@@ -86,7 +86,8 @@ exports.show = function (req, res, next) {
                     poster: movie.images.banner,
                     magnet: episode.torrents['480p'].url,
                     episode: episode,
-                    seasons: seasons
+                    seasons: seasons,
+                    rating: (movie.rating.percentage / 10)
                 };
                 return res.render('serie/stream', data);
             });

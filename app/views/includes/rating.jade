@@ -1,0 +1,8 @@
+- var starmax = 5;
+- var ratingmax = 10
+- var star = (starmax * rating) / ratingmax
+ul.rating(title="Rating #{rating}" data-star="#{star}")
+    - for (var i=1; i <= starmax; i++)
+        li
+            - var clazz = star >= i ? 'fa-star' : (star > i-1 ? 'fa-star-half-o' : 'fa-star-o')
+            i(class="fa #{clazz}")
