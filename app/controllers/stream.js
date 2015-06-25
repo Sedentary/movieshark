@@ -6,15 +6,20 @@ var log = require('winston');
 var async = require('async');
 var fs = require('fs');
 var torrentStream = require('torrent-stream');
+var torrent = require('../services/torrent');
 
 exports.index = function (req, res) {
     var magnet = req.url.replace('/?', '');
-    var engine = torrentStream(magnet);
+    
+    var engine = torrentStream(magnet, {
+        connections: 100,
+        uploads: 10,
+        trackers: torrent.trackers
+    });
 
     engine.on('ready', function () {
 
-        var exist = false;
-        async.each(engine.files, function (file, cb) {
+        engine.files.forEach(function (file) {
             var movieFileName = file.name;
             var extension = movieFileName.replace(/.*\./, '');
             var contentType = null;
@@ -31,11 +36,10 @@ exports.index = function (req, res) {
             }
 
             if (!contentType)
-                return cb();
+                return;
 
             log.info('filename:', file.name);
             var total = file.length;
-            exist = true;
 
             // Chunks based streaming
             if (req.headers.range) {
@@ -71,10 +75,6 @@ exports.index = function (req, res) {
                 // res.openedFile = file;
                 file.createReadStream().pipe(res);
             }
-            cb();
-        }, function () {
-            if (!exist)
-                res.status(200).end();
         });
     });
 
