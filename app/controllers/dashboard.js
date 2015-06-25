@@ -49,7 +49,11 @@ exports.index = function (req, res, next) {
                     if (err)
                         return cb(err);
 
-                    return cb(null, body);
+                    async.concat(body, function (pag, cbPag) {
+                        cbPag(null, pag.replace(/.*\//, ''));
+                    }, function (err, pages) {
+                        return cb(null, pages);
+                    })
                 });
         }
     }, function (err, results) {
