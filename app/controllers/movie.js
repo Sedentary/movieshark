@@ -45,7 +45,7 @@ exports.show = function (req, res, next) {
     var movie_id = req.params.id;
 
     async.parallel({
-        movie : function (cb) {
+        movie: function (cb) {
             request
                 .get({
                     url: provider.movie('movie_details.json'),
@@ -59,10 +59,10 @@ exports.show = function (req, res, next) {
                     if (err)
                         return cb(err);
 
-                    return cb(null, body.data)                    
+                    return cb(null, body.data)
                 });
         },
-        comments : function (cb) {
+        comments: function (cb) {
             request
                 .get({
                     url: provider.movie('movie_comments.json'),
@@ -80,7 +80,7 @@ exports.show = function (req, res, next) {
                     });
                 });
         },
-        suggestions : function (cb) {
+        suggestions: function (cb) {
             request
                 .get({
                     url: provider.movie('movie_suggestions.json'),
@@ -93,6 +93,30 @@ exports.show = function (req, res, next) {
                         return cb(err);
 
                     return cb(null, body.data.movie_suggestions);
+                });
+        },
+        subs: function (imdb_code, cb) {
+            request
+                .get({
+                    url: provider.subtitles().url + imdb_code,
+                    json: true
+                }, function (err, response, body) {
+                    if (err || response.statusCode >= 400 || !data || !data.success) {
+                        // Try mirror
+                        request
+                            .get({
+                                url: provider.subtitles().mirrorUrl + imdb_code,
+                                json: true
+                            }, function (err, response, body) {
+                                if (err || response.statusCode >= 400 || !data || !data.success) {
+                                    return cb(err);
+                                }
+                                return cb(null, body.data);
+                            });
+
+                    } else {
+                        return cb(null, body.data);
+                    }
                 });
         }
     }, function (err, results) {
@@ -114,6 +138,7 @@ exports.show = function (req, res, next) {
             rating: movie.rating,
             comments: results.comments,
             suggestions: results.suggestions,
+            subs: results.subs(movie.imdb_code),
             peers: tor.peers,
             seeds: tor.seeds,
             ratio: (tor.seeds / tor.peers)
