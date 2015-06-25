@@ -13,6 +13,7 @@ exports.index = function (req, res) {
 
     engine.on('ready', function () {
 
+        var exist = false;
         async.each(engine.files, function (file, cb) {
             var movieFileName = file.name;
             var extension = movieFileName.replace(/.*\./, '');
@@ -34,6 +35,7 @@ exports.index = function (req, res) {
 
             log.info('filename:', file.name);
             var total = file.length;
+            exist = true;
 
             // Chunks based streaming
             if (req.headers.range) {
@@ -70,6 +72,9 @@ exports.index = function (req, res) {
                 file.createReadStream().pipe(res);
             }
             cb();
+        }, function () {
+            if (!exist)
+                res.status(200).end();
         });
     });
 
