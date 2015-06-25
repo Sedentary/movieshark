@@ -24,5 +24,8 @@
     "serve-favicon": "~2.2.0",
     "torrent-stream": "^0.19.2",
     "winston": "^1.0.0"
+  },
+  "engines": {
+    "node": "0.12.x"
   }
 }
