@@ -8,7 +8,7 @@ nav
         each page in pagination
             - var show = Number(page.replace(/.*\//, ''))
             li(class="#{current === show ? 'active' : ''}")
-                a(href="#{show}") #{show}
+                a(href="#{page}") #{show}
         
         - var next = Number(current) + 1;
         li(class="#{next > pagination.length ? 'disabled' : ''}")
