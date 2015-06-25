@@ -15,7 +15,7 @@ exports.index = function (req, res, next) {
             //noinspection JSLint
             request
                 .get({
-                    uri: uri
+                    url: uri
                 }, function (err, response, body) {
                     if (err) {
                         return cb(err);
@@ -30,7 +30,7 @@ exports.index = function (req, res, next) {
             //noinspection JSLint
             request
                 .get({
-                    uri: provider.serie('shows')
+                    url: provider.serie('shows')
                 }, function (err, response, body) {
                     if (err) {
                         return cb(err);

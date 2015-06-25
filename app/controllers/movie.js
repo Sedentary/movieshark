@@ -5,12 +5,13 @@
 var async = require('async');
 var request = require('request');
 var provider = require('../services/provider');
+var torrent = require('../services/torrent');
 
 exports.index = function (req, res, next) {
     var current = Number(req.params.page || 1);
     request
         .get({
-            uri: provider.movie('list_movies.json'),
+            url: provider.movie('list_movies.json'),
             json: true,
             qs: {
                 page: current,
@@ -41,16 +42,31 @@ exports.index = function (req, res, next) {
 };
 
 exports.show = function (req, res, next) {
-    var uri = provider.serie('show/' + req.params.id);
-    //noinspection JSLint
     request
         .get({
-            uri: uri,
-            json: true
+            url: provider.movie('movie_details.json'),
+            json: true,
+            qs: {
+                movie_id: req.params.id,
+                with_images: true,
+                with_cast: true
+            }
         }, function (err, response, body) {
             if (err)
                 return next(err);
 
-            return res.render('movie/stream', {movie: body});
+            var movie = body.data;
+            var magnet = torrent.magnetize({
+                name: movie.title_long,
+                hash: movie.torrents[0].hash
+            })
+            var data = {
+                title: movie.title,
+                synopsis: movie.description_full,
+                poster: movie.images.large_screenshot_image1,
+                magnet: magnet
+            }
+
+            return res.render('movie/stream', data);
         });
 };

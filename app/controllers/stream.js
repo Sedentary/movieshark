@@ -14,17 +14,26 @@ exports.index = function (req, res) {
     engine.on('ready', function () {
 
         async.each(engine.files, function (file, cb) {
-            log.info('filename:', file.name);
-
-            var total = file.length,
-                movieFileName = file.name,
-                contentType = 'video/mp4'
-
-            if (movieFileName.indexOf('.ogg') !== -1) {
-                contentType = 'video/ogg';
-            } else if (movieFileName.indexOf('.webm') !== -1) {
-                contentType = 'video/webm';
+            var movieFileName = file.name;
+            var extension = movieFileName.replace(/.*\./, '');
+            var contentType = null;
+            switch (extension) {
+                case 'ogg':
+                    contentType = 'video/ogg';
+                    break;
+                case 'webm':
+                    contentType = 'video/webm';
+                    break;
+                case 'mp4':
+                    contentType = 'video/mp4';
+                    break;
             }
+
+            if (!contentType)
+                return cb();
+
+            log.info('filename:', file.name);
+            var total = file.length;
 
             // Chunks based streaming
             if (req.headers.range) {

@@ -2,7 +2,6 @@ extends ../layout
 
 block stylesheets
     link(rel='stylesheet', href='/bower_components/videojs/dist/video-js/video-js.css')
-    link(rel='stylesheet', href='/stylesheets/stream.css')
 
 block javascripts
     script(src='/bower_components/webtorrent-io/webtorrent.min.js')
@@ -16,30 +15,7 @@ block content
         .page-header
             h1 #{title}
             p #{synopsis}
-        .col-md-6
-            .row
-                #accordion.panel-group(role='tablist', aria-multiselectable='true')
-                    h4.text-center Seasons
-                    each episodes, season in seasons
-                        .panel.panel-default
-                            - var collapseId = "collapse-" + season
-                            - var headingId = "heading-" + season
-                            .panel-heading(id="#{headingId}" role='tab')
-                                h4.panel-title
-                                    a(role='button', data-toggle='collapse', data-parent='#accordion', href="##{collapseId}", aria-expanded='false', aria-controls="#{collapseId}")
-                                        | Season #{season}
-                            .panel-collapse.collapse(id="#{collapseId}" role='tabpanel' aria-labelledby="#{headingId}")
-                                ul.list-group
-                                    each episode, index in episodes
-                                        li.list-group-item
-                                            a(href="/serie/#{id}/season/#{season}/episode/#{index}")
-                                                h5 #{episode.title}
-                                            | #{episode.overview}
-            .row
-                h3 #{episode.title}
-                p #{episode.overview}
-
-        .col-md-6
+        .col-md-12
             video#video.video-js.vjs-default-skin(controls='', preload='none', width='auto', height='300', poster='#{poster}')
                 source(src="/stream?#{magnet}" type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"')
                 source(src="/stream?#{magnet}" type='video/webm; codecs="vp8.0, vorbis"')
