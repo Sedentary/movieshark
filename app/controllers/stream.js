@@ -17,19 +17,13 @@ exports.index = function (req, res) {
             log.info('filename:', file.name);
 
             var total = file.length,
-            // Get the filename
                 movieFileName = file.name,
-                contentType = {
-                    type: 'video/mp4',
-                    convert: false
-                };
+                contentType = 'video/mp4'
 
             if (movieFileName.indexOf('.ogg') !== -1) {
-                contentType.type = 'video/ogg';
+                contentType = 'video/ogg';
             } else if (movieFileName.indexOf('.webm') !== -1) {
-                contentType.type = 'video/webm';
-            } else if (movieFileName.indexOf('.avi') !== -1) {
-                contentType.convert = true;
+                contentType = 'video/webm';
             }
 
             // Chunks based streaming
@@ -47,7 +41,7 @@ exports.index = function (req, res) {
                 res.set('Content-Range', 'bytes ' + start + '-' + end + '/' + total);
                 res.set('Accept-Ranges', 'bytes');
                 res.set('Content-Length', chunksize);
-                res.set('Content-Type', contentType.type);
+                res.set('Content-Type', contentType);
                 // res.openedFile = file;
                 var stream = file.createReadStream({
                     start: start,
@@ -62,7 +56,7 @@ exports.index = function (req, res) {
             } else {
                 res.status(200);
                 res.set('Content-Length', total);
-                res.set('Content-Type', contentType.type);
+                res.set('Content-Type', contentType);
                 // res.openedFile = file;
                 file.createReadStream().pipe(res);
             }

@@ -57,24 +57,38 @@ exports.show = function (req, res, next) {
     //noinspection JSLint
     request
         .get({
-            uri: uri
+            uri: uri,
+            json: true
         }, function (err, response, body) {
-            if (err) {
+            if (err)
                 return next(err);
-            }
 
-            var movie = JSON.parse(body),
-                episode = movie.episodes[req.params.index || 0],
-                data = {
+            var movie = body;
+            var seasons = {}
+            var firstSeason;
+            async.each(movie.episodes, function (epi, cb) {
+                var season = epi.season;
+                if (!firstSeason || firstSeason > season)
+                    firstSeason = season
+
+                if (!!seasons[season]) {
+                    seasons[season].push(epi);
+                } else {
+                    seasons[season] = [epi];
+                }
+                cb();
+            }, function () {
+                var episode = seasons[req.params.season || firstSeason][req.params.episode || 0];
+                var data = {
                     id: movie._id,
                     title: movie.title,
                     synopsis: movie.synopsis,
                     poster: movie.images.banner,
                     magnet: episode.torrents['480p'].url,
                     episode: episode,
-                    episodes: movie.episodes
+                    seasons: seasons
                 };
-
-            return res.render('movie/stream', data);
+                return res.render('serie/stream', data);
+            });
         });
 };

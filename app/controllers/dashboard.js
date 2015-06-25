@@ -14,52 +14,47 @@ exports.index = function (req, res, next) {
             request
                 .get({
                     uri: uri,
+                    json: true,
                     qs: {
-                        q: current,
-                        sort_by: 'rating',
+                        page: current,
+                        sort_by: 'download_count',
                         order_by: 'desc'
                     }
                 }, function (err, response, body) {
-                    if (err) {
+                    if (err)
                         return cb(err);
-                    }
 
-                    var data = body ? JSON.parse(body).data.movies : [];
-
-                    return cb(null, data);
+                    return cb(null, body.data.movies);
                 });
         },
         series: function (cb) {
             var uri = provider.serie('shows/' + current);
             request
                 .get({
-                    uri: uri
+                    uri: uri,
+                    json: true
                 }, function (err, response, body) {
-                    if (err) {
+                    if (err)
                         return cb(err);
-                    }
 
-                    var data = body ? JSON.parse(body) : [];
-
-                    return cb(null, data);
+                    return cb(null, body);
                 });
         },
         pagination: function (cb) {
             request
                 .get({
-                    uri: provider.serie('shows')
+                    uri: provider.serie('shows'),
+                    json: true
                 }, function (err, response, body) {
-                    if (err) {
+                    if (err)
                         return cb(err);
-                    }
 
-                    return cb(null, JSON.parse(body));
+                    return cb(null, body);
                 });
         }
     }, function (err, results) {
-        if (err) {
+        if (err)
             return next(err);
-        }
 
         return res.render('dashboard/index', {
             movies: results.movies,
