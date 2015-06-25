@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var log = require('winston');
 var moment = require('moment');
+var expressStatic = require('express-static');
 
 // mongoose
 //require('./config/mongoose');
@@ -37,7 +38,7 @@ app.use(methodOverride(function (req) {
     }
 }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'app/public')));
+app.use(expressStatic(path.join(__dirname, 'app/public')));
 
 // routes
 require('./config/routes')(app);
