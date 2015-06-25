@@ -8,8 +8,8 @@ var fs = require('fs');
 var torrentStream = require('torrent-stream');
 
 exports.index = function (req, res) {
-    var magnet = req.url.replace('/?', ''),
-        engine = torrentStream(magnet);
+    var magnet = req.url.replace('/?', '');
+    var engine = torrentStream(magnet);
 
     engine.on('ready', function () {
 
