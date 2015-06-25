@@ -78,11 +78,4 @@ exports.index = function (req, res) {
         });
     });
 
-    engine.on('download', function (fragment) {
-        console.log('Downloading ' + fragment + ' fragment...');
-    });
-
-    engine.on('upload', function (fragment, offset, length) {
-        console.log('Uploading ' + fragment + ' fragment...');
-    });
 };
