@@ -79,12 +79,16 @@ exports.show = function (req, res, next) {
                 cb();
             }, function () {
                 var episode = seasons[req.params.season || firstSeason][req.params.episode || 0];
+                var torrent = episode.torrents['480p'];
                 var data = {
                     id: movie._id,
                     title: movie.title,
                     synopsis: movie.synopsis,
                     poster: movie.images.banner,
-                    magnet: episode.torrents['480p'].url,
+                    magnet: torrent.url,
+                    peers: torrent.peers,
+                    seeds: torrent.seeds,
+                    ratio: (torrent.seeds / torrent.peers),
                     episode: episode,
                     seasons: seasons,
                     rating: (movie.rating.percentage / 10)

@@ -1,0 +1,6 @@
+- var clazz = 'torrent-ratio-good'
+if ratio < 2
+    - clazz = 'torrent-ratio-medium'
+else if ratio < 1
+    - clazz = 'torrent-ratio-bad'
+i(class="fa fa-circle torrent-ratio #{clazz}" title="ratio #{Math.round(ratio)}")

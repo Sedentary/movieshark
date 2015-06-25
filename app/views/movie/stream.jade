@@ -17,6 +17,7 @@ block content
         .page-header
             h1 #{title}
                 include ../includes/rating
+                include ../includes/torrent_ratio
             p #{synopsis}
         .col-md-12
             video#video.video-js.vjs-default-skin(controls='', preload='none', width='auto', height='300', poster='#{poster}')
@@ -29,7 +30,7 @@ block content
     
     .row
         section.col-md-6.comments
-            h3 #{comments.count} comments 
+            h3 #{comments.count} comments
             each comment in comments.list
                 article.comment
                     header

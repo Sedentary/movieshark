@@ -16,3 +16,20 @@
 .rating .fa {
   color: #C6BF2D;
 }
+
+.torrent-ratio {
+  font-size: 0.5em;
+  margin-left: 1em;
+}
+
+.torrent-ratio-good {
+  color: #3BC526;
+}
+
+.torrent-ratio-medium {
+  color: #C6BF2D;
+}
+
+.torrent-ratio-bad {
+  color: #F00;
+}

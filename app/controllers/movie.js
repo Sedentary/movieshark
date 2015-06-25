@@ -100,9 +100,10 @@ exports.show = function (req, res, next) {
             return next(err);
 
         var movie = results.movie;
+        var tor = movie.torrents[0];
         var magnet = torrent.magnetize({
             name: movie.title_long,
-            hash: movie.torrents[0].hash
+            hash: tor.hash
         });
 
         return res.render('movie/stream', {
@@ -112,7 +113,10 @@ exports.show = function (req, res, next) {
             magnet: magnet,
             rating: movie.rating,
             comments: results.comments,
-            suggestions: results.suggestions
+            suggestions: results.suggestions,
+            peers: tor.peers,
+            seeds: tor.seeds,
+            ratio: (tor.seeds / tor.peers)
         });
     });
 };
