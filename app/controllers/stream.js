@@ -11,13 +11,7 @@ var torrent = require('../services/torrent');
 exports.index = function (req, res) {
     var magnet = req.url.replace('/?', '');
     
-    var engine = torrentStream(magnet, {
-        connections: 100,
-        uploads: 10,
-        dht: false,
-        tracker: true,
-        trackers: torrent.trackers
-    });
+    var engine = torrentStream(magnet);
 
     engine.on('ready', function () {
 
@@ -75,13 +69,13 @@ exports.index = function (req, res) {
             file.createReadStream().pipe(res);
         }
 
-        // res.on('close', function () {
-        //     engine.destroy();
-        // });
+        res.on('close', function () {
+            engine.destroy();
+        });
 
-        // res.on('finish', function () {
-        //     engine.destroy();
-        // });
+        res.on('finish', function () {
+            engine.destroy();
+        });
 
     });
 
