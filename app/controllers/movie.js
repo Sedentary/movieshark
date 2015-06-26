@@ -6,39 +6,57 @@ var async = require('async');
 var request = require('request');
 var provider = require('../services/provider');
 var torrent = require('../services/torrent');
+var redis = require('../services/redis');
+var client = redis.getClient();
+
+var _renderMovies = function (res, current, data) {
+    var movies = data.movies;
+    var total_pages = Math.round(data.movie_count / data.limit);
+    var total_pagination = current + data.limit;
+
+    var pagination = [];
+    for (var i = current; i < total_pagination; i++) {
+        if (i < total_pages)
+            pagination.push('/movies/' + i);
+    }
+
+    return res.render('dashboard/index', {
+        movies: movies,
+        pagination: pagination,
+        current: current
+    });
+}
 
 exports.index = function (req, res, next) {
     var current = Number(req.params.page || 1);
-    request
-        .get({
-            url: provider.movie('list_movies.json'),
-            json: true,
-            qs: {
-                page: current,
-                sort_by: 'download_count',
-                order_by: 'desc'
-            }
-        }, function (err, response, body) {
-            if (err)
-                return next(err);
+    var key = 'movies-' + current;
+    client.get(key, function (err, data) {
+        if (err)
+            return next(err);
 
-            var data = body.data;
-            var movies = data.movies;
-            var total_pages = Math.round(data.movie_count / data.limit);
-            var pagination = [];
-            var total_pagination = current + data.limit;
+        if (data)
+            return _renderMovies(res, current, JSON.parse(data));
 
-            for (var i = current; i < total_pagination; i++) {
-                if (i < total_pages)
-                    pagination.push('/movies/' + i);
-            }
+        request
+            .get({
+                url: provider.movie('list_movies.json'),
+                json: true,
+                qs: {
+                    page: current,
+                    sort_by: 'download_count',
+                    order_by: 'desc'
+                }
+            }, function (err, response, body) {
+                if (err)
+                    return next(err);
 
-            return res.render('dashboard/index', {
-                movies: movies,
-                pagination: pagination,
-                current: current
+                var data = body.data;
+                client.set(key, JSON.stringify(data));
+                client.expire(key, (5 * 60));
+
+                return _renderMovies(res, current, data);
             });
-        });
+    });
 };
 
 exports.show = function (req, res, next) {
