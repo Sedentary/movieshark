@@ -45,7 +45,7 @@ exports.show = function (req, res, next) {
     var movie_id = req.params.id;
 
     async.parallel({
-        movie : function (cb) {
+        movie: function (cb) {
             request
                 .get({
                     url: provider.movie('movie_details.json'),
@@ -59,10 +59,10 @@ exports.show = function (req, res, next) {
                     if (err)
                         return cb(err);
 
-                    return cb(null, body.data)                    
+                    return cb(null, body.data)
                 });
         },
-        comments : function (cb) {
+        comments: function (cb) {
             request
                 .get({
                     url: provider.movie('movie_comments.json'),
@@ -80,7 +80,7 @@ exports.show = function (req, res, next) {
                     });
                 });
         },
-        suggestions : function (cb) {
+        suggestions: function (cb) {
             request
                 .get({
                     url: provider.movie('movie_suggestions.json'),
@@ -99,6 +99,7 @@ exports.show = function (req, res, next) {
         if (err)
             return next(err);
 
+        var template = 'movie/stream';
         var movie = results.movie;
         var tor = movie.torrents[0];
         var magnet = torrent.magnetize({
@@ -106,7 +107,7 @@ exports.show = function (req, res, next) {
             hash: tor.hash
         });
 
-        return res.render('movie/stream', {
+        var dataRender = {
             title: movie.title,
             synopsis: movie.description_full,
             poster: movie.images.large_screenshot_image1,
@@ -117,6 +118,30 @@ exports.show = function (req, res, next) {
             peers: tor.peers,
             seeds: tor.seeds,
             ratio: (tor.seeds / tor.peers)
-        });
+        }
+
+        request
+            .get({
+                url: provider.subtitles().url + movie.imdb_code,
+                json: true
+            }, function (err, response, body) {
+                if (!err && response.statusCode === 200 && !!body && body.success) {
+                    dataRender.subs = body.subs;
+                    return res.render(template, dataRender);
+                }
+
+                request
+                    .get({
+                        url: provider.subtitles().mirrorUrl + movie.imdb_code,
+                        json: true
+                    }, function (err, response, body) {
+                        if (err || response.statusCode >= 400 || !body || !body.success) {
+                            return next(err);
+                        }
+
+                        dataRender.subs = body.subs;
+                        return res.render(template, dataRender);
+                    });
+            });
     });
 };

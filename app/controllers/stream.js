@@ -14,6 +14,8 @@ exports.index = function (req, res) {
     var engine = torrentStream(magnet, {
         connections: 100,
         uploads: 10,
+        dht: false,
+        tracker: true,
         trackers: torrent.trackers
     });
 
