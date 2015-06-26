@@ -5,44 +5,68 @@
 var async = require('async');
 var request = require('request');
 var provider = require('../services/provider');
+var redis = require('../services/redis');
+var client = redis.getClient();
+var clientExpire = (5 * 60);
 
 exports.index = function (req, res, next) {
     var current = req.params.page || 1;
 
     async.parallel({
         series: function (cb) {
-            var uri = provider.serie('shows/' + current);
-            //noinspection JSLint
-            request
-                .get({
-                    url: uri
-                }, function (err, response, body) {
-                    if (err) {
-                        return cb(err);
-                    }
+            var key = 'series-' + current;
+            client.get(key, function (err, series) {
+                if (err)
+                    return cb(err);
 
-                    var data = body ? JSON.parse(body) : [];
+                if (series)
+                    return cb(null, JSON.parse(series));
 
-                    return cb(null, data);
-                });
+                var uri = provider.serie('shows/' + current);
+                //noinspection JSLint
+                request
+                    .get({
+                        url: uri,
+                        json: true
+                    }, function (err, response, body) {
+                        if (err)
+                            return cb(err);
+
+                        client.set(key, JSON.stringify(body));
+                        client.expire(key, clientExpire);
+
+                        return cb(null, body);
+                    });
+            });
         },
         pagination: function (cb) {
-            //noinspection JSLint
-            request
-                .get({
-                    url: provider.serie('shows')
-                }, function (err, response, body) {
-                    if (err) {
-                        return cb(err);
-                    }
+            var key = 'series-pagination';
+            client.get(key, function (err, pagination) {
+                if (err)
+                    return cb(err);
 
-                    return cb(null, JSON.parse(body));
-                });
+                if (pagination)
+                    return cb(null, JSON.parse(pagination));
+
+                //noinspection JSLint
+                request
+                    .get({
+                        url: provider.serie('shows'),
+                        json: true
+                    }, function (err, response, body) {
+                        if (err)
+                            return cb(err);
+
+                        client.set(key, JSON.stringify(body));
+                        client.expire(key, clientExpire);
+
+                        return cb(null, body);
+                    });
+            });
         }
     }, function (err, results) {
-        if (err) {
+        if (err)
             return next(err);
-        }
 
         return res.render('dashboard/index', {
             series: results.series,
