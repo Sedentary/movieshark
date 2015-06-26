@@ -9,7 +9,7 @@ var url = require('url');
 var client
 
 if (process.env.REDISCLOUD_URL) {
-    var urlParse = url.parse(redisUrl);
+    var urlParse = url.parse(process.env.REDISCLOUD_URL);
     client = redis.createClient(urlParse.port, urlParse.hostname, { no_ready_check: true });
     client.auth(urlParse.auth.split(":")[1]);    
 } else {
