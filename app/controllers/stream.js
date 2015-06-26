@@ -79,9 +79,9 @@ exports.index = function (req, res) {
         //     engine.destroy();
         // });
 
-        res.on('finish', function () {
-            engine.destroy();
-        });
+        // res.on('finish', function () {
+        //     engine.destroy();
+        // });
 
     });
 
