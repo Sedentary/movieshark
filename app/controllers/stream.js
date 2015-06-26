@@ -75,9 +75,9 @@ exports.index = function (req, res) {
             file.createReadStream().pipe(res);
         }
 
-        res.on('close', function () {
-            engine.destroy();
-        });
+        // res.on('close', function () {
+        //     engine.destroy();
+        // });
 
         res.on('finish', function () {
             engine.destroy();
