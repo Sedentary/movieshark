@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+if (process.env.NODE_ENV === 'production') {
+  require('newrelic');
+}
+
 var log = require('winston');
 var debug = require('debug')('faccat-crud:server');
 
