@@ -6,7 +6,7 @@ var debug = require('debug')('faccat-crud:server');
 // Include the cluster module
 var cluster = require('cluster');
 
-var cpuCount = require('os').cpus().length;
+var cpuCount = process.env.WEB_CONCURRENCY || require('os').cpus().length;
 
 cluster.setupMaster({exec: 'app.js'});
 
