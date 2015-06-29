@@ -42,9 +42,7 @@ exports.get = function (imdb_code, cb) {
 
 exports.download = function (subtitles, imdb_code) {
     if (!subtitles)
-        return
-
-    console.log('PASSSOOOOUUUUU ============')
+        return;
 
     var moviePath = path.resolve(__dirname, '..', 'public/subtitles/' + imdb_code) + '/';
     if (!fs.existsSync(moviePath)) {
