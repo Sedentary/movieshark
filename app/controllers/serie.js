@@ -149,3 +149,21 @@ exports.show = function (req, res, next) {
         });
     })
 };
+
+exports.search = function (req, res, next) {
+    var search = req.query.q;
+    var uri = provider.serie('shows/search/' + search);
+    request
+        .get({
+            uri: uri,
+            json: true
+        }, function (err, response, body) {
+            if (err)
+                return next(err);
+
+            return res.render('dashboard/index', {
+                series: body,
+                q: search
+            });
+        });
+}

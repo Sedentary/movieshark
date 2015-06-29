@@ -165,3 +165,28 @@ exports.show = function (req, res, next) {
         });
     });
 };
+
+exports.search = function (req, res, next) {
+    var search = req.query.q;
+    var uri = provider.movie('list_movies.json');
+    request
+        .get({
+            uri: uri,
+            json: true,
+            qs: {
+                sort_by: 'download_count',
+                order_by: 'desc',
+                query_term: search
+            }
+        }, function (err, response, body) {
+            if (err)
+                return next(err);
+
+            var movies = body.data.movies
+
+            return res.render('dashboard/index', {
+                movies: movies,
+                q: search
+            });
+        });
+};

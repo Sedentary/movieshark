@@ -17,6 +17,6 @@ nav.navbar.navbar-default.navbar-fixed-top
 
           form.navbar-form.navbar-right(role='search')
               .input-group
-                  input.form-control(type='text', name='search', placeholder='Search...')
+                  input.form-control(type='text', name='q', placeholder='Search...', value="#{q || ''}")
                   span.input-group-btn
                       button.btn.btn-default(type='submit') Go!

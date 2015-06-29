@@ -11,8 +11,7 @@ var client = redis.getClient();
 var clientExpire = (5 * 60); // 5 minutes
 
 exports.index = function (req, res, next) {
-    var current = req.params.page || 1,
-        search = req.query.search; //FIXME doesnt work
+    var current = req.params.page || 1;
 
     async.parallel({
         movies: function (cb) {
@@ -108,6 +107,55 @@ exports.index = function (req, res, next) {
             series: results.series,
             pagination: results.pagination,
             current: current
+        });
+    });
+};
+
+exports.search = function (req, res, next) {
+    var search = req.query.q;
+
+    async.parallel({
+        movies: function (cb) {
+            var uri = provider.movie('list_movies.json');
+            request
+                .get({
+                    uri: uri,
+                    json: true,
+                    qs: {
+                        sort_by: 'download_count',
+                        order_by: 'desc',
+                        query_term: search
+                    }
+                }, function (err, response, body) {
+                    if (err)
+                        return cb(err);
+
+                    var movies = body.data.movies
+
+                    return cb(null, movies);
+                });
+        },
+        series: function (cb) {
+            var uri = provider.serie('shows/search/' + search);
+            request
+                .get({
+                    uri: uri,
+                    json: true
+                }, function (err, response, body) {
+                    if (err)
+                        return cb(err);
+
+                    return cb(null, body);
+                });
+        }
+    }, function (err, results) {
+        if (err)
+            return next(err);
+
+        return res.render('dashboard/index', {
+            movies: results.movies,
+            series: results.series,
+            q: search
         });
     });
 };
