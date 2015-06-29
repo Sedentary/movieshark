@@ -6,7 +6,7 @@ var log = require('winston');
 var redis = require('redis');
 var url = require('url');
 
-var client
+var client;
 
 if (process.env.REDISCLOUD_URL) {
     var urlParse = url.parse(process.env.REDISCLOUD_URL);
