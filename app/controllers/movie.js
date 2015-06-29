@@ -63,90 +63,105 @@ exports.index = function (req, res, next) {
 exports.show = function (req, res, next) {
     var movie_id = req.params.id;
 
-    async.parallel({
-        movie: function (cb) {
-            request
-                .get({
-                    url: provider.movie('movie_details.json'),
-                    json: true,
-                    qs: {
-                        movie_id: movie_id,
-                        with_images: true,
-                        with_cast: true
-                    }
-                }, function (err, response, body) {
-                    if (err)
-                        return cb(err);
-
-                    return cb(null, body.data)
-                });
-        },
-        comments: function (cb) {
-            request
-                .get({
-                    url: provider.movie('movie_comments.json'),
-                    json: true,
-                    qs: {
-                        movie_id: movie_id
-                    }
-                }, function (err, response, body) {
-                    if (err)
-                        return cb(err);
-                    var data = body.data;
-                    return cb(null, {
-                        list: data.comments,
-                        count: data.comment_count
-                    });
-                });
-        },
-        suggestions: function (cb) {
-            request
-                .get({
-                    url: provider.movie('movie_suggestions.json'),
-                    json: true,
-                    qs: {
-                        movie_id: movie_id
-                    }
-                }, function (err, response, body) {
-                    if (err)
-                        return cb(err);
-
-                    return cb(null, body.data.movie_suggestions);
-                });
-        }
-    }, function (err, results) {
+    var key = 'movie-' + movie_id;
+    client.get(key, function (err, data) {
         if (err)
             return next(err);
 
-        var movie = results.movie;
-        var tor = movie.torrents[0];
-        var magnet = torrent.magnetize({
-            name: movie.title_long,
-            hash: tor.hash
-        });
+        var template = 'movie/stream';
 
-        var imdb_code = movie.imdb_code;
+        if (data)
+            return res.render(template, JSON.parse(data));
 
-        var dataRender = {
-            title: movie.title,
-            synopsis: movie.description_full,
-            poster: movie.images.large_screenshot_image1,
-            magnet: magnet,
-            rating: movie.rating,
-            comments: results.comments,
-            suggestions: results.suggestions,
-            peers: tor.peers,
-            seeds: tor.seeds,
-            ratio: (tor.seeds / tor.peers),
-            imdb_code: imdb_code
-        }
+        async.parallel({
+            movie: function (cb) {
+                request
+                    .get({
+                        url: provider.movie('movie_details.json'),
+                        json: true,
+                        qs: {
+                            movie_id: movie_id,
+                            with_images: true,
+                            with_cast: true
+                        }
+                    }, function (err, response, body) {
+                        if (err)
+                            return cb(err);
 
-        subtitle.get(imdb_code, function (err, subtitles) {
+                        return cb(null, body.data)
+                    });
+            },
+            comments: function (cb) {
+                request
+                    .get({
+                        url: provider.movie('movie_comments.json'),
+                        json: true,
+                        qs: {
+                            movie_id: movie_id
+                        }
+                    }, function (err, response, body) {
+                        if (err)
+                            return cb(err);
+                        var data = body.data;
+                        return cb(null, {
+                            list: data.comments,
+                            count: data.comment_count
+                        });
+                    });
+            },
+            suggestions: function (cb) {
+                request
+                    .get({
+                        url: provider.movie('movie_suggestions.json'),
+                        json: true,
+                        qs: {
+                            movie_id: movie_id
+                        }
+                    }, function (err, response, body) {
+                        if (err)
+                            return cb(err);
+
+                        return cb(null, body.data.movie_suggestions);
+                    });
+            }
+        }, function (err, results) {
             if (err)
                 return next(err);
 
-            dataRender.subtitles = subtitles;
-            return res.render('movie/stream', dataRender);
+            var movie = results.movie;
+            var tor = movie.torrents[0];
+            var magnet = torrent.magnetize({
+                name: movie.title_long,
+                hash: tor.hash
+            });
+
+            var imdb_code = movie.imdb_code;
+
+            var dataRender = {
+                title: movie.title,
+                synopsis: movie.description_full,
+                poster: movie.images.large_screenshot_image1,
+                magnet: magnet,
+                rating: movie.rating,
+                comments: results.comments,
+                suggestions: results.suggestions,
+                peers: tor.peers,
+                seeds: tor.seeds,
+                ratio: (tor.seeds / tor.peers),
+                imdb_code: imdb_code
+            }
+
+            subtitle.get(imdb_code, function (err, subtitles) {
+                if (err)
+                    return next(err);
+
+                dataRender.subtitles = subtitles;
+
+                client.set(key, JSON.stringify(dataRender));
+                client.expire(key, (2 * 60));
+
+                return res.render('movie/stream', dataRender);
+            });
         });
     });
 };
