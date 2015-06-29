@@ -11,7 +11,9 @@ var client = redis.getClient();
 var clientExpire = (5 * 60); // 5 minutes
 
 exports.index = function (req, res, next) {
-    var current = req.params.page || 1;
+    var current = req.params.page || 1,
+        search = req.query.search; //FIXME doesnt work
+
     async.parallel({
         movies: function (cb) {
             var key = 'dashboard-movies-' + current;

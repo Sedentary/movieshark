@@ -14,3 +14,9 @@ nav.navbar.navbar-default.navbar-fixed-top
               a(href='/movies') Movies
             li
               a(href='/series') Series
+
+          form.navbar-form.navbar-right(role='search')
+              .input-group
+                  input.form-control(type='text', name='search', placeholder='Search...')
+                  span.input-group-btn
+                      button.btn.btn-default(type='submit') Go!

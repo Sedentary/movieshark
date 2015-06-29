@@ -15,5 +15,5 @@ exports.subtitles = function () {
         url: 'http://api.yifysubtitles.com/subs',
         mirrorUrl: 'http://api.ysubs.com/subs',
         prefix: 'http://www.yifysubtitles.com'
-    }
+    };
 };

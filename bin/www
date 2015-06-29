@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 var log = require('winston');
-var debug = require('debug')('faccat-crud:server');
+var debug = require('debug')('movieshark:server');
 
 // Include the cluster module
 var cluster = require('cluster');
