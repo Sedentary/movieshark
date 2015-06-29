@@ -30,3 +30,6 @@ build/Release
 node_modules
 
 app/public/bower_components
+
+app/public/subtitles/*/zip
+app/public/subtitles/*/srt
