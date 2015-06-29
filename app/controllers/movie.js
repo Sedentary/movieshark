@@ -118,7 +118,6 @@ exports.show = function (req, res, next) {
         if (err)
             return next(err);
 
-        var template = 'movie/stream';
         var movie = results.movie;
         var tor = movie.torrents[0];
         var magnet = torrent.magnetize({
@@ -142,30 +141,12 @@ exports.show = function (req, res, next) {
             imdb_code: imdb_code
         }
 
-        request
-            .get({
-                url: provider.subtitles().url + '/' + imdb_code,
-                json: true
-            }, function (err, response, body) {
-                if (!err && response.statusCode === 200 && !!body && body.success) {
-                    dataRender.subs = body.subs[imdb_code];
-                    subtitle.download(dataRender.subs, imdb_code);
-                    return res.render(template, dataRender);
-                }
+        subtitle.get(imdb_code, function (err, subtitles) {
+            if (err)
+                return next(err);
 
-                request
-                    .get({
-                        url: provider.subtitles().mirrorUrl + '/' + imdb_code,
-                        json: true
-                    }, function (err, response, body) {
-                        if (err || response.statusCode >= 400 || !body || !body.success) {
-                            return next(err);
-                        }
-
-                        dataRender.subs = body.subs[imdb_code];
-                        subtitle.download(dataRender.subs, imdb_code);
-                        return res.render(template, dataRender);
-                    });
-            });
+            dataRender.subtitles = subtitles;
+            return res.render('movie/stream', dataRender);
+        });
     });
 };

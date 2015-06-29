@@ -1,0 +1,10 @@
+video#video.video-js.vjs-default-skin(controls='', preload='none', width='auto', height='300', poster='#{poster}')
+    source(src="/stream?#{magnet}" type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"')
+    source(src="/stream?#{magnet}" type='video/webm; codecs="vp8.0, vorbis"')
+    source(src="/stream?#{magnet}" type='video/ogg; codecs="theora, vorbis"')
+
+    include subtitles
+
+    p.vjs-no-js
+        | To view this video please enable JavaScript, and consider upgrading to a web browser that
+        a(href='http://videojs.com/html5-video-support/', target='_blank') supports HTML5 video

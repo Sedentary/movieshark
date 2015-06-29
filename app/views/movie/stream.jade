@@ -20,20 +20,7 @@ block content
                 include ../includes/torrent_ratio
             p #{synopsis}
         .col-md-12
-            video#video.video-js.vjs-default-skin(controls='', preload='none', width='auto', height='300', poster='#{poster}')
-                source(src="/stream?#{magnet}" type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"')
-                source(src="/stream?#{magnet}" type='video/webm; codecs="vp8.0, vorbis"')
-                source(src="/stream?#{magnet}" type='video/ogg; codecs="theora, vorbis"')
-
-                each sub, language in subs
-                    - var url = sub.sort(function (a, b) { return a.rating < b.rating })[0].url
-                    - var pathSubtitle = '/subtitles/' + imdb_code + '/';
-                    - var src = url.replace(/.*\//, pathSubtitle).replace(/\..*/, '.srt')
-                    track(kind="captions" src="#{src}" srclang="#{language.substr(0, 2)}" label="#{language}")
-
-                p.vjs-no-js
-                    | To view this video please enable JavaScript, and consider upgrading to a web browser that
-                    a(href='http://videojs.com/html5-video-support/', target='_blank') supports HTML5 video
+            include ../includes/video
     
     .row
         section.col-md-6.comments

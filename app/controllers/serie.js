@@ -8,6 +8,7 @@ var provider = require('../services/provider');
 var redis = require('../services/redis');
 var client = redis.getClient();
 var clientExpire = (5 * 60);
+var subtitle = require('../services/subtitle');
 
 exports.index = function (req, res, next) {
     var current = req.params.page || 1;
@@ -117,7 +118,14 @@ exports.show = function (req, res, next) {
                     seasons: seasons,
                     rating: (movie.rating.percentage / 10)
                 };
-                return res.render('serie/stream', data);
+
+                subtitle.get(movie.imdb_id, function (err, subtitles) {
+                    if (err)
+                        return next(err);
+
+                    data.subtitles = subtitles;
+                    return res.render('serie/stream', data);
+                });
             });
         });
 };
