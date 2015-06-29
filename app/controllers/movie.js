@@ -8,6 +8,7 @@ var provider = require('../services/provider');
 var torrent = require('../services/torrent');
 var redis = require('../services/redis');
 var client = redis.getClient();
+var subtitle = require('../services/subtitle');
 
 var _renderMovies = function (res, current, data) {
     var movies = data.movies;
@@ -125,6 +126,8 @@ exports.show = function (req, res, next) {
             hash: tor.hash
         });
 
+        var imdb_code = movie.imdb_code;
+
         var dataRender = {
             title: movie.title,
             synopsis: movie.description_full,
@@ -135,29 +138,32 @@ exports.show = function (req, res, next) {
             suggestions: results.suggestions,
             peers: tor.peers,
             seeds: tor.seeds,
-            ratio: (tor.seeds / tor.peers)
+            ratio: (tor.seeds / tor.peers),
+            imdb_code: imdb_code
         }
 
         request
             .get({
-                url: provider.subtitles().url + movie.imdb_code,
+                url: provider.subtitles().url + '/' + imdb_code,
                 json: true
             }, function (err, response, body) {
                 if (!err && response.statusCode === 200 && !!body && body.success) {
-                    dataRender.subs = body.subs;
+                    dataRender.subs = body.subs[imdb_code];
+                    subtitle.download(dataRender.subs, imdb_code);
                     return res.render(template, dataRender);
                 }
 
                 request
                     .get({
-                        url: provider.subtitles().mirrorUrl + movie.imdb_code,
+                        url: provider.subtitles().mirrorUrl + '/' + imdb_code,
                         json: true
                     }, function (err, response, body) {
                         if (err || response.statusCode >= 400 || !body || !body.success) {
                             return next(err);
                         }
 
-                        dataRender.subs = body.subs;
+                        dataRender.subs = body.subs[imdb_code];
+                        subtitle.download(dataRender.subs, imdb_code);
                         return res.render(template, dataRender);
                     });
             });

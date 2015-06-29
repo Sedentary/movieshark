@@ -12,8 +12,8 @@ exports.serie = function (uri) {
 
 exports.subtitles = function () {
     return {
-        url: 'http://api.yifysubtitles.com/subs/',
-        mirrorUrl: 'http://api.ysubs.com/subs/',
+        url: 'http://api.yifysubtitles.com/subs',
+        mirrorUrl: 'http://api.ysubs.com/subs',
         prefix: 'http://www.yifysubtitles.com'
     }
 };

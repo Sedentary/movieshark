@@ -7,6 +7,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "adm-zip": "^0.4.7",
     "async": "^1.2.1",
     "binaryjs": "^0.2.1",
     "body-parser": "~1.12.0",
