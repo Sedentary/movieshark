@@ -71,10 +71,12 @@ exports.index = function (req, res) {
 
         res.on('close', function () {
             engine.destroy();
+            log.info('Engine destroy');
         });
 
         res.on('finish', function () {
             engine.destroy();
+            log.info('Engine destroy');
         });
 
     });
