@@ -12,11 +12,12 @@ var methodOverride = require('method-override');
 var log = require('winston');
 var moment = require('moment');
 var expressStatic = require('express-static');
-
-// mongoose
-//require('./config/mongoose');
+var helmet = require('helmet');
 
 var app = express();
+
+// help secure express apps with various HTTP headers
+app.use(helmet());
 
 app.locals.moment = moment;
 
