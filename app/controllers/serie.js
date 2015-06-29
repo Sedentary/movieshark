@@ -77,55 +77,75 @@ exports.index = function (req, res, next) {
     });
 };
 
+var _getSerie = function (serieId, cb) {
+    var key = 'serie-' + serieId;
+
+    client.get(key, function (err, serie) {
+        if (err)
+            return cb(err);
+
+        if (serie)
+            return cb(null, JSON.parse(serie));
+
+        var uri = provider.serie('show/' + serieId);
+        //noinspection JSLint
+        request
+            .get({
+                uri: uri,
+                json: true
+            }, function (err, response, body) {
+                if (err)
+                    return cb(err);
+
+                client.set(key, JSON.stringify(body));
+                client.expire(key, (2 * 60));
+                cb(null, body);
+            });
+    });
+}
+
 exports.show = function (req, res, next) {
-    var uri = provider.serie('show/' + req.params.id);
-    //noinspection JSLint
-    request
-        .get({
-            uri: uri,
-            json: true
-        }, function (err, response, body) {
-            if (err)
-                return next(err);
+    _getSerie(req.params.id, function (err, serie) {
+        if (err)
+            return next(err);
 
-            var movie = body;
-            var seasons = {}
-            var firstSeason;
-            async.each(movie.episodes, function (epi, cb) {
-                var season = epi.season;
-                if (!firstSeason || firstSeason > season)
-                    firstSeason = season
+        var seasons = {}
+        var firstSeason;
+        async.each(serie.episodes, function (epi, cb) {
+            var season = epi.season;
+            if (!firstSeason || firstSeason > season)
+                firstSeason = season
 
-                if (!!seasons[season]) {
-                    seasons[season].push(epi);
-                } else {
-                    seasons[season] = [epi];
-                }
-                cb();
-            }, function () {
-                var episode = seasons[req.params.season || firstSeason][req.params.episode || 0];
-                var torrent = episode.torrents['480p'];
-                var data = {
-                    id: movie._id,
-                    title: movie.title,
-                    synopsis: movie.synopsis,
-                    poster: movie.images.banner,
-                    magnet: torrent.url,
-                    peers: torrent.peers,
-                    seeds: torrent.seeds,
-                    ratio: (torrent.seeds / torrent.peers),
-                    episode: episode,
-                    seasons: seasons,
-                    rating: (movie.rating.percentage / 10)
-                };
+            if (!!seasons[season]) {
+                seasons[season].push(epi);
+            } else {
+                seasons[season] = [epi];
+            }
+            cb();
+        }, function () {
+            var episode = seasons[req.params.season || firstSeason][req.params.episode || 0];
+            var torrent = episode.torrents['480p'];
+            var data = {
+                id: serie._id,
+                title: serie.title,
+                synopsis: serie.synopsis,
+                poster: serie.images.banner,
+                magnet: torrent.url,
+                peers: torrent.peers,
+                seeds: torrent.seeds,
+                ratio: (torrent.seeds / torrent.peers),
+                episode: episode,
+                seasons: seasons,
+                rating: (serie.rating.percentage / 10)
+            };
 
-                subtitle.get(movie.imdb_id, function (err, subtitles) {
-                    if (err)
-                        return next(err);
+            subtitle.get(serie.imdb_id, function (err, subtitles) {
+                if (err)
+                    return next(err);
 
-                    data.subtitles = subtitles;
-                    return res.render('serie/stream', data);
-                });
+                data.subtitles = subtitles;
+                return res.render('serie/stream', data);
             });
         });
+    })
 };
