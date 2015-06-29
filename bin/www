@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-if (process.env.NODE_ENV === 'production') {
-  require('newrelic');
-}
-
 var log = require('winston');
 var debug = require('debug')('movieshark:server');
+
+if (process.env.NODE_ENV === 'production') {
+  require('newrelic');
+  log.info('NEWRELIC load');
+}
 
 // Include the cluster module
 var cluster = require('cluster');
