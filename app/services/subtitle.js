@@ -53,7 +53,9 @@ exports.getMovieSubs = function (imdb_code, cb) {
  */
 exports.getSerieSubs = function (query, cb) {
     var userAgent = 'MovieShark';
-    openSRT.searchEpisode(query, userAgent).then(console.log);
+    openSRT.searchEpisode(query, userAgent).then(function (subtitles) {
+        cb(null, subtitles);
+    });
 };
 
 var _download = function (subtitles, imdb_code) {
