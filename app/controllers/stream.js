@@ -6,7 +6,6 @@ var log = require('winston');
 var async = require('async');
 var fs = require('fs');
 var torrentStream = require('torrent-stream');
-var torrent = require('../services/torrent');
 
 exports.index = function (req, res) {
     var magnet = req.url.replace('/?', '');

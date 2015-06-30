@@ -30,8 +30,7 @@ exports.index = function (req, res, next) {
                         json: true,
                         qs: {
                             page: current,
-                            sort_by: 'download_count',
-                            order_by: 'desc'
+                            sort_by: 'seeds'
                         }
                     }, function (err, response, body) {
                         if (err)
@@ -136,7 +135,7 @@ exports.search = function (req, res, next) {
                 });
         },
         series: function (cb) {
-            var uri = provider.serie('shows/search/' + search);
+            var uri = provider.serie('shows/search/' + search + '/all');
             request
                 .get({
                     uri: uri,

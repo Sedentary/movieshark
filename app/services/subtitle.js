@@ -12,7 +12,6 @@ var log = require('winston');
 var srt2vtt = require('srt2vtt');
 
 exports.get = function (imdb_code, cb) {
-    var that = this;
     request
         .get({
             url: provider.subtitles().url + '/' + imdb_code,
@@ -21,7 +20,7 @@ exports.get = function (imdb_code, cb) {
             if (!err && response.statusCode === 200 && !!body && body.success && body.subtitles > 0) {
                 var subtitles = body.subs[imdb_code];
                 cb(null, subtitles);
-                that.download(subtitles, imdb_code);
+                _download(subtitles, imdb_code);
             }
 
             request
@@ -35,12 +34,12 @@ exports.get = function (imdb_code, cb) {
 
                     var subtitles = body.subtitles > 0 ? body.subs[imdb_code] : [];
                     cb(null, subtitles);
-                    that.download(subtitles, imdb_code);
+                    _download(subtitles, imdb_code);
                 });
         });
 }
 
-exports.download = function (subtitles, imdb_code) {
+var _download = function (subtitles, imdb_code) {
     if (!subtitles)
         return;
 

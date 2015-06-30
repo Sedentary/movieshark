@@ -5,3 +5,11 @@ footer {
   background-color: #f9f9f9;
   border-top: 1px solid #e5e5e5;
 }
+
+footer a {
+  margin: 0 5px;
+}
+
+footer i {
+  margin: 0 5px;
+}

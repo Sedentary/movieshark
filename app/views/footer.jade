@@ -1,4 +1,16 @@
 footer
    .row
       .col-lg-12
-         p Copyright &copy; Movieshark 2015
+         p Copyright &copy; Movieshark #{moment().get('year')}
+         p
+            a(href='https://github.com/Sedentary/movieshark')
+                i.fa.fa-github-alt
+                | GitHub
+
+            a(href='#terms')
+                i.fa.fa-file-text-o
+                | Terms of Service
+
+            a(href='#terms')
+                i.fa.fa-envelope-o
+                | Contact

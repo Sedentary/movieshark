@@ -152,7 +152,7 @@ exports.show = function (req, res, next) {
 
 exports.search = function (req, res, next) {
     var search = req.query.q;
-    var uri = provider.serie('shows/search/' + search);
+    var uri = provider.serie('shows/search/' + search + '/all');
     request
         .get({
             uri: uri,
