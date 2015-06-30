@@ -26,11 +26,12 @@ var _renderMovies = function (res, current, data) {
         pagination: pagination,
         current: current
     });
-}
+};
 
 exports.index = function (req, res, next) {
     var current = Number(req.params.page || 1);
-    var key = 'movies-' + current;
+    var key = 'movies-' + current,
+        search = req.query.search;
     client.get(key, function (err, data) {
         if (err)
             return next(err);
@@ -45,7 +46,8 @@ exports.index = function (req, res, next) {
                 qs: {
                     page: current,
                     sort_by: 'download_count',
-                    order_by: 'desc'
+                    order_by: 'desc',
+                    query_term: search
                 }
             }, function (err, response, body) {
                 if (err)
@@ -149,9 +151,9 @@ exports.show = function (req, res, next) {
                 seeds: tor.seeds,
                 ratio: (tor.seeds / tor.peers),
                 imdb_code: imdb_code
-            }
+            };
 
-            subtitle.get(imdb_code, function (err, subtitles) {
+            subtitle.getMovieSubs(imdb_code, function (err, subtitles) {
                 if (err)
                     return next(err);
 
@@ -182,7 +184,7 @@ exports.search = function (req, res, next) {
             if (err)
                 return next(err);
 
-            var movies = body.data.movies
+            var movies = body.data.movies;
 
             return res.render('dashboard/index', {
                 movies: movies,

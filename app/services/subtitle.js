@@ -10,8 +10,9 @@ var AdmZip = require('adm-zip');
 var path = require('path');
 var log = require('winston');
 var srt2vtt = require('srt2vtt');
+var openSRT = require('popcorn-opensubtitles');
 
-exports.get = function (imdb_code, cb) {
+exports.getMovieSubs = function (imdb_code, cb) {
     request
         .get({
             url: provider.subtitles().url + '/' + imdb_code,
@@ -37,7 +38,23 @@ exports.get = function (imdb_code, cb) {
                     _download(subtitles, imdb_code);
                 });
         });
-}
+};
+
+/**
+ *
+ * @param {object} query {
+ *  moviehash,
+ *  imdbid,
+ *  season,
+ *  episode,
+ *  tag
+ * }
+ * @param cb
+ */
+exports.getSerieSubs = function (query, cb) {
+    var userAgent = 'MovieShark';
+    openSRT.searchEpisode(query, userAgent).then(console.log);
+};
 
 var _download = function (subtitles, imdb_code) {
     if (!subtitles)
@@ -63,10 +80,12 @@ var _download = function (subtitles, imdb_code) {
         }
 
         async.each(subtitles, function (language, cb) {
-            var subtitle = language.sort(function (a, b) { return a.rating < b.rating })[0];
+            var subtitle = language.sort(function (a, b) {
+                return a.rating < b.rating
+            })[0];
             var url = provider.subtitles().prefix + subtitle.url;
             var extension = url.replace(/.*\./, '');
-            
+
             switch (extension) {
                 case 'zip':
                     _downloadZip(zipPath, srtPath, vttPath, url);
@@ -80,10 +99,10 @@ var _download = function (subtitles, imdb_code) {
             }
 
             cb();
-            
+
         });
     }
-}
+};
 
 var _downloadZip = function (zipPath, srtPath, vttPath, url) {
     var filename = zipPath + url.replace(/.*\//, '');
@@ -127,17 +146,17 @@ var _downloadSrt = function (srtPath, vttPath, url) {
             });
         })
         .pipe(out);
-}
+};
 
 var _downloadVtt = function (vttPath, url) {
     var filename = vttPath + url.replace(/.*\//, '');
     var out = fs.createWriteStream(filename);
     request(url).pipe(out);
-}
+};
 
 var _convertSrtToVtt = function (vttPath, filename) {
     var srtData = fs.readFileSync(filename);
-    srt2vtt(srtData, function(err, vttData) {
+    srt2vtt(srtData, function (err, vttData) {
         if (err)
             return log.error(err);
 
@@ -145,4 +164,4 @@ var _convertSrtToVtt = function (vttPath, filename) {
         var vttFile = vttPath + file.replace('.srt', '.vtt');
         fs.writeFileSync(vttFile, vttData);
     });
-}
+};

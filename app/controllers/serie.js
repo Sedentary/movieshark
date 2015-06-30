@@ -102,7 +102,7 @@ var _getSerie = function (serieId, cb) {
                 cb(null, body);
             });
     });
-}
+};
 
 exports.show = function (req, res, next) {
     _getSerie(req.params.id, function (err, serie) {
@@ -139,7 +139,9 @@ exports.show = function (req, res, next) {
                 rating: (serie.rating.percentage / 10)
             };
 
-            subtitle.get(serie.imdb_id, function (err, subtitles) {
+            subtitle.getSerieSubs({
+                imdbid: serie.imdb_id
+            }, function (err, subtitles) {
                 if (err)
                     return next(err);
 
@@ -147,7 +149,7 @@ exports.show = function (req, res, next) {
                 return res.render('serie/stream', data);
             });
         });
-    })
+    });
 };
 
 exports.search = function (req, res, next) {
@@ -166,4 +168,4 @@ exports.search = function (req, res, next) {
                 q: search
             });
         });
-}
+};

@@ -28,7 +28,8 @@
     "srt2vtt": "^1.3.0",
     "torrent-stream": "^0.19.2",
     "url": "^0.10.3",
-    "winston": "^1.0.0"
+    "winston": "^1.0.0",
+    "popcorn-opensubtitles": "git+https://git.popcorntime.io/popcorntime/opensubtitles.git#a7ad4445a2cc89e3f37d4fe4e6ac06186fd719ea"
   },
   "engines": {
     "node": "0.10.x"
