@@ -14,6 +14,7 @@ module.exports = function (app) {
     var movie = require('../app/routes/movie');
     var movies = require('../app/routes/movies');
     var stream = require('../app/routes/stream');
+    var tos = require('../app/routes/tos');
 
     requestDebug(request, function(type, data, r) {
         if (data.method && data.uri)
@@ -25,6 +26,7 @@ module.exports = function (app) {
     app.use('/movie', movie);
     app.use('/movies', movies);
     app.use('/stream', stream);
+    app.use('/tos', tos);
     app.use('/', dashboard);
 
     // catch 404 and forward to error handler

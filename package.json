@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "bower install",
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www --ignore app/public"
   },
   "dependencies": {
     "adm-zip": "^0.4.7",

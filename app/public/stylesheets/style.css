@@ -13,3 +13,46 @@ footer a {
 footer i {
   margin: 0 5px;
 }
+
+/* NAVBAR */
+.navbar {
+  background-color: #337ab7;
+  border-color: #337ab7;
+  transition: box-shadow 0.5s;
+}
+
+.navbar-box {
+  box-shadow: 0 0 4px #666, 0 4px 8px #ddd;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav>li>a {
+  color: #ffffff;
+}
+
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+  color: #ddd;
+}
+
+/* PAGINATION */
+.pagination>li>a,
+.pagination>li>span {
+  border: none;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover,
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+  box-shadow: 0 0 4px #ddd, 0 4px 8px #ddd;
+  border-radius: 50%;
+}

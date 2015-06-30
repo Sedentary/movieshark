@@ -1,4 +1,4 @@
-extends ../layout
+extends ../layouts/layout
 
 block stylesheets
     link(rel='stylesheet', href='/bower_components/Justified-Gallery/dist/css/justifiedGallery.css')
@@ -14,7 +14,6 @@ block content
                 include ../includes/pagination
 
     +pagination
-    hr
 
     #gallery
         if movies
@@ -29,4 +28,3 @@ block content
 
     hr
     +pagination
-    hr

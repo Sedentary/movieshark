@@ -1,0 +1,10 @@
+h1,
+h3 {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.container p {
+  text-align: justify;
+  padding: 0 20%;
+}
