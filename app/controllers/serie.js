@@ -141,8 +141,8 @@ exports.show = function (req, res, next) {
 
             subtitle.getSerieSubs({
                 imdbid: serie.imdb_id,
-                season: req.params.season || firstSeason,
-                episode: parseInt(req.params.episode || 0) + 1
+                season: episode.season,
+                episode: episode.episode
             }, function (err, subtitles) {
                 if (err)
                     return next(err);

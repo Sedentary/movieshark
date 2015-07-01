@@ -35,7 +35,7 @@ exports.getMovieSubs = function (imdb_code, cb) {
 
                     var subtitles = body.subtitles > 0 ? body.subs[imdb_code] : [];
                     cb(null, subtitles);
-                    _download(subtitles, imdb_code);
+                    _downloadMovieSubs(subtitles, imdb_code);
                 });
         });
 };
@@ -58,11 +58,42 @@ exports.getSerieSubs = function (query, cb) {
             subtitles[lang] = subtitles[lang].url;
         }
         cb(null, subtitles);
-        _download(subtitles, query.imdbid);
+        _downloadSerieSubs(subtitles, query.imdbid, query.season, query.episode);
     });
 };
 
-var _download = function (subtitles, imdb_code) {
+var _downloadSerieSubs = function (subtitles, imdb_code, season, episode) {
+    if (!subtitles)
+        return;
+
+    var seriePath = path.normalize(path.resolve(__dirname, '..', 'public/subtitles/' + imdb_code) + '/');
+    var seasonPath = path.normalize(seriePath + '/' + season + '/');
+    var episodePath = path.normalize(seasonPath + '/' + episode + '/');
+
+    if (!fs.existsSync(episodePath)) {
+        fs.mkdirSync(seriePath);
+        fs.mkdirSync(seasonPath);
+        fs.mkdirSync(episodePath);
+
+        var srtPath = path.normalize(episodePath + 'srt/');
+        if (!fs.existsSync(srtPath)) {
+            fs.mkdirSync(srtPath);
+        }
+
+        var vttPath = path.normalize(episodePath + 'vtt/');
+        if (!fs.existsSync(vttPath)) {
+            fs.mkdirSync(vttPath);
+        }
+
+        async.each(subtitles, function (language, cb) {
+            _downloadSrt(srtPath, vttPath, language);
+
+            cb();
+        });
+    }
+};
+
+var _downloadMovieSubs = function (subtitles, imdb_code) {
     if (!subtitles)
         return;
 
@@ -86,14 +117,11 @@ var _download = function (subtitles, imdb_code) {
         }
 
         async.each(subtitles, function (language, cb) {
-            var subtitle;
-            if (typeof language !== 'string') {
-                subtitle = language.sort(function (a, b) {
-                    return a.rating < b.rating;
-                })[0];
-            }
+            var subtitle = language.sort(function (a, b) {
+                return a.rating < b.rating;
+            })[0];
 
-            var url = subtitle ? provider.subtitles().prefix + subtitle.url : language;
+            var url = provider.subtitles().prefix + subtitle.url;
             var extension = url.replace(/.*\./, '');
 
             switch (extension) {
@@ -109,7 +137,6 @@ var _download = function (subtitles, imdb_code) {
             }
 
             cb();
-
         });
     }
 };
