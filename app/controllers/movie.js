@@ -44,7 +44,6 @@ exports.index = function (req, res, next) {
                 json: true,
                 qs: {
                     page: current,
-                    limit: 50,
                     sort_by: 'seeds'
                 }
             }, function (err, response, body) {
@@ -175,7 +174,6 @@ exports.search = function (req, res, next) {
             json: true,
             qs: {
                 sort_by: 'seeds',
-                limit: 50,
                 query_term: search
             }
         }, function (err, response, body) {
