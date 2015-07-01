@@ -54,11 +54,13 @@ exports.getMovieSubs = function (imdb_code, cb) {
 exports.getSerieSubs = function (query, cb) {
     var userAgent = 'Popcorn Time v1';
     openSRT.searchEpisode(query, userAgent).then(function (subtitles) {
+        var subs = {};
         for (var lang in subtitles) {
-            subtitles[lang] = subtitles[lang].url;
+            var language = _languageMapping[lang];
+            subs[language] = subtitles[lang].url
         }
-        cb(null, subtitles);
-        _downloadSerieSubs(subtitles, query.imdbid, query.season, query.episode);
+        cb(null, subs);
+        _downloadSerieSubs(subs, query.imdbid, query.season, query.episode);
     });
 };
 
@@ -157,7 +159,7 @@ var _downloadZip = function (zipPath, srtPath, vttPath, url) {
                     zip.extractAllTo(srtPath, true);
                     var zipEntries = zip.getEntries();
                     async.each(zipEntries, function (entry, cbEntry) {
-                        if (entry.entryName.indexOf('.srt') === -1)
+                        if (path.extname(entry.entryName) === '.srt')
                             return cbEntry();
 
                         var entryPath = srtPath + entry.entryName;
@@ -207,4 +209,48 @@ var _convertSrtToVtt = function (vttPath, filename) {
         var vttFile = vttPath + file.replace('.srt', '.vtt');
         fs.writeFileSync(vttFile, vttData);
     });
+};
+
+var _languageMapping = {
+    'sq' : 'albanian',
+    'ar' : 'arabic',
+    'bn' : 'bengali',
+    'pt-br' : 'brazilian-portuguese',
+    'bg' : 'bulgarian',
+    'bs' : 'bosnian',
+    'zh' : 'chinese',
+    'hr' : 'croatian',
+    'cs' : 'czech',
+    'da' : 'danish',
+    'nl' : 'dutch',
+    'en' : 'english',
+    'et' : 'estonian',
+    'fa' : 'farsi-persian',
+    'fi' : 'finnish',
+    'fr' : 'french',
+    'de' : 'german',
+    'el' : 'greek',
+    'he' : 'hebrew',
+    'hu' : 'hungarian',
+    'id' : 'indonesian',
+    'it' : 'italian',
+    'ja' : 'japanese',
+    'ko' : 'korean',
+    'lt' : 'lithuanian',
+    'mk' : 'macedonian',
+    'ms' : 'malay',
+    'no' : 'norwegian',
+    'pl' : 'polish',
+    'pt' : 'portuguese',
+    'ro' : 'romanian',
+    'ru' : 'russian',
+    'sr' : 'serbian',
+    'sl' : 'slovenian',
+    'es' : 'spanish',
+    'sv' : 'swedish',
+    'th' : 'thai',
+    'tr' : 'turkish',
+    'ur' : 'urdu',
+    'uk' : 'ukrainian',
+    'vi' : 'vietnamese',
 };
