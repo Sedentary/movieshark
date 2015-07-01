@@ -30,8 +30,7 @@ var _renderMovies = function (res, current, data) {
 
 exports.index = function (req, res, next) {
     var current = Number(req.params.page || 1);
-    var key = 'movies-' + current,
-        search = req.query.search;
+    var key = 'movies-' + current;
     client.get(key, function (err, data) {
         if (err)
             return next(err);
@@ -45,9 +44,7 @@ exports.index = function (req, res, next) {
                 json: true,
                 qs: {
                     page: current,
-                    sort_by: 'download_count',
-                    order_by: 'desc',
-                    query_term: search
+                    sort_by: 'seeds'
                 }
             }, function (err, response, body) {
                 if (err)
