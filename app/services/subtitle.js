@@ -69,9 +69,15 @@ var _downloadSerieSubs = function (subtitles, imdb_code, season, episode) {
     var seriePath = path.normalize(path.resolve(__dirname, '..', 'public/subtitles/' + imdb_code) + '/');
     var seasonPath = path.normalize(seriePath + season + '/');
     var episodePath = path.normalize(seasonPath + episode + '/');
+    console.log(episodePath);
     if (!fs.existsSync(episodePath)) {
-        fs.mkdirSync(seriePath);
-        fs.mkdirSync(seasonPath);
+        
+        if (!fs.existsSync(seriePath))
+            fs.mkdirSync(seriePath);
+
+        if (!fs.existsSync(seasonPath))
+            fs.mkdirSync(seasonPath);
+
         fs.mkdirSync(episodePath);
 
         var srtPath = path.normalize(episodePath + 'srt/');
