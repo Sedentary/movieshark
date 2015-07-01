@@ -19,6 +19,7 @@ var app = express();
 // help secure express apps with various HTTP headers
 app.use(helmet());
 
+app.locals.moviesharkurl = 'http://www.movieshark.co'
 app.locals.movieshark = 'Movieshark'
 app.locals.moment = moment;
 
