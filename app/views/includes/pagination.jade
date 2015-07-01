@@ -1,7 +1,8 @@
 if pagination
     nav
         ul.pagination
-            - var previous = Number(current) - 1;
+            - current = Number(current)
+            - var previous = current - 1;
             li(class="#{previous < 1 ? 'disabled' : ''}")
                 a(href="#{previous}", aria-label='Previous')
                     span(aria-hidden='true') &laquo;
@@ -9,9 +10,9 @@ if pagination
             each page in pagination
                 - var show = Number(page.replace(/.*\//, ''))
                 li(class="#{current === show ? 'active' : ''}")
-                    a(href="#{page}") #{show}
+                    a(href="#{page}") !{current === show ? current : '&nbsp;' }
             
-            - var next = Number(current) + 1;
+            - var next = current + 1;
             li(class="#{next > pagination.length ? 'disabled' : ''}")
                 a(href="#{next}", aria-label='Next')
                     span(aria-hidden='true') &raquo;
