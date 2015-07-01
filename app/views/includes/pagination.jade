@@ -10,7 +10,7 @@ if pagination
             each page in pagination
                 - var show = Number(page.replace(/.*\//, ''))
                 li(class="#{current === show ? 'active' : ''}")
-                    a(href="#{page}") !{current === show ? current : '&nbsp;' }
+                    a(href="#{url + '/' + show}") !{current === show ? current : '&nbsp;' }
             
             - var next = current + 1;
             li(class="#{next > pagination.length ? 'disabled' : ''}")

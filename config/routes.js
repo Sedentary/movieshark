@@ -21,6 +21,12 @@ module.exports = function (app) {
             log.info('%s %s', data.method, data.uri);
     });
 
+    app.use(function (req, res, next) {
+        var url = req.url;
+        res.locals.url = url === '/' ? '' : url;
+        next();
+    });
+
     app.use('/serie', serie);
     app.use('/series', series);
     app.use('/movie', movie);

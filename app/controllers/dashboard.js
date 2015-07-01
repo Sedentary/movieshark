@@ -87,13 +87,9 @@ exports.index = function (req, res, next) {
                         if (err)
                             return cb(err);
 
-                        async.concat(body, function (pag, cbPag) {
-                            cbPag(null, pag.replace(/.*\//, ''));
-                        }, function (err, pages) {
-                            client.set(key, JSON.stringify(pages));
-                            client.expire(key, clientExpire);
-                            return cb(null, pages);
-                        })
+                        client.set(key, JSON.stringify(body));
+                        client.expire(key, clientExpire);
+                        return cb(null, body);
                     });
             });
         }

@@ -18,7 +18,7 @@ var _renderMovies = function (res, current, data) {
     var pagination = [];
     for (var i = current; i < total_pagination; i++) {
         if (i < total_pages)
-            pagination.push('/movies/' + i);
+            pagination.push(String(i));
     }
 
     return res.render('dashboard/index', {
