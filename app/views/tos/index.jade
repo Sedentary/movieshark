@@ -5,7 +5,12 @@ block stylesheets
 
 block content
     .container
-        - var company = "Movieshark"
+        - var company = 'Movieshark'
+
+        a.logo(href='/')
+            img(src='/img/movieshark.png' alt='Movieshark')
+            h1.movieshark.movieshark--blue #{company}
+
         h1 Terms of service
 
         h3 Your Acceptance

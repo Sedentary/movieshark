@@ -8,3 +8,21 @@ h3 {
   text-align: justify;
   padding: 0 20%;
 }
+
+.logo {
+  display: block;
+  text-align: center;
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.logo img {
+  width: 25%;
+}
+
+.logo h1 {
+  font-size: 100px;
+  margin-top: -20px;
+}
