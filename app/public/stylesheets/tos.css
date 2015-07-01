@@ -26,3 +26,9 @@ h3 {
   font-size: 100px;
   margin-top: -20px;
 }
+
+@media (max-width: 570px) {
+  .logo h1 {
+    font-size: 70px;
+  }
+}
