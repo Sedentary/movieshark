@@ -1,5 +1,5 @@
 each sub, language in subtitles
-    - var url = sub.sort(function (a, b) { return a.rating < b.rating })[0].url
+    - var url = (typeof(sub) === 'string') ? sub : sub.sort(function (a, b) { return a.rating < b.rating })[0].url
     - var pathSubtitle = '/subtitles/' + imdb_code + '/vtt/';
     - var src = url.replace(/.*\//, pathSubtitle).replace(/zip|srt/, 'vtt')
     track(src="#{src}" srclang="#{language.substr(0, 2)}" label="#{language}")

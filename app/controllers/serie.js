@@ -109,12 +109,12 @@ exports.show = function (req, res, next) {
         if (err)
             return next(err);
 
-        var seasons = {}
+        var seasons = {};
         var firstSeason;
         async.each(serie.episodes, function (epi, cb) {
             var season = epi.season;
             if (!firstSeason || firstSeason > season)
-                firstSeason = season
+                firstSeason = season;
 
             if (!!seasons[season]) {
                 seasons[season].push(epi);
@@ -140,7 +140,9 @@ exports.show = function (req, res, next) {
             };
 
             subtitle.getSerieSubs({
-                imdbid: serie.imdb_id
+                imdbid: serie.imdb_id,
+                season: req.params.season || firstSeason,
+                episode: parseInt(req.params.episode || 0) + 1
             }, function (err, subtitles) {
                 if (err)
                     return next(err);

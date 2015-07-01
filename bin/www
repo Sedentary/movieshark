@@ -10,8 +10,8 @@ var cpuCount = process.env.WEB_CONCURRENCY || require('os').cpus().length;
 
 cluster.setupMaster({exec: 'app.js'});
 
-for (var i = 0; i < cpuCount; i++) 
-  cluster.fork();
+for (var i = 0; i < cpuCount; i++)
+    cluster.fork();
 
 // Listen for dying workers
 cluster.on('exit', function (worker) {

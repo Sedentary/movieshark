@@ -52,9 +52,13 @@ exports.getMovieSubs = function (imdb_code, cb) {
  * @param cb
  */
 exports.getSerieSubs = function (query, cb) {
-    var userAgent = 'MovieShark';
+    var userAgent = 'Popcorn Time v1';
     openSRT.searchEpisode(query, userAgent).then(function (subtitles) {
+        for (var lang in subtitles) {
+            subtitles[lang] = subtitles[lang].url;
+        }
         cb(null, subtitles);
+        _download(subtitles, query.imdbid);
     });
 };
 
@@ -66,26 +70,30 @@ var _download = function (subtitles, imdb_code) {
     if (!fs.existsSync(moviePath)) {
         fs.mkdirSync(moviePath);
 
-        var zipPath = moviePath + 'zip/';
+        var zipPath = path.normalize(moviePath + 'zip/');
         if (!fs.existsSync(zipPath)) {
             fs.mkdirSync(zipPath);
         }
 
-        var srtPath = moviePath + 'srt/';
+        var srtPath = path.normalize(moviePath + 'srt/');
         if (!fs.existsSync(srtPath)) {
             fs.mkdirSync(srtPath);
         }
 
-        var vttPath = moviePath + 'vtt/';
+        var vttPath = path.normalize(moviePath + 'vtt/');
         if (!fs.existsSync(vttPath)) {
             fs.mkdirSync(vttPath);
         }
 
         async.each(subtitles, function (language, cb) {
-            var subtitle = language.sort(function (a, b) {
-                return a.rating < b.rating
-            })[0];
-            var url = provider.subtitles().prefix + subtitle.url;
+            var subtitle;
+            if (typeof language !== 'string') {
+                subtitle = language.sort(function (a, b) {
+                    return a.rating < b.rating;
+                })[0];
+            }
+
+            var url = subtitle ? provider.subtitles().prefix + subtitle.url : language;
             var extension = url.replace(/.*\./, '');
 
             switch (extension) {
@@ -120,19 +128,19 @@ var _downloadZip = function (zipPath, srtPath, vttPath, url) {
                         if (entry.entryName.indexOf('.srt') === -1)
                             return cbEntry();
 
-                        var entryPath = srtPath + entry.entryName
+                        var entryPath = srtPath + entry.entryName;
                         var newName = path.join(srtPath, filename.replace(/.*\//, '').replace('.zip', '.srt'));
                         fs.renameSync(entryPath, newName);
                         _convertSrtToVtt(vttPath, newName);
                         cbEntry();
                     });
                 } catch (err) {
-                    log.error('Error unzip subtitle: ', filename);
+                    log.error('Error unzipping subtitle: ', filename);
                 }
             });
         })
         .pipe(out);
-}
+};
 
 var _downloadSrt = function (srtPath, vttPath, url) {
     var filename = srtPath + url.replace(/.*\//, '');
@@ -143,7 +151,7 @@ var _downloadSrt = function (srtPath, vttPath, url) {
                 try {
                     _convertSrtToVtt(vttPath, filename);
                 } catch (err) {
-                    log.error('Error unzip subtitle: ', filename);
+                    log.error('Error converting subtitle: ', filename);
                 }
             });
         })
