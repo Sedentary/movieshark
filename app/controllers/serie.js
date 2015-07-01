@@ -136,7 +136,8 @@ exports.show = function (req, res, next) {
                 ratio: (torrent.seeds / torrent.peers),
                 episode: episode,
                 seasons: seasons,
-                rating: (serie.rating.percentage / 10)
+                rating: (serie.rating.percentage / 10),
+                imdb_code: (serie.imdb_id + '/' + episode.season + '/' + episode.episode)
             };
 
             subtitle.getSerieSubs({
