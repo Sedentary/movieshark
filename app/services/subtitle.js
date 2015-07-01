@@ -108,11 +108,6 @@ var _downloadMovieSubs = function (subtitles, imdb_code) {
     if (!fs.existsSync(moviePath)) {
         fs.mkdirSync(moviePath);
 
-        var zipPath = path.normalize(moviePath + 'zip/');
-        if (!fs.existsSync(zipPath)) {
-            fs.mkdirSync(zipPath);
-        }
-
         var srtPath = path.normalize(moviePath + 'srt/');
         if (!fs.existsSync(srtPath)) {
             fs.mkdirSync(srtPath);
@@ -124,21 +119,23 @@ var _downloadMovieSubs = function (subtitles, imdb_code) {
         }
 
         async.each(subtitles, function (language, cb) {
-            var subtitle = language.sort(function (a, b) {
-                return a.rating < b.rating;
-            })[0];
+            var subtitle = language.sort(function (a, b) { return a.rating < b.rating; })[0];
 
             var url = provider.subtitles().prefix + subtitle.url;
-            var extension = path.basename(url);
+            var extension = path.extname(url);
 
             switch (extension) {
-                case 'zip':
+                case '.zip':
+                    var zipPath = path.normalize(moviePath + 'zip/');
+                    if (!fs.existsSync(zipPath)) {
+                        fs.mkdirSync(zipPath);
+                    }
                     _downloadZip(zipPath, srtPath, vttPath, url);
                     break;
-                case 'srt':
+                case '.srt':
                     _downloadSrt(srtPath, vttPath, url);
                     break;
-                case 'vtt':
+                case '.vtt':
                     _downloadVtt(vttPath, url);
                     break;
             }
@@ -159,11 +156,11 @@ var _downloadZip = function (zipPath, srtPath, vttPath, url) {
                     zip.extractAllTo(srtPath, true);
                     var zipEntries = zip.getEntries();
                     async.each(zipEntries, function (entry, cbEntry) {
-                        if (path.extname(entry.entryName) === '.srt')
+                        if (path.extname(entry.entryName) !== '.srt')
                             return cbEntry();
 
+                        var newName = path.join(srtPath, path.basename(filename).replace('.zip', '.srt'));
                         var entryPath = srtPath + entry.entryName;
-                        var newName = path.join(srtPath, path.base(filename).replace('.zip', '.srt'));
                         fs.renameSync(entryPath, newName);
                         _convertSrtToVtt(vttPath, newName);
                         cbEntry();
