@@ -67,9 +67,8 @@ var _downloadSerieSubs = function (subtitles, imdb_code, season, episode) {
         return;
 
     var seriePath = path.normalize(path.resolve(__dirname, '..', 'public/subtitles/' + imdb_code) + '/');
-    var seasonPath = path.normalize(seriePath + '/' + season + '/');
-    var episodePath = path.normalize(seasonPath + '/' + episode + '/');
-
+    var seasonPath = path.normalize(seriePath + season + '/');
+    var episodePath = path.normalize(seasonPath + episode + '/');
     if (!fs.existsSync(episodePath)) {
         fs.mkdirSync(seriePath);
         fs.mkdirSync(seasonPath);
