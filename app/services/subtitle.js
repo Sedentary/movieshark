@@ -21,7 +21,7 @@ exports.getMovieSubs = function (imdb_code, cb) {
             if (!err && response.statusCode === 200 && !!body && body.success && body.subtitles > 0) {
                 var subtitles = body.subs[imdb_code];
                 cb(null, subtitles);
-                _download(subtitles, imdb_code);
+                _downloadMovieSubs(subtitles, imdb_code);
             }
 
             request
@@ -177,6 +177,7 @@ var _downloadSrt = function (srtPath, vttPath, url) {
                 try {
                     _convertSrtToVtt(vttPath, filename);
                 } catch (err) {
+                    console.log(err);
                     log.error('Error converting subtitle: ', filename);
                 }
             });
