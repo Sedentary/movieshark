@@ -127,7 +127,7 @@ var _downloadMovieSubs = function (subtitles, imdb_code) {
             })[0];
 
             var url = provider.subtitles().prefix + subtitle.url;
-            var extension = url.replace(/.*\./, '');
+            var extension = path.basename(url);
 
             switch (extension) {
                 case 'zip':
@@ -147,7 +147,7 @@ var _downloadMovieSubs = function (subtitles, imdb_code) {
 };
 
 var _downloadZip = function (zipPath, srtPath, vttPath, url) {
-    var filename = zipPath + url.replace(/.*\//, '');
+    var filename = zipPath + path.basename(url);
     var out = fs.createWriteStream(filename);
     request(url)
         .on('end', function () {
@@ -161,7 +161,7 @@ var _downloadZip = function (zipPath, srtPath, vttPath, url) {
                             return cbEntry();
 
                         var entryPath = srtPath + entry.entryName;
-                        var newName = path.join(srtPath, filename.replace(/.*\//, '').replace('.zip', '.srt'));
+                        var newName = path.join(srtPath, path.base(filename).replace('.zip', '.srt'));
                         fs.renameSync(entryPath, newName);
                         _convertSrtToVtt(vttPath, newName);
                         cbEntry();
@@ -175,7 +175,7 @@ var _downloadZip = function (zipPath, srtPath, vttPath, url) {
 };
 
 var _downloadSrt = function (srtPath, vttPath, url) {
-    var filename = srtPath + url.replace(/.*\//, '');
+    var filename = srtPath + path.basename(url);
     var out = fs.createWriteStream(filename);
     request(url)
         .on('end', function () {
@@ -192,7 +192,7 @@ var _downloadSrt = function (srtPath, vttPath, url) {
 };
 
 var _downloadVtt = function (vttPath, url) {
-    var filename = vttPath + url.replace(/.*\//, '');
+    var filename = vttPath + path.basename(url);
     var out = fs.createWriteStream(filename);
     request(url).pipe(out);
 };
@@ -203,7 +203,7 @@ var _convertSrtToVtt = function (vttPath, filename) {
         if (err)
             return log.error(err);
 
-        var file = filename.replace(/.*\//, '');
+        var file = path.basename(filename);
         var vttFile = vttPath + file.replace('.srt', '.vtt');
         fs.writeFileSync(vttFile, vttData);
     });
