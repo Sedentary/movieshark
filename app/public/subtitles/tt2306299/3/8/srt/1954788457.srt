@@ -1,0 +1,964 @@
+﻿1
+00:00:01,044 --> 00:00:02,678
+<font color="#ffff00"><i>Sebelumnya di Vikings...</i></font>
+
+2
+00:00:02,708 --> 00:00:05,430
+<font color="#ffff00">Kau harus melindungi kami
+dari para kafir ini.</font>
+
+3
+00:00:05,460 --> 00:00:06,948
+<font color="#ffff00">Kota ini sukar ditembus.</font>
+
+4
+00:00:06,978 --> 00:00:08,783
+<font color="#ffff00">Athelstan. Aku berharap
+dia di sini dengan kita.</font>
+
+5
+00:00:08,813 --> 00:00:09,896
+<font color="#ffff00">Kita akan berhasil tanpanya.</font>
+
+6
+00:00:09,926 --> 00:00:12,153
+<font color="#ffff00">Raja telah memintaku
+untuk memimpin.</font>
+
+7
+00:00:12,183 --> 00:00:13,522
+<font color="#ffff00">Bagaimana cara terbaik kita
+menyerang kota?</font>
+
+8
+00:00:13,552 --> 00:00:16,124
+<font color="#ffff00">Kita akan serang dari
+darat dan air.</font>
+
+9
+00:00:16,154 --> 00:00:18,843
+<font color="#ffff00">Aku akan pimpin penyerbuan ke
+menara dan gerbang.</font>
+
+10
+00:00:18,873 --> 00:00:19,956
+<font color="#ffff00">Kita akan serang bersama-sama.</font>
+
+11
+00:00:19,986 --> 00:00:21,229
+<font color="#ffff00">Kurasa kau tak mendengarkan.</font>
+
+12
+00:00:21,259 --> 00:00:22,764
+<font color="#ffff00">Bersamaan dengan penyerbuan
+ke gerbang...</font>
+
+13
+00:00:22,794 --> 00:00:24,541
+<font color="#ffff00">...juga akan ada penyerangan
+dari sungai.</font>
+
+14
+00:00:24,571 --> 00:00:25,785
+<font color="#ffff00">Kita akan rebut dinding itu.</font>
+
+15
+00:00:25,815 --> 00:00:28,047
+<font color="#ffff00">Kita akan panjat dan masuk
+melewati itu.</font>
+
+16
+00:00:28,077 --> 00:00:30,355
+<font color="#ffff00">Floki, kau akan bertanggungg jawab
+untuk merancang...</font>
+
+17
+00:00:30,385 --> 00:00:32,707
+<font color="#ffff00">...apapun yang kita butuhkan
+untuk memanjat dinding ini.</font>
+
+18
+00:00:32,737 --> 00:00:34,692
+<font color="#ffff00">Bukan aku yang membuat menara ini.</font>
+
+19
+00:00:34,722 --> 00:00:35,793
+<font color="#ffff00">Tapi para Dewa.</font>
+
+20
+00:00:35,823 --> 00:00:37,689
+<font color="#ffff00">Kuberi mereka pengorbanan besar.</font>
+
+21
+00:00:37,719 --> 00:00:41,066
+<font color="#ffff00">Rakyat Paris ketakutan
+oleh pasukan kafir ini.</font>
+
+22
+00:00:41,096 --> 00:00:43,194
+<font color="#ffff00">Kau harus percaya padaku
+melakukan semua yang mungkin...</font>
+
+23
+00:00:43,224 --> 00:00:45,761
+<font color="#ffff00">...untuk meyakinkan rakyat
+kita akan menang.</font>
+
+24
+00:00:45,961 --> 00:01:07,922
+<font color="#ffff00>http://www.lebahku.com</font>
+
+25
+00:01:08,880 --> 00:01:23,916
+<font color="#ffff00>http://IDFL.me</font>
+
+26
+00:01:28,103 --> 00:01:35,534
+<font color="#ffff00>Translated by ervanderZ</font>
+<font color=#FFFF00>www.IDFL.me</font>
+
+27
+00:01:37,000 --> 00:01:43,074
+Iklankan produk atau merek dagang Anda di sini
+dengan menghubungi www.OpenSubtitles.org sekarang
+
+28
+00:03:05,597 --> 00:03:06,913
+<font color="#ffff00">Sudah sampai!</font>
+
+29
+00:04:38,860 --> 00:04:40,993
+<font color="#ffff00">Bertahan!</font>
+
+30
+00:04:57,391 --> 00:04:59,510
+<font color="#ffff00">Tutup gerbangnya!</font>
+
+31
+00:05:01,354 --> 00:05:02,831
+<font color="#ffff00">Buka, Tuan!</font>
+
+32
+00:05:14,372 --> 00:05:16,992
+<font color="#ffff00">Roland! Roland!</font>
+
+33
+00:05:17,366 --> 00:05:19,486
+<font color="#ffff00">Pangeran Odo./
+Mereka datang.</font>
+
+34
+00:05:19,516 --> 00:05:21,282
+<font color="#ffff00">Perintahkan pasukan
+untuk tidak beranjak.</font>
+
+35
+00:05:21,312 --> 00:05:22,839
+<font color="#ffff00">Kecuali jika mereka sudah dekat./
+Ya, Pangeran.</font>
+
+36
+00:05:22,869 --> 00:05:24,541
+<font color="#ffff00">Apapun yang terjadi, mereka
+tak boleh melewati gerbang.</font>
+
+37
+00:05:24,571 --> 00:05:26,390
+<font color="#ffff00">Mereka tak boleh memasuki kota.</font>
+
+38
+00:05:26,822 --> 00:05:27,813
+<font color="#ffff00">Kau paham?/
+Ya.</font>
+
+39
+00:05:27,843 --> 00:05:30,725
+<font color="#ffff00">Apapun itu, akan kami bereskan,
+kuyakinkan itu padamu.</font>
+
+40
+00:05:59,644 --> 00:06:01,221
+<font color="#ffff00">Dayung!</font>
+
+41
+00:06:29,190 --> 00:06:30,575
+<font color="#ffff00">Ayo jalan!</font>
+
+42
+00:06:31,197 --> 00:06:33,376
+<font color="#ffff00">Pertahankan barisan!</font>
+
+43
+00:07:04,027 --> 00:07:06,268
+<font color="#ffff00">Bawa kubah pelindung dan
+balok penghancur!</font>
+
+44
+00:07:24,492 --> 00:07:25,842
+<font color="#ffff00">Tahan!</font>
+
+45
+00:07:30,221 --> 00:07:32,204
+<font color="#ffff00">Pemanah, lindungi kami.</font>
+
+46
+00:07:35,832 --> 00:07:37,235
+<font color="#ffff00">Dinding perisai!</font>
+
+47
+00:07:43,155 --> 00:07:44,638
+<font color="#ffff00">Tunggu aba-aba dariku!</font>
+
+48
+00:08:18,390 --> 00:08:20,387
+<font color="#ffff00">Mereka telah tiba!</font>
+
+49
+00:08:20,417 --> 00:08:22,778
+<font color="#ffff00">Persiapkan diri kalian.</font>
+
+50
+00:08:24,236 --> 00:08:26,704
+<font color="#ffff00">Kita akan menang.</font>
+
+51
+00:09:01,757 --> 00:09:03,671
+<font color="#ffff00">Maju!</font>
+
+52
+00:09:39,819 --> 00:09:41,682
+<font color="#ffff00">Perkuat gerbang itu!</font>
+
+53
+00:11:18,482 --> 00:11:20,138
+<font color="#ffff00">Berhenti!</font>
+
+54
+00:11:24,762 --> 00:11:26,334
+<font color="#ffff00">Mereka berhenti.</font>
+
+55
+00:11:28,079 --> 00:11:30,547
+<font color="#ffff00">Erlendur, ambil tombak!</font>
+
+56
+00:11:57,710 --> 00:12:02,183
+<font color="#ffff00">Thor, ayo! Naiklah! Naiklah!</font>
+
+57
+00:12:35,007 --> 00:12:40,912
+<font color="#ffff00">Ayo! Kalian semua! Ayo!</font>
+
+58
+00:12:41,547 --> 00:12:43,645
+<font color="#ffff00">Naik!</font>
+
+59
+00:12:52,732 --> 00:12:54,304
+<font color="#ffff00">Apa yang kautakutkan?</font>
+
+60
+00:12:54,334 --> 00:12:57,945
+<font color="#ffff00">Para Dewa bersama kita.</font>
+
+61
+00:12:57,975 --> 00:13:00,578
+<font color="#ffff00">Naik lewat tangga itu.
+Ayo.</font>
+
+62
+00:13:00,608 --> 00:13:04,976
+<font color="#ffff00">Naik lewat tangga itu.</font>
+
+63
+00:13:06,822 --> 00:13:10,643
+<font color="#ffff00">Kubilang, para Dewa bersama kita.</font>
+
+64
+00:13:46,659 --> 00:13:48,294
+<font color="#ffff00">Oriflamme.</font>
+
+65
+00:13:48,528 --> 00:13:51,282
+<font color="#ffff00">Ini pataka suci dari Saint-Denis.</font>
+
+66
+00:13:52,114 --> 00:13:55,153
+<font color="#ffff00">Kainnya dibasahi oleh darahnya.</font>
+
+67
+00:13:56,902 --> 00:13:58,465
+<font color="#ffff00">Darah Martyr.</font>
+
+68
+00:13:58,595 --> 00:13:59,795
+<font color="#ffff00">Ya.</font>
+
+69
+00:14:01,140 --> 00:14:04,532
+<font color="#ffff00">Demi mempertahankan ini,
+kalian dan para orde rela mati.</font>
+
+70
+00:14:05,210 --> 00:14:06,506
+<font color="#ffff00">Ya.</font>
+
+71
+00:14:08,407 --> 00:14:12,834
+<font color="#ffff00">Dan begitu juga aku,
+untuk Paris.</font>
+
+72
+00:14:24,523 --> 00:14:27,266
+<font color="#ffff00">Bapa. Bapa.</font>
+
+73
+00:14:28,884 --> 00:14:30,366
+<font color="#ffff00">Oh, apa ini?/
+Oriflamme.</font>
+
+74
+00:14:30,659 --> 00:14:33,500
+<font color="#ffff00">Pataka suci Saint-Denis,
+yang telah dibasahi darahnya.</font>
+
+75
+00:14:33,530 --> 00:14:35,693
+<font color="#ffff00">Berkati, Bapa.</font>
+
+76
+00:14:35,723 --> 00:14:36,923
+<font color="#ffff00">Percaya padanya.</font>
+
+77
+00:14:37,303 --> 00:14:39,180
+<font color="#ffff00">Aku tak yakin.../
+Lakukan!</font>
+
+78
+00:14:39,210 --> 00:14:41,810
+<font color="#ffff00">Lakukan sekarang jika
+kau peduli Paris.</font>
+
+79
+00:14:56,276 --> 00:14:57,623
+<font color="#ffff00">Pangeran Odo!</font>
+
+80
+00:14:58,028 --> 00:14:59,984
+<font color="#ffff00">Pangeran Odo!/
+Ada apa?</font>
+
+81
+00:15:00,014 --> 00:15:01,998
+<font color="#ffff00">Mereka telah menembus dinding.</font>
+
+82
+00:15:09,608 --> 00:15:12,241
+<font color="#ffff00">Bunuh mereka!
+Potong talinya!</font>
+
+83
+00:15:16,096 --> 00:15:18,985
+<font color="#ffff00">Sekarang! Panjat!</font>
+
+84
+00:15:51,904 --> 00:15:54,115
+<font color="#ffff00">Tutup gerbang utama.</font>
+
+85
+00:16:16,140 --> 00:16:19,354
+<font color="#ffff00">Para pasukan!
+Rakyat Paris!</font>
+
+86
+00:16:19,925 --> 00:16:21,774
+<font color="#ffff00">Pertahankan Oriflamme.</font>
+
+87
+00:16:22,228 --> 00:16:24,661
+<font color="#ffff00">Pertahankan bendera suci Saint-Denis.</font>
+
+88
+00:16:25,219 --> 00:16:27,803
+<font color="#ffff00">Pertahankan bendera suci Frankia.</font>
+
+89
+00:16:28,446 --> 00:16:30,772
+<font color="#ffff00">Pertahankan, para pasukan Yesus.</font>
+
+90
+00:16:30,802 --> 00:16:32,540
+<font color="#ffff00">Itulah makna Oriflamme...,</font>
+
+91
+00:16:32,570 --> 00:16:35,736
+<font color="#ffff00">...tak ada tanah yang bisa
+direbut musuh kita.</font>
+
+92
+00:16:35,766 --> 00:16:39,531
+<font color="#ffff00">Para pasukan, jangan beri ampun.</font>
+
+93
+00:16:39,761 --> 00:16:41,927
+<font color="#ffff00">Berjuanglah!</font>
+
+94
+00:16:42,246 --> 00:16:43,759
+<font color="#ffff00">Berjuang sampai mati!</font>
+
+95
+00:17:14,818 --> 00:17:16,878
+<font color="#ffff00">Siapkan minyak.</font>
+
+96
+00:17:35,481 --> 00:17:37,842
+<font color="#ffff00">Seigfried, kuda-kudanya!</font>
+
+97
+00:18:04,509 --> 00:18:06,498
+<font color="#ffff00">Kalf, talinya!</font>
+
+98
+00:18:28,529 --> 00:18:30,384
+<font color="#ffff00">Ya!</font>
+
+99
+00:19:11,496 --> 00:19:13,119
+<font color="#ffff00">Panjat!</font>
+
+100
+00:19:13,377 --> 00:19:14,710
+<font color="#ffff00">Panjat!</font>
+
+101
+00:19:17,881 --> 00:19:19,454
+<font color="#ffff00">Pengecut!</font>
+
+102
+00:19:19,839 --> 00:19:21,924
+<font color="#ffff00">Naik ke menara!</font>
+
+103
+00:19:22,300 --> 00:19:24,129
+<font color="#ffff00">Ayo!</font>
+
+104
+00:19:25,862 --> 00:19:27,627
+<font color="#ffff00">Ayo, panjat!</font>
+
+105
+00:21:19,847 --> 00:21:21,185
+<font color="#ffff00">Tarik!</font>
+
+106
+00:22:11,387 --> 00:22:13,287
+<font color="#ffff00">Lagertha, berhenti.</font>
+
+107
+00:22:13,317 --> 00:22:15,277
+<font color="#ffff00">Lagertha,berhenti!/
+Apa?</font>
+
+108
+00:22:15,307 --> 00:22:16,569
+<font color="#ffff00">Apa?</font>
+
+109
+00:22:16,599 --> 00:22:19,045
+<font color="#ffff00">Apa yang kaulakukan?/
+Tunggu.</font>
+
+110
+00:23:20,216 --> 00:23:24,061
+<font color="#ffff00">Naik! Cepat! Naik!</font>
+
+111
+00:23:53,479 --> 00:23:54,968
+<font color="#ffff00">Kau mau ke mana?</font>
+
+112
+00:23:54,998 --> 00:23:57,393
+<font color="#ffff00">Kita harus mundur.</font>
+
+113
+00:23:57,423 --> 00:23:59,902
+<font color="#ffff00">Valhalla ke arah sana!</font>
+
+114
+00:24:58,507 --> 00:25:00,344
+<font color="#ffff00">Athelstan.</font>
+
+115
+00:25:01,796 --> 00:25:03,852
+<font color="#ffff00">Athelstan telah melakukan ini.</font>
+
+116
+00:25:05,416 --> 00:25:09,330
+<font color="#ffff00">Serigala berdiri di pintu Barat.</font>
+
+117
+00:25:09,963 --> 00:25:12,844
+<font color="#ffff00">Kita semua akan mati.</font>
+
+118
+00:25:14,812 --> 00:25:17,339
+<font color="#ffff00">Ragnar dikhianati.</font>
+
+119
+00:25:17,369 --> 00:25:20,606
+<font color="#ffff00">Bagaimana dia mempercayai Athelstan.</font>
+
+120
+00:25:20,636 --> 00:25:23,822
+<font color="#ffff00">Dan kini tanah akan dibasahi
+darah para keluarga.</font>
+
+121
+00:25:23,852 --> 00:25:27,159
+<font color="#ffff00">Pedang mereka akan dibasahi oleh darah.</font>
+
+122
+00:28:46,188 --> 00:28:47,686
+<font color="#ffff00">Ampuni...</font>
+
+123
+00:29:39,732 --> 00:29:41,497
+<font color="#ffff00">Para Dewa telah jahat!</font>
+
+124
+00:29:41,527 --> 00:29:45,637
+<font color="#ffff00">Padahal aku telah lakukan pengorbanan,
+aku sayang kalian.</font>
+
+125
+00:29:45,667 --> 00:29:49,111
+<font color="#ffff00">Aku telah memberikan semua
+yang terbaik.</font>
+
+126
+00:29:49,141 --> 00:29:52,613
+<font color="#ffff00">Dan kalian tetap mengkhianatiku.</font>
+
+127
+00:29:54,373 --> 00:29:57,590
+<font color="#ffff00">Jangan hinakan aku, Dewa.</font>
+
+128
+00:29:57,620 --> 00:30:00,081
+<font color="#ffff00">Kau tau siapa aku!</font>
+
+129
+00:30:05,661 --> 00:30:08,914
+<font color="#ffff00">Mulutmu penuh kebohongan, Floki.</font>
+
+130
+00:30:08,944 --> 00:30:10,976
+<font color="#ffff00">Dasar bajingan bodoh.</font>
+
+131
+00:30:11,006 --> 00:30:13,153
+<font color="#ffff00">Kau gila.</font>
+
+132
+00:30:13,455 --> 00:30:15,927
+<font color="#ffff00">Aku akan terbakar.</font>
+
+133
+00:30:55,157 --> 00:30:58,049
+<font color="#ffff00">Sekarang aku melihat mereka dari dekat,...</font>
+
+134
+00:30:58,079 --> 00:31:01,909
+<font color="#ffff00">...mereka tak terlalu mengerikan
+dari yang kuduga.</font>
+
+135
+00:31:06,094 --> 00:31:09,716
+<font color="#ffff00">Bahkan, mereka hanyalah manusia.</font>
+
+136
+00:32:17,233 --> 00:32:20,085
+<font color="#ffff00">Kepemimpinanmu akan diberi selamat...</font>
+
+137
+00:32:20,115 --> 00:32:23,834
+<font color="#ffff00">...untuk keberanian dan kegigihan
+mempertahankan kota ini.</font>
+
+138
+00:32:24,506 --> 00:32:27,382
+<font color="#ffff00">Semuanya, Hidup Sang Raja!</font>
+
+139
+00:32:27,412 --> 00:32:31,715
+<font color="#ffff00">Hidup Sang Raja!</font>
+
+140
+00:34:17,572 --> 00:34:19,695
+<font color="#ffff00">Kattegat.</font>
+
+141
+00:34:59,209 --> 00:35:03,101
+<font color="#ffff00">Siggy. Shh.</font>
+
+142
+00:35:18,352 --> 00:35:20,011
+<font color="#ffff00">Dia masih hidup?</font>
+
+143
+00:35:20,041 --> 00:35:22,416
+<font color="#ffff00">Aku baru dapat kabar.</font>
+
+144
+00:35:23,882 --> 00:35:27,935
+<font color="#ffff00">Apa dia sekarat? Puteraku sekarat?/
+Aku tak tahu.</font>
+
+145
+00:35:33,063 --> 00:35:34,367
+<font color="#ffff00">Apa yang terjadi?</font>
+
+146
+00:35:34,397 --> 00:35:38,865
+<font color="#ffff00">Dia membuktikan, tak perlu gelar
+untuk menjadi seorang pemimpin.</font>
+
+147
+00:35:47,523 --> 00:35:50,038
+<font color="#ffff00">Kau seharusnya tak biarkan dia
+menaiki tangga itu.</font>
+
+148
+00:35:50,068 --> 00:35:51,165
+<font color="#ffff00">Kini dia mungkin bisa mati.</font>
+
+149
+00:35:51,195 --> 00:35:54,433
+<font color="#ffff00">Kalian berdua berhentilah
+perlakukan dia seperti anak kecil.</font>
+
+150
+00:35:54,827 --> 00:35:58,419
+<font color="#ffff00">Dia seorang lelaki, maka biarkan
+dia jadi lelaki.</font>
+
+151
+00:36:00,075 --> 00:36:03,514
+<font color="#ffff00">Hari ini kita terlalu dekat.</font>
+
+152
+00:36:03,544 --> 00:36:07,580
+<font color="#ffff00">Berikutnya, kita tak akan
+buat kesalahan yang sama.</font>
+
+153
+00:36:40,629 --> 00:36:42,335
+<font color="#ffff00">Apa yang kaulakukan?</font>
+
+154
+00:36:44,286 --> 00:36:45,816
+<font color="#ffff00">Helga...</font>
+
+155
+00:36:46,312 --> 00:36:48,161
+<font color="#ffff00">Apa yang kaulakukan di sini?</font>
+
+156
+00:36:48,919 --> 00:36:51,950
+<font color="#ffff00">Aku tak bisa lihatkan wajahku
+pada yang lain.</font>
+
+157
+00:36:51,980 --> 00:36:53,571
+<font color="#ffff00">Kenapa?</font>
+
+158
+00:36:55,042 --> 00:36:58,438
+<font color="#ffff00">Karena semua bencana ini
+adalah salahku.</font>
+
+159
+00:36:59,654 --> 00:37:03,345
+<font color="#ffff00">Dengan alasan mereka, para Dewa
+memutuskan untuk menghukumku.</font>
+
+160
+00:37:03,375 --> 00:37:05,803
+<font color="#ffff00">Dan aku tak mengerti.</font>
+
+161
+00:37:05,833 --> 00:37:08,137
+<font color="#ffff00">Semua yang kulakukan...</font>
+
+162
+00:37:08,167 --> 00:37:10,883
+<font color="#ffff00">...semua yang telah kulakukan,
+kulakukan untuk mereka.</font>
+
+163
+00:37:10,913 --> 00:37:13,735
+<font color="#ffff00">Ini semua bukan tentangmu!</font>
+
+164
+00:37:14,429 --> 00:37:16,402
+<font color="#ffff00">Jangan marah padaku.</font>
+
+165
+00:37:17,066 --> 00:37:19,963
+<font color="#ffff00">Tolong jangan marah padaku./
+Kenapa tidak?</font>
+
+166
+00:37:20,280 --> 00:37:23,804
+<font color="#ffff00">Bagaiamana aku bisa hidup
+mengetahui semua ini?</font>
+
+167
+00:37:23,834 --> 00:37:26,756
+<font color="#ffff00">Kau tak memikirkan orang lain
+selain dirimu.</font>
+
+168
+00:37:26,786 --> 00:37:31,098
+<font color="#ffff00">Itu tidak benar!
+Itu tak benar, Helga.</font>
+
+169
+00:37:31,128 --> 00:37:33,540
+<font color="#ffff00">Aku memikirkan kita semua.</font>
+
+170
+00:37:33,570 --> 00:37:37,219
+<font color="#ffff00">Aku memikirkan semua
+manusia di Midgard.</font>
+
+171
+00:37:38,801 --> 00:37:41,336
+<font color="#ffff00">Hel... Helga, jangan pergi.</font>
+
+172
+00:37:41,366 --> 00:37:43,868
+<font color="#ffff00">Helga, jangan tinggalkan aku.</font>
+
+173
+00:37:44,848 --> 00:37:47,323
+<font color="#ffff00">Helga, kembali.</font>
+
+174
+00:37:47,540 --> 00:37:49,975
+<font color="#ffff00">Helga, kembali!</font>
+
+175
+00:37:50,877 --> 00:37:52,873
+<font color="#ffff00">Helga!</font>
+
+176
+00:38:13,532 --> 00:38:15,311
+<font color="#ffff00">Bagaimana kondisimu?</font>
+
+177
+00:38:15,341 --> 00:38:16,906
+<font color="#ffff00">Masih hidup.</font>
+
+178
+00:38:41,224 --> 00:38:43,504
+<font color="#ffff00">Kau ingin membenciku,...</font>
+
+179
+00:38:44,292 --> 00:38:46,345
+<font color="#ffff00">...tapi kau tak bisa.</font>
+
+180
+00:38:46,590 --> 00:38:48,194
+<font color="#ffff00">Kenapa tidak?</font>
+
+181
+00:38:54,987 --> 00:38:56,861
+<font color="#ffff00">Semua yang kutahu...</font>
+
+182
+00:38:59,225 --> 00:39:04,222
+<font color="#ffff00">...bahawa kau berhasrat sepenuhnya padamu.</font>
+
+183
+00:39:05,242 --> 00:39:07,549
+<font color="#ffff00">Aku ingin bersamamu.</font>
+
+184
+00:39:21,345 --> 00:39:23,381
+<font color="#ffff00">Bagaimana aku bisa percaya padamu?</font>
+
+185
+00:39:24,045 --> 00:39:26,676
+<font color="#ffff00">Aku bisa saja biarkan kau mati.</font>
+
+186
+00:39:29,922 --> 00:39:33,140
+<font color="#ffff00">Bagaimana jika aku terima
+apa yang harus kukatakan?</font>
+
+187
+00:39:33,170 --> 00:39:36,773
+<font color="#ffff00">Bagaimana jika aku setuju untuk bersamamu...</font>
+
+188
+00:39:36,803 --> 00:39:39,370
+<font color="#ffff00">...dan ikut denganmu?</font>
+
+189
+00:39:41,489 --> 00:39:47,625
+<font color="#ffff00">Tapi aku tak akan pernah memaafkanmu
+karena telah merebut desaku.</font>
+
+190
+00:39:47,755 --> 00:39:52,031
+<font color="#ffff00">Dan suatu saat, aku akan membunuhmu.</font>
+
+191
+00:39:58,319 --> 00:40:02,884
+<font color="#ffff00">Jika kauterima konsidi itu,...</font>
+
+192
+00:40:05,626 --> 00:40:09,181
+<font color="#ffff00">...maka kita bisa bersama...</font>
+
+193
+00:40:12,536 --> 00:40:15,038
+<font color="#ffff00">...dan saling menikmati satu sama lain.</font>
+
+194
+00:40:47,550 --> 00:40:49,523
+<font color="#ffff00">Kau lihat?</font>
+
+195
+00:40:50,479 --> 00:40:53,661
+<font color="#ffff00">Seharusnya kau tak memanggilku itu.</font>
+
+196
+00:40:54,658 --> 00:40:56,400
+<font color="#ffff00">Memanggilmu apa?</font>
+
+197
+00:40:56,767 --> 00:40:58,746
+<font color="#ffff00">Ironside.</font>
+
+198
+00:41:00,450 --> 00:41:03,262
+<font color="#ffff00">Seakan para Dewa melindungiku.</font>
+
+199
+00:41:03,658 --> 00:41:05,187
+<font color="#ffff00">Pergilah.</font>
+
+200
+00:41:13,296 --> 00:41:15,323
+<font color="#ffff00">Kau masih hidup, bukan?</font>
+
+201
+00:41:18,025 --> 00:41:20,016
+<font color="#ffff00">Hari ini kacau sekali.</font>
+
+202
+00:41:21,857 --> 00:41:23,741
+<font color="#ffff00">Ya, memang.</font>
+
+203
+00:41:28,579 --> 00:41:30,481
+<font color="#ffff00">Hari ini kau memimpin.</font>
+
+204
+00:41:34,639 --> 00:41:37,805
+<font color="#ffff00">Aku hanya ikuti instingku.</font>
+
+205
+00:41:37,835 --> 00:41:42,810
+<font color="#ffff00">Itu permulaan.</font>
+
+206
+00:41:45,140 --> 00:41:47,682
+<font color="#ffff00">Apa yang akan kita lakukan?</font>
+
+207
+00:41:51,178 --> 00:41:56,503
+<font color="#ffff00">Sebelum kuputuskan aku harus
+bicara dengan seorang teman lama.</font>
+
+208
+00:42:10,346 --> 00:42:12,746
+<font color="#ffff00">Athelstan.</font>
+
+209
+00:42:13,182 --> 00:42:15,706
+<font color="#ffff00">Kuharap kau mendengarku, Athelstan...,</font>
+
+210
+00:42:16,129 --> 00:42:19,152
+<font color="#ffff00">...dan aku tak sekedar bicara sendiri.</font>
+
+211
+00:42:19,423 --> 00:42:20,881
+<font color="#ffff00">Oh...</font>
+
+212
+00:42:29,856 --> 00:42:31,527
+<font color="#ffff00">Apa?</font>
+
+213
+00:42:32,982 --> 00:42:35,933
+<font color="#ffff00">Menurutmu aku terlalu berlebihan pada Floki?</font>
+
+214
+00:42:37,318 --> 00:42:38,720
+<font color="#ffff00">Hmm.</font>
+
+215
+00:42:41,110 --> 00:42:42,987
+<font color="#ffff00">Bisakah kau percaya, Floki berpikir...</font>
+
+216
+00:42:43,017 --> 00:42:46,857
+<font color="#ffff00">...aku biarkan dia memimpin tanpa
+aku punya tujuan?</font>
+
+217
+00:42:50,973 --> 00:42:54,857
+<font color="#ffff00">Jika aku jadi dia, aku tak
+terlalu pikirkan para Dewa...</font>
+
+218
+00:42:54,887 --> 00:42:58,968
+<font color="#ffff00">...dan lebih mementingkan kesabaran.</font>
+
+219
+00:42:59,722 --> 00:43:03,946
+<font color="#ffff00">Dan seperti kau tahu,
+aku orang yang sabar.</font>
+
+220
+00:43:21,097 --> 00:43:23,248
+<font color="#ffff00">Kuharap kau ada di sini.</font>
+
+221
+00:43:26,932 --> 00:43:30,204
+<font color="#ffff00">Paris persis seperti yang
+kaukatakan padaku.</font>
+
+222
+00:43:34,303 --> 00:43:37,236
+<font color="#ffff00">Dan aku bersemangat...</font>
+
+223
+00:43:37,266 --> 00:43:41,059
+<font color="#ffff00">...untuk merebutnya.</font>
+
+224
+00:43:43,058 --> 00:43:50,374
+<font color="#ffff00>Translated by ervanderz
+</font><font color=#FFFF00>www.IDFL.me</font>
+
+224
+00:43:51,305 --> 00:43:57,265
+Dukung kami dan jadilah anggota VIP supaya 
+semua iklan tidak ditampilkan di www.OpenSubtitles.org
