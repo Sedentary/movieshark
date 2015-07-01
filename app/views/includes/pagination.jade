@@ -1,18 +1,19 @@
 if pagination
     nav
         ul.pagination
+            - var urlParse = url.replace('/' + current, '');
             - current = Number(current)
             - var previous = current - 1;
             li(class="#{previous < 1 ? 'disabled' : ''}")
-                a(href="#{previous}", aria-label='Previous')
+                a(href="#{urlParse}/#{previous}", aria-label='Previous')
                     span(aria-hidden='true') &laquo;
 
             each page in pagination
                 - var show = Number(page.replace(/.*\//, ''))
                 li(class="#{current === show ? 'active' : ''}")
-                    a(href="#{url + '/' + show}") !{current === show ? current : '&nbsp;' }
+                    a(href="#{urlParse}/#{show}") !{current === show ? current : '&nbsp;' }
             
             - var next = current + 1;
             li(class="#{next > pagination.length ? 'disabled' : ''}")
-                a(href="#{next}", aria-label='Next')
+                a(href="#{urlParse}/#{next}", aria-label='Next')
                     span(aria-hidden='true') &raquo;
