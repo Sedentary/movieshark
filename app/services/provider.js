@@ -7,8 +7,7 @@ exports.movie = function (uri) {
 };
 
 exports.serie = function (uri) {
-    return 'http://api.popcorntime.io/' + uri;
-    // return 'http://eztvapi.re/' + uri;
+    return 'http://eztvapi.re/' + uri;
 };
 
 exports.subtitles = function () {
