@@ -1,0 +1,40 @@
+.video-js .vjs-captions {
+  color: #FFFFFF;
+  font-family: 'tahoma';
+}
+
+.video-js .vjs-text-track {
+  background-color: transparent;
+}
+
+/* upsize button */
+.vjs-subupsize-button {
+  font-family: FontAwesome !important;
+}
+
+.vjs-subupsize-button:before {
+  content:"\f031";
+}
+
+.vjs-subupsize-button:after {
+  position: relative;
+  left: 7px;
+  top: 8px;
+  content:"\f176";
+}
+
+/* downsize button */
+.vjs-subdownsize-button {
+  font-family: FontAwesome !important;
+}
+
+.vjs-subdownsize-button:before {
+  content:"\f031";
+}
+
+.vjs-subdownsize-button:after {
+  position: relative;
+  left: 7px;
+  top: 8px;
+  content:"\f175";
+}

@@ -7,12 +7,11 @@ block stylesheets
     link(rel='stylesheet', href='/bower_components/videojs/dist/video-js/video-js.css')
     link(rel='stylesheet', href='/stylesheets/stream.css')
     link(rel='stylesheet', href='/stylesheets/movie.css')
+    link(rel='stylesheet', href='/stylesheets/video.css')
 
 block javascripts
     script(src='/bower_components/videojs/dist/video-js/video.js')
-    script(type='text/javascript').
-        videojs.options.flash.swf = 'video-js.swf';
-        videojs('video');
+    script(src='/javascript/stream.js')
 
 block content
     .row
