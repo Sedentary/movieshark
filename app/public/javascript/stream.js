@@ -129,6 +129,6 @@
 
   })();
 
-  main.init();
+  video.init();
 
 })(window, document);
