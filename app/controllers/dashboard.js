@@ -63,6 +63,9 @@ exports.index = function (req, res, next) {
                         if (err)
                             return cb(err);
 
+                        if (response.statusCode !== 200)
+                            return cb(null, null);
+
                         client.set(key, JSON.stringify(body));
                         client.expire(key, clientExpire);
 
