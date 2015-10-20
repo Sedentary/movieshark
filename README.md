@@ -10,4 +10,4 @@
 #### Access
 > http://localhost:8080/
 
-[![forthebadge](http://forthebadge.com/images/badges/built-with-swag.svg)](http://forthebadge.com)
+<!--[![forthebadge](http://forthebadge.com/images/badges/built-with-swag.svg)](http://forthebadge.com)-->
