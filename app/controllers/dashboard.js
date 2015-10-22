@@ -36,7 +36,11 @@ exports.index = function (req, res, next) {
                         if (err)
                             return cb(err);
 
-                        var movies = body.data.movies
+                        if (!body) {
+                            return cb({ message : 'Temporarily unavailable movies. Try again :)' });
+                        }
+
+                        var movies = body.data.movies;
 
                         client.set(key, JSON.stringify(movies));
                         client.expire(key, clientExpire);
