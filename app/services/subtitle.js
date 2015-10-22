@@ -58,6 +58,11 @@ exports.getMovieSubs = function (imdb_code, cb) {
  * @param cb
  */
 exports.getSerieSubs = function (query, cb) {
+    query.extensions = ['srt', 'vtt'];
+    OpenSubtitles.search(query)
+        .then(function (subtitles) {
+            console.log('SUBTITLES: ', subtitles);
+        });
     // var userAgent = 'Popcorn Time v1';
     // openSRT.searchEpisode(query, userAgent).then(function (subtitles) {
         var subs = {};
