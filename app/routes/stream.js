@@ -1,8 +1,8 @@
-/*jslint node: true */
+'use strict';
 
-var express = require('express');
-var router = express.Router();
-var controller = require('../controllers/stream');
+const express = require('express');
+let router = express.Router();
+let controller = require('../controllers/stream');
 
 router.get('/', controller.index);
 

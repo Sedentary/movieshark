@@ -11,7 +11,7 @@ const log = require('winston');
 const moment = require('moment');
 const expressStatic = require('express-static');
 const helmet = require('helmet');
-const app = express();
+let app = express();
 
 // help secure express apps with various HTTP headers
 app.use(helmet());

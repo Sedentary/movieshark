@@ -1,8 +1,8 @@
-/*jslint node: true */
+'use strict';
 
-var express = require('express');
-var router = express.Router();
-var controller = require('../controllers/serie');
+const express = require('express');
+let router = express.Router();
+let controller = require('../controllers/serie');
 
 router.get('/:id', controller.show);
 
