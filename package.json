@@ -32,6 +32,6 @@
     "popcorn-opensubtitles": "git+https://git.popcorntime.io/popcorntime/opensubtitles.git#a7ad4445a2cc89e3f37d4fe4e6ac06186fd719ea"
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "4.2.x"
   }
 }
