@@ -2,142 +2,153 @@
 
 'use strict';
 
-var provider = require('./provider');
-var async = require('async');
-var request = require('request');
-var fs = require('fs');
-var AdmZip = require('adm-zip');
-var path = require('path');
-var log = require('winston');
-var srt2vtt = require('srt2vtt');
-var crypto = require('crypto');
+const provider = require('./provider');
+const async = require('async');
+const request = require('request');
+const fs = require('fs');
+const AdmZip = require('adm-zip');
+const path = require('path');
+const log = require('winston');
+const srt2vtt = require('srt2vtt');
+const crypto = require('crypto');
 
 // TODO: https://git.popcorntime.io/popcorntime/opensubtitles-api
-var OS = require('opensubtitles-api');
-var openSubtitleUser = process.env.MOVIESHARK_OPENSUBTITLE_USER;
-var openSubtitlePass = crypto.createHash('md5').update(process.env.MOVIESHARK_OPENSUBTITLE_PASS).digest('hex');
-var OpenSubtitles = new OS('UserAgent', openSubtitleUser, openSubtitlePass, 'http://api.opensubtitles.org:80/xml-rpc');
+const OS = require('opensubtitles-api');
+let openSubtitleUser = process.env.MOVIESHARK_OPENSUBTITLE_USER;
+let openSubtitlePass = crypto.createHash('md5').update(process.env.MOVIESHARK_OPENSUBTITLE_PASS).digest('hex');
+let OpenSubtitles = new OS('UserAgent', openSubtitleUser, openSubtitlePass, 'http://api.opensubtitles.org:80/xml-rpc');
 
-exports.getMovieSubs = function (imdb_code, cb) {
-    request
-        .get({
-            url: provider.subtitles().url + '/' + imdb_code,
-            json: true
-        }, function (err, response, body) {
-            if (!err && response.statusCode === 200 && !!body && body.success && body.subtitles > 0) {
-                var subtitles = body.subs[imdb_code];
-                cb(null, subtitles);
-                _downloadMovieSubs(subtitles, imdb_code);
-            }
+let _convertSrtToVtt = (vttPath, filename) => {
+    let srtData = fs.readFileSync(filename);
+    srt2vtt(srtData, (err, vttData) => {
+        if (err) {
+            return log.error(err);
+        }
 
-            request
-                .get({
-                    url: provider.subtitles().mirrorUrl + '/' + imdb_code,
-                    json: true
-                }, function (err, response, body) {
-                    if (err || response.statusCode >= 400 || !body || !body.success) {
-                        return cb(err);
-                    }
-
-                    var subtitles = body.subtitles > 0 ? body.subs[imdb_code] : [];
-                    cb(null, subtitles);
-                    _downloadMovieSubs(subtitles, imdb_code);
-                });
-        });
+        let file = path.basename(filename);
+        let vttFile = vttPath + file.replace('.srt', '.vtt');
+        fs.writeFileSync(vttFile, vttData);
+    });
 };
 
-/**
- *
- * @param {object} query {
- *  moviehash,
- *  imdbid,
- *  season,
- *  episode,
- *  tag
- * }
- * @param cb
- */
-exports.getSerieSubs = function (query, cb) {
-    query.extensions = ['srt', 'vtt'];
-    OpenSubtitles.search(query)
-        .then(function (subtitles) {
-            console.log('SUBTITLES: ', subtitles);
-        });
-    // var userAgent = 'Popcorn Time v1';
-    // openSRT.searchEpisode(query, userAgent).then(function (subtitles) {
-        var subs = {};
-    //     for (var lang in subtitles) {
-    //         var language = _languageMapping[lang];
-    //         subs[language] = subtitles[lang].url
-    //     }
-        cb(null, subs);
-    //     _downloadSerieSubs(subs, query.imdbid, query.season, query.episode);
-    // });
+let _downloadSrt = (srtPath, vttPath, url) => {
+    let filename = srtPath + path.basename(url);
+    let out = fs.createWriteStream(filename);
+    request(url)
+        .on('end', () => {
+            out.end(() => {
+                try {
+                    _convertSrtToVtt(vttPath, filename);
+                } catch (err) {
+                    log.error(err);
+                    log.error(`Error converting subtitle: ${filename}`);
+                }
+            });
+        })
+        .pipe(out);
 };
 
-var _downloadSerieSubs = function (subtitles, imdb_code, season, episode) {
-    if (!subtitles)
+let _downloadSerieSubs = (subtitles, imdb_code, season, episode) => {
+    if (!subtitles) {
         return;
+    }
 
-    var seriePath = path.normalize(path.resolve(__dirname, '..', 'public/subtitles/' + imdb_code) + '/');
-    var seasonPath = path.normalize(seriePath + season + '/');
-    var episodePath = path.normalize(seasonPath + episode + '/');
+    let seriePath = path.normalize(`${path.resolve(__dirname, '..', `public/subtitles/${imdb_code}`)}/`);
+    let seasonPath = path.normalize(`${seriePath}${season}/`);
+    let episodePath = path.normalize(`${seasonPath}${episode}/`);
 
     if (!fs.existsSync(episodePath)) {
 
-        if (!fs.existsSync(seriePath))
+        if (!fs.existsSync(seriePath)) {
             fs.mkdirSync(seriePath);
+        }
 
-        if (!fs.existsSync(seasonPath))
+        if (!fs.existsSync(seasonPath)) {
             fs.mkdirSync(seasonPath);
+        }
 
         fs.mkdirSync(episodePath);
 
-        var srtPath = path.normalize(episodePath + 'srt/');
+        let srtPath = path.normalize(`${episodePath}srt/`);
         if (!fs.existsSync(srtPath)) {
             fs.mkdirSync(srtPath);
         }
 
-        var vttPath = path.normalize(episodePath + 'vtt/');
+        let vttPath = path.normalize(`${episodePath}vtt/`);
         if (!fs.existsSync(vttPath)) {
             fs.mkdirSync(vttPath);
         }
 
-        async.each(subtitles, function (language, cb) {
+        async.each(subtitles, (language, cb) => {
             _downloadSrt(srtPath, vttPath, language);
-
             cb();
         });
     }
 };
 
-var _downloadMovieSubs = function (subtitles, imdb_code) {
-    if (!subtitles)
-        return;
+let _downloadZip = (zipPath, srtPath, vttPath, url) => {
+    let filename = zipPath + path.basename(url);
+    let out = fs.createWriteStream(filename);
+    request(url)
+        .on('end', () => {
+            out.end(() => {
+                try {
+                    let zip = new AdmZip(filename);
+                    zip.extractAllTo(srtPath, true);
+                    let zipEntries = zip.getEntries();
+                    async.each(zipEntries, (entry, cbEntry) => {
+                        if (path.extname(entry.entryName) !== '.srt') {
+                            return cbEntry();
+                        }
 
-    var moviePath = path.resolve(__dirname, '..', 'public/subtitles/' + imdb_code) + '/';
+                        let newName = path.join(srtPath, path.basename(filename).replace('.zip', '.srt'));
+                        let entryPath = srtPath + entry.entryName;
+                        fs.renameSync(entryPath, newName);
+                        _convertSrtToVtt(vttPath, newName);
+                        cbEntry();
+                    });
+                } catch (err) {
+                    log.error(`Error unzipping subtitle: ${filename}`);
+                }
+            });
+        })
+        .pipe(out);
+};
+
+let _downloadVtt = (vttPath, url) => {
+    let filename = vttPath + path.basename(url);
+    let out = fs.createWriteStream(filename);
+    request(url).pipe(out);
+};
+
+let _downloadMovieSubs = (subtitles, imdb_code) => {
+    if (!subtitles) {
+        return;
+    }
+
+    let moviePath = `${path.resolve(__dirname, '..', `public/subtitles/${imdb_code}`)}/`;
     if (!fs.existsSync(moviePath)) {
         fs.mkdirSync(moviePath);
 
-        var srtPath = path.normalize(moviePath + 'srt/');
+        let srtPath = path.normalize(`${moviePath}srt/`);
         if (!fs.existsSync(srtPath)) {
             fs.mkdirSync(srtPath);
         }
 
-        var vttPath = path.normalize(moviePath + 'vtt/');
+        let vttPath = path.normalize(`${moviePath}vtt/`);
         if (!fs.existsSync(vttPath)) {
             fs.mkdirSync(vttPath);
         }
 
-        async.each(subtitles, function (language, cb) {
-            var subtitle = language.sort(function (a, b) { return a.rating < b.rating; })[0];
+        async.each(subtitles, (language, cb) => {
+            let subtitle = language.sort((a, b) => { return a.rating < b.rating; })[0];
 
-            var url = provider.subtitles().prefix + subtitle.url;
-            var extension = path.extname(url);
+            let url = provider.subtitles().prefix + subtitle.url;
+            let extension = path.extname(url);
 
             switch (extension) {
                 case '.zip':
-                    var zipPath = path.normalize(moviePath + 'zip/');
+                    let zipPath = path.normalize(`${moviePath}zip/`);
                     if (!fs.existsSync(zipPath)) {
                         fs.mkdirSync(zipPath);
                     }
@@ -150,76 +161,12 @@ var _downloadMovieSubs = function (subtitles, imdb_code) {
                     _downloadVtt(vttPath, url);
                     break;
             }
-
             cb();
         });
     }
 };
 
-var _downloadZip = function (zipPath, srtPath, vttPath, url) {
-    var filename = zipPath + path.basename(url);
-    var out = fs.createWriteStream(filename);
-    request(url)
-        .on('end', function () {
-            out.end(function () {
-                try {
-                    var zip = new AdmZip(filename);
-                    zip.extractAllTo(srtPath, true);
-                    var zipEntries = zip.getEntries();
-                    async.each(zipEntries, function (entry, cbEntry) {
-                        if (path.extname(entry.entryName) !== '.srt')
-                            return cbEntry();
-
-                        var newName = path.join(srtPath, path.basename(filename).replace('.zip', '.srt'));
-                        var entryPath = srtPath + entry.entryName;
-                        fs.renameSync(entryPath, newName);
-                        _convertSrtToVtt(vttPath, newName);
-                        cbEntry();
-                    });
-                } catch (err) {
-                    log.error('Error unzipping subtitle: ', filename);
-                }
-            });
-        })
-        .pipe(out);
-};
-
-var _downloadSrt = function (srtPath, vttPath, url) {
-    var filename = srtPath + path.basename(url);
-    var out = fs.createWriteStream(filename);
-    request(url)
-        .on('end', function () {
-            out.end(function () {
-                try {
-                    _convertSrtToVtt(vttPath, filename);
-                } catch (err) {
-                    console.log(err);
-                    log.error('Error converting subtitle: ', filename);
-                }
-            });
-        })
-        .pipe(out);
-};
-
-var _downloadVtt = function (vttPath, url) {
-    var filename = vttPath + path.basename(url);
-    var out = fs.createWriteStream(filename);
-    request(url).pipe(out);
-};
-
-var _convertSrtToVtt = function (vttPath, filename) {
-    var srtData = fs.readFileSync(filename);
-    srt2vtt(srtData, function (err, vttData) {
-        if (err)
-            return log.error(err);
-
-        var file = path.basename(filename);
-        var vttFile = vttPath + file.replace('.srt', '.vtt');
-        fs.writeFileSync(vttFile, vttData);
-    });
-};
-
-var _languageMapping = {
+let _languageMapping = {
     'sq' : 'albanian',
     'ar' : 'arabic',
     'bn' : 'bengali',
@@ -261,4 +208,61 @@ var _languageMapping = {
     'ur' : 'urdu',
     'uk' : 'ukrainian',
     'vi' : 'vietnamese',
+};
+
+exports.getMovieSubs = (imdb_code, cb) => {
+    request
+        .get({
+            url: `${provider.subtitles().url}/${imdb_code}`,
+            json: true
+        }, (err, response, body) => {
+            if (!err && response.statusCode === 200 && !!body && body.success && body.subtitles > 0) {
+                let subtitles = body.subs[imdb_code];
+                cb(null, subtitles);
+                _downloadMovieSubs(subtitles, imdb_code);
+            }
+
+            request
+                .get({
+                    url: `${provider.subtitles().mirrorUrl}/${imdb_code}`,
+                    json: true
+                }, (err, response, body) => {
+                    if (err || response.statusCode >= 400 || !body || !body.success) {
+                        return cb(err);
+                    }
+
+                    let subtitles = body.subtitles > 0 ? body.subs[imdb_code] : [];
+                    cb(null, subtitles);
+                    _downloadMovieSubs(subtitles, imdb_code);
+                });
+        });
+};
+
+/**
+ *
+ * @param {object} query {
+ *  moviehash,
+ *  imdbid,
+ *  season,
+ *  episode,
+ *  tag
+ * }
+ * @param cb
+ */
+exports.getSerieSubs = (query, cb) => {
+    query.extensions = ['srt', 'vtt'];
+    OpenSubtitles.search(query)
+        .then(subtitles => {
+            console.log('SUBTITLES: ', subtitles);
+        });
+    // var userAgent = 'Popcorn Time v1';
+    // openSRT.searchEpisode(query, userAgent).then(function (subtitles) {
+        let subs = {};
+    //     for (var lang in subtitles) {
+    //         var language = _languageMapping[lang];
+    //         subs[language] = subtitles[lang].url
+    //     }
+        cb(null, subs);
+    //     _downloadSerieSubs(subs, query.imdbid, query.season, query.episode);
+    // });
 };

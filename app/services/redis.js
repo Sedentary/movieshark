@@ -2,28 +2,29 @@
 
 'use strict';
 
-var log = require('winston');
-var redis = require('redis');
-var url = require('url');
+const log = require('winston');
+const redis = require('redis');
+const url = require('url');
 
-var client;
+let redisCloudUrl = process.env.REDISCLOUD_URL;
+let client;
 
-if (process.env.REDISCLOUD_URL) {
-    var urlParse = url.parse(process.env.REDISCLOUD_URL);
+if (redisCloudUrl) {
+    let urlParse = url.parse(redisCloudUrl);
     client = redis.createClient(urlParse.port, urlParse.hostname, { no_ready_check: true });
     client.auth(urlParse.auth.split(':')[1]);
 } else {
     client = redis.createClient(6379, '127.0.0.1', { no_ready_check: true });
 }
 
-client.on('error', function (err) {
+client.on('error', err => {
     log.error('Redis connection error: ', err.message);
 });
 
-client.on('ready', function callback() {
+client.on('ready', () => {
     log.info('Connected to Redis!');
 });
 
-exports.getClient = function () {
+exports.getClient = () => {
     return client;
 };

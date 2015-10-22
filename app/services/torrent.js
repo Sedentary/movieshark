@@ -1,5 +1,3 @@
-/*jslint node: true */
-
 'use strict';
 
 exports.trackers = [
@@ -13,13 +11,11 @@ exports.trackers = [
     'http://exodus.desync.com:6969/announce'
 ];
 
-exports.magnetize = function (torrent) {
-    //noinspection JSLint
-    var magnet = 'magnet:?xt=urn:btih:' + torrent.hash;
-    magnet += '&dn=' + encodeURIComponent(torrent.name);
-    this.trackers.forEach(function (tracker) {
-        magnet += '&tr=' + tracker;
+exports.magnetize = torrent => {
+    let magnet = `magnet:?xt=urn:btih:${torrent.hash}`;
+    magnet += `&dn=${encodeURIComponent(torrent.name)}`;
+    this.trackers.forEach(tracker => {
+        magnet += `&tr=${tracker}`;
     });
-
     return magnet;
 };

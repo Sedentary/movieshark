@@ -2,7 +2,7 @@
 
 'use strict';
 
-exports.getMovieGenres = function () {
+exports.getMovieGenres = () => {
     return [
         'All',
         'Action',
@@ -31,7 +31,7 @@ exports.getMovieGenres = function () {
     ];
 };
 
-exports.getSerieGenres = function () {
+exports.getSerieGenres = () => {
     return [
         'All',
         'Action',
