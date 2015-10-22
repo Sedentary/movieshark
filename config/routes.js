@@ -1,27 +1,27 @@
-/*jslint node: true */
+'use strict';
 
-module.exports = function (app) {
+module.exports = app => {
 
-    'use strict';
+    const log = require('winston');
+    const request = require('request');
+    const requestDebug = require('request-debug');
 
-    var log = require('winston');
-    var request = require('request');
-    var requestDebug = require('request-debug');
+    // routes
+    const dashboard = require('../app/routes/dashboard');
+    const serie = require('../app/routes/serie');
+    const series = require('../app/routes/series');
+    const movie = require('../app/routes/movie');
+    const movies = require('../app/routes/movies');
+    const stream = require('../app/routes/stream');
+    const tos = require('../app/routes/tos');
 
-    var dashboard = require('../app/routes/dashboard');
-    var serie = require('../app/routes/serie');
-    var series = require('../app/routes/series');
-    var movie = require('../app/routes/movie');
-    var movies = require('../app/routes/movies');
-    var stream = require('../app/routes/stream');
-    var tos = require('../app/routes/tos');
-
-    requestDebug(request, function(type, data, r) {
-        if (data.method && data.uri)
+    requestDebug(request, (type, data, r) => {
+        if (data.method && data.uri) {
             log.info('%s %s', data.method, data.uri);
+        }
     });
 
-    app.use(function (req, res, next) {
+    app.use((req, res, next) => {
         var url = req.url;
         res.locals.url = url === '/' ? '' : url;
         next();
@@ -36,7 +36,7 @@ module.exports = function (app) {
     app.use('/', dashboard);
 
     // catch 404 and forward to error handler
-    app.use(function (req, res, next) {
+    app.use((req, res, next) => {
         var err = new Error('Not Found');
         err.status = 404;
         next(err);
@@ -47,7 +47,7 @@ module.exports = function (app) {
     // development error handler
     // will print stacktrace
     if (app.get('env') === 'development') {
-        app.use(function (err, req, res, next) {
+        app.use((err, req, res, next) => {
             res.status(err.status || 500);
             res.render('error', {
                 message: err.message,
@@ -58,7 +58,7 @@ module.exports = function (app) {
 
     // production error handler
     // no stacktraces leaked to user
-    app.use(function (err, req, res, next) {
+    app.use((err, req, res, next) => {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
