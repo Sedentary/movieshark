@@ -1,23 +1,22 @@
-/*jslint node: true */
-
 'use strict';
 
-var log = require('winston');
-var async = require('async');
-var fs = require('fs');
-var torrentStream = require('torrent-stream');
+const log = require('winston');
+const async = require('async');
+const fs = require('fs');
+const torrentStream = require('torrent-stream');
 
-exports.index = function (req, res) {
-    var magnet = req.url.replace('/?', '');
-    
-    var engine = torrentStream(magnet);
+exports.index = (req, res) => {
+    let magnet = req.url.replace('/?', '');
 
-    engine.on('ready', function () {
+    let engine = torrentStream(magnet);
 
-        var file = engine.files[0];
-        var movieFileName = file.name;
-        var extension = movieFileName.replace(/.*\./, '');
-        var contentType = null;
+    engine.on('ready', () => {
+
+        let file = engine.files[0];
+        let movieFileName = file.name;
+        let extension = movieFileName.replace(/.*\./, '');
+        let contentType = null;
+
         switch (extension) {
             case 'ogg':
                 contentType = 'video/ogg';
@@ -35,27 +34,27 @@ exports.index = function (req, res) {
             return res.status(200).end();
         }
 
-        log.info('filename:', file.name);
-        var total = file.length;
+        log.info(`filename: ${file.name}`);
+        let total = file.length;
 
         // Chunks based streaming
         if (req.headers.range) {
-            var range = req.headers.range;
-            var parts = range.replace(/bytes=/, "").split("-");
-            var partialstart = parts[0];
-            var partialend = parts[1];
+            let range = req.headers.range;
+            let parts = range.replace(/bytes=/, "").split("-");
+            let partialstart = parts[0];
+            let partialend = parts[1];
 
-            var start = parseInt(partialstart, 10);
-            var end = partialend ? parseInt(partialend, 10) : total - 1;
-            var chunksize = (end - start) + 1;
+            let start = parseInt(partialstart, 10);
+            let end = partialend ? parseInt(partialend, 10) : total - 1;
+            let chunksize = (end - start) + 1;
 
             res.status(206);
-            res.set('Content-Range', 'bytes ' + start + '-' + end + '/' + total);
+            res.set('Content-Range', `bytes ${start}-${end}/${total}`);
             res.set('Accept-Ranges', 'bytes');
             res.set('Content-Length', chunksize);
             res.set('Content-Type', contentType);
 
-            var stream = file.createReadStream({
+            let stream = file.createReadStream({
                 start: start,
                 end: end
             });
@@ -68,12 +67,12 @@ exports.index = function (req, res) {
             file.createReadStream().pipe(res);
         }
 
-        res.on('close', function () {
+        res.on('close', () => {
             engine.destroy();
             log.info('Engine destroy');
         });
 
-        res.on('finish', function () {
+        res.on('finish', () => {
             engine.destroy();
             log.info('Engine destroy');
         });
