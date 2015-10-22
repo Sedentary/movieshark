@@ -1,21 +1,24 @@
 #!/usr/bin/env node
 
-var log = require('winston');
-var debug = require('debug')('movieshark:server');
+'use strict';
+
+const log = require('winston');
+const debug = require('debug')('movieshark:server');
 
 // Include the cluster module
-var cluster = require('cluster');
+const cluster = require('cluster');
 
-var cpuCount = process.env.WEB_CONCURRENCY || require('os').cpus().length;
+let cpuCount = process.env.WEB_CONCURRENCY || require('os').cpus().length;
 
 cluster.setupMaster({exec: 'app.js'});
 
-for (var i = 0; i < cpuCount; i++)
+for (var i = 0; i < cpuCount; i++) {
     cluster.fork();
+}
 
 // Listen for dying workers
-cluster.on('exit', function (worker) {
+cluster.on('exit', worker => {
     // Replace the dead worker, we're not sentimental
-    log.info('Worker ' + worker.id + ' died :(');
+    log.info(`Worker ${worker.id} died :(`);
     cluster.fork();
 });
