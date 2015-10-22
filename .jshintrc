@@ -1,4 +1,6 @@
 {
+  "node": true,
+  "esnext": true,
   "globalstrict": true,
   "globals": {
     "angular": false,
