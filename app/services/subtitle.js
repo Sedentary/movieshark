@@ -10,7 +10,13 @@ var AdmZip = require('adm-zip');
 var path = require('path');
 var log = require('winston');
 var srt2vtt = require('srt2vtt');
-var openSRT = require('popcorn-opensubtitles');
+var crypto = require('crypto');
+
+// TODO: https://git.popcorntime.io/popcorntime/opensubtitles-api
+var OS = require('opensubtitles-api');
+var openSubtitleUser = process.env.MOVIESHARK_OPENSUBTITLE_USER;
+var openSubtitlePass = crypto.createHash('md5').update(process.env.MOVIESHARK_OPENSUBTITLE_PASS).digest('hex');
+var OpenSubtitles = new OS('UserAgent', openSubtitleUser, openSubtitlePass, 'http://api.opensubtitles.org:80/xml-rpc');
 
 exports.getMovieSubs = function (imdb_code, cb) {
     request
@@ -52,16 +58,16 @@ exports.getMovieSubs = function (imdb_code, cb) {
  * @param cb
  */
 exports.getSerieSubs = function (query, cb) {
-    var userAgent = 'Popcorn Time v1';
-    openSRT.searchEpisode(query, userAgent).then(function (subtitles) {
+    // var userAgent = 'Popcorn Time v1';
+    // openSRT.searchEpisode(query, userAgent).then(function (subtitles) {
         var subs = {};
-        for (var lang in subtitles) {
-            var language = _languageMapping[lang];
-            subs[language] = subtitles[lang].url
-        }
+    //     for (var lang in subtitles) {
+    //         var language = _languageMapping[lang];
+    //         subs[language] = subtitles[lang].url
+    //     }
         cb(null, subs);
-        _downloadSerieSubs(subs, query.imdbid, query.season, query.episode);
-    });
+    //     _downloadSerieSubs(subs, query.imdbid, query.season, query.episode);
+    // });
 };
 
 var _downloadSerieSubs = function (subtitles, imdb_code, season, episode) {
@@ -73,7 +79,7 @@ var _downloadSerieSubs = function (subtitles, imdb_code, season, episode) {
     var episodePath = path.normalize(seasonPath + episode + '/');
 
     if (!fs.existsSync(episodePath)) {
-        
+
         if (!fs.existsSync(seriePath))
             fs.mkdirSync(seriePath);
 
