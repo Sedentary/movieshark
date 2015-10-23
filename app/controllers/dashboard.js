@@ -36,8 +36,8 @@ exports.index = (req, res, next) => {
                             return cb(err);
                         }
 
-                        if (!body) {
-                            return cb({ message : 'Movies are temporarily unavailable. Try again later :)' });
+                        if (response.statusCode !== 200 || !body) {
+                            return cb(null, null);
                         }
 
                         let movies = body.data.movies;
@@ -69,7 +69,7 @@ exports.index = (req, res, next) => {
                             return cb(err);
                         }
 
-                        if (response.statusCode !== 200) {
+                        if (response.statusCode !== 200 || !body) {
                             return cb(null, null);
                         }
 

@@ -52,7 +52,7 @@ exports.index = (req, res, next) => {
                     return next(err);
                 }
 
-                if (!body) {
+                if (response.statusCode !== 200 || !body) {
                     return next({ message : 'Movies are temporarily unavailable. Try again later :)' });
                 }
 

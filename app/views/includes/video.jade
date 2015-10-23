@@ -1,7 +1,7 @@
-video#video.video-js(controls='', preload='auto', width='auto', height='300', poster='#{poster}', data-setup='{}')
-    source(src="/stream?#{magnet}" type='video/mp4;')
-    source(src="/stream?#{magnet}" type='video/webm;')
-    source(src="/stream?#{magnet}" type='video/ogg;')
+video#video.video-js(controls='', preload='none', width='auto', height='300', poster='#{poster}', data-setup='{}')
+    source(src="/stream?#{magnet}" type='video/mp4')
+    source(src="/stream?#{magnet}" type='video/webm')
+    source(src="/stream?#{magnet}" type='video/ogg')
 
     include subtitles
 
