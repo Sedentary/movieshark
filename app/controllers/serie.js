@@ -1,37 +1,36 @@
-/*jslint node: true */
-
 'use strict';
 
-var async = require('async');
-var request = require('request');
-var provider = require('../services/provider');
-var redis = require('../services/redis');
-var client = redis.getClient();
-var clientExpire = (5 * 60);
-var subtitle = require('../services/subtitle');
+const async = require('async');
+const request = require('request');
+const provider = require('../services/provider');
+const redis = require('../services/redis');
+let client = redis.getClient();
+let clientExpire = (5 * 60);
+const subtitle = require('../services/subtitle');
 
-exports.index = function (req, res, next) {
-    var current = req.params.page || 1;
+exports.index = (req, res, next) => {
+    let current = req.params.page || 1;
 
     async.parallel({
-        series: function (cb) {
-            var key = 'series-' + current;
-            client.get(key, function (err, series) {
-                if (err)
+        series: cb => {
+            let key = `series-${current}`;
+            client.get(key, (err, series) => {
+                if (err) {
                     return cb(err);
+                }
 
-                if (series)
+                if (series) {
                     return cb(null, JSON.parse(series));
+                }
 
-                var uri = provider.serie('shows/' + current);
-                //noinspection JSLint
                 request
                     .get({
-                        url: uri,
+                        url: provider.serie(`shows/${current}`),
                         json: true
-                    }, function (err, response, body) {
-                        if (err)
+                    }, (err, response, body) => {
+                        if (err) {
                             return cb(err);
+                        }
 
                         client.set(key, JSON.stringify(body));
                         client.expire(key, clientExpire);
@@ -40,23 +39,25 @@ exports.index = function (req, res, next) {
                     });
             });
         },
-        pagination: function (cb) {
-            var key = 'series-pagination';
-            client.get(key, function (err, pagination) {
-                if (err)
+        pagination: cb => {
+            let key = 'series-pagination';
+            client.get(key, (err, pagination) => {
+                if (err) {
                     return cb(err);
+                }
 
-                if (pagination)
+                if (pagination) {
                     return cb(null, JSON.parse(pagination));
+                }
 
-                //noinspection JSLint
                 request
                     .get({
                         url: provider.serie('shows'),
                         json: true
-                    }, function (err, response, body) {
-                        if (err)
+                    }, (err, response, body) => {
+                        if (err) {
                             return cb(err);
+                        }
 
                         client.set(key, JSON.stringify(body));
                         client.expire(key, clientExpire);
@@ -65,9 +66,10 @@ exports.index = function (req, res, next) {
                     });
             });
         }
-    }, function (err, results) {
-        if (err)
+    }, (err, results) => {
+        if (err) {
             return next(err);
+        }
 
         return res.render('dashboard/index', {
             series: results.series,
@@ -77,25 +79,26 @@ exports.index = function (req, res, next) {
     });
 };
 
-var _getSerie = function (serieId, cb) {
-    var key = 'serie-' + serieId;
+let _getSerie = (serieId, cb) => {
+    let key = `serie-${serieId}`;
 
-    client.get(key, function (err, serie) {
-        if (err)
+    client.get(key, (err, serie) => {
+        if (err) {
             return cb(err);
+        }
 
-        if (serie)
+        if (serie) {
             return cb(null, JSON.parse(serie));
+        }
 
-        var uri = provider.serie('show/' + serieId);
-        //noinspection JSLint
         request
             .get({
-                uri: uri,
+                uri: provider.serie(`show/${serieId}`),
                 json: true
-            }, function (err, response, body) {
-                if (err)
+            }, (err, response, body) => {
+                if (err) {
                     return cb(err);
+                }
 
                 client.set(key, JSON.stringify(body));
                 client.expire(key, (2 * 60));
@@ -104,28 +107,33 @@ var _getSerie = function (serieId, cb) {
     });
 };
 
-exports.show = function (req, res, next) {
-    _getSerie(req.params.id, function (err, serie) {
-        if (err)
+exports.show = (req, res, next) => {
+    _getSerie(req.params.id, (err, serie) => {
+        if (err) {
             return next(err);
+        }
 
-        var seasons = {};
-        var firstSeason;
-        async.each(serie.episodes, function (epi, cb) {
-            var season = epi.season;
-            if (!firstSeason || firstSeason > season)
+        let seasons = {};
+        let firstSeason;
+
+        async.each(serie.episodes, (epi, cb) => {
+            let season = epi.season;
+
+            if (!firstSeason || firstSeason > season) {
                 firstSeason = season;
+            }
 
             if (!!seasons[season]) {
                 seasons[season].push(epi);
             } else {
                 seasons[season] = [epi];
             }
+
             cb();
-        }, function () {
-            var episode = seasons[req.params.season || firstSeason][req.params.episode || 0];
-            var torrent = episode.torrents['480p'];
-            var data = {
+        }, () => {
+            let episode = seasons[req.params.season || firstSeason][req.params.episode || 0];
+            let torrent = episode.torrents['480p'];
+            let data = {
                 id: serie._id,
                 title: serie.title,
                 synopsis: serie.synopsis,
@@ -137,16 +145,17 @@ exports.show = function (req, res, next) {
                 episode: episode,
                 seasons: seasons,
                 rating: (serie.rating.percentage / 10),
-                imdb_code: (serie.imdb_id + '/' + episode.season + '/' + episode.episode)
+                imdb_code: `${serie.imdb_id}/${episode.season}/${episode.episode}`
             };
 
             subtitle.getSerieSubs({
                 imdbid: serie.imdb_id,
                 season: episode.season,
                 episode: episode.episode
-            }, function (err, subtitles) {
-                if (err)
+            }, (err, subtitles) => {
+                if (err) {
                     return next(err);
+                }
 
                 data.subtitles = subtitles;
                 return res.render('serie/stream', data);
@@ -155,16 +164,16 @@ exports.show = function (req, res, next) {
     });
 };
 
-exports.search = function (req, res, next) {
-    var search = req.query.q;
-    var uri = provider.serie('shows/search/' + search + '/all');
+exports.search = (req, res, next) => {
+    let search = req.query.q;
     request
         .get({
-            uri: uri,
+            uri: provider.serie(`shows/search/${search}'/all`),
             json: true
-        }, function (err, response, body) {
-            if (err)
+        }, (err, response, body) => {
+            if (err) {
                 return next(err);
+            }
 
             return res.render('dashboard/index', {
                 series: body,

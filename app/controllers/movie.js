@@ -1,24 +1,23 @@
-/*jslint node: true */
-
 'use strict';
 
-var async = require('async');
-var request = require('request');
-var provider = require('../services/provider');
-var torrent = require('../services/torrent');
-var redis = require('../services/redis');
-var client = redis.getClient();
-var subtitle = require('../services/subtitle');
+const async = require('async');
+const request = require('request');
+const provider = require('../services/provider');
+const torrent = require('../services/torrent');
+const redis = require('../services/redis');
+let client = redis.getClient();
+const subtitle = require('../services/subtitle');
 
-var _renderMovies = function (res, current, data) {
-    var movies = data.movies;
-    var total_pages = Math.round(data.movie_count / data.limit);
-    var total_pagination = current + data.limit;
+let _renderMovies = (res, current, data) => {
+    let movies = data.movies;
+    let total_pages = Math.round(data.movie_count / data.limit);
+    let total_pagination = current + data.limit;
 
-    var pagination = [];
-    for (var i = current; i < total_pagination; i++) {
-        if (i < total_pages)
+    let pagination = [];
+    for (let i = current; i < total_pagination; i++) {
+        if (i < total_pages) {
             pagination.push(String(i));
+        }
     }
 
     return res.render('dashboard/index', {
@@ -28,15 +27,17 @@ var _renderMovies = function (res, current, data) {
     });
 };
 
-exports.index = function (req, res, next) {
-    var current = Number(req.params.page || 1);
-    var key = 'movies-' + current;
-    client.get(key, function (err, data) {
-        if (err)
+exports.index = (req, res, next) => {
+    let current = Number(req.params.page || 1);
+    let key = `movies-${current}`;
+    client.get(key, (err, data) => {
+        if (err) {
             return next(err);
+        }
 
-        if (data)
+        if (data) {
             return _renderMovies(res, current, JSON.parse(data));
+        }
 
         request
             .get({
@@ -46,11 +47,12 @@ exports.index = function (req, res, next) {
                     page: current,
                     sort_by: 'seeds'
                 }
-            }, function (err, response, body) {
-                if (err)
+            }, (err, response, body) => {
+                if (err) {
                     return next(err);
+                }
 
-                var data = body.data;
+                let data = body.data;
                 client.set(key, JSON.stringify(data));
                 client.expire(key, (5 * 60));
 
@@ -59,21 +61,23 @@ exports.index = function (req, res, next) {
     });
 };
 
-exports.show = function (req, res, next) {
-    var movie_id = req.params.id;
+exports.show = (req, res, next) => {
+    let movie_id = req.params.id;
 
-    var key = 'movie-' + movie_id;
-    client.get(key, function (err, data) {
-        if (err)
+    let key = `movie-${movie_id}`;
+    client.get(key, (err, data) => {
+        if (err) {
             return next(err);
+        }
 
-        var template = 'movie/stream';
+        let template = 'movie/stream';
 
-        if (data)
+        if (data) {
             return res.render(template, JSON.parse(data));
+        }
 
         async.parallel({
-            movie: function (cb) {
+            movie: cb => {
                 request
                     .get({
                         url: provider.movie('movie_details.json'),
@@ -83,14 +87,14 @@ exports.show = function (req, res, next) {
                             with_images: true,
                             with_cast: true
                         }
-                    }, function (err, response, body) {
-                        if (err)
+                    }, (err, response, body) => {
+                        if (err) {
                             return cb(err);
-
-                        return cb(null, body.data)
+                        }
+                        return cb(null, body.data);
                     });
             },
-            comments: function (cb) {
+            comments: cb => {
                 request
                     .get({
                         url: provider.movie('movie_comments.json'),
@@ -98,17 +102,18 @@ exports.show = function (req, res, next) {
                         qs: {
                             movie_id: movie_id
                         }
-                    }, function (err, response, body) {
-                        if (err)
+                    }, (err, response, body) => {
+                        if (err) {
                             return cb(err);
-                        var data = body.data;
+                        }
+                        let data = body.data;
                         return cb(null, {
                             list: data.comments,
                             count: data.comment_count
                         });
                     });
             },
-            suggestions: function (cb) {
+            suggestions: cb => {
                 request
                     .get({
                         url: provider.movie('movie_suggestions.json'),
@@ -116,27 +121,28 @@ exports.show = function (req, res, next) {
                         qs: {
                             movie_id: movie_id
                         }
-                    }, function (err, response, body) {
-                        if (err)
+                    }, (err, response, body) => {
+                        if (err) {
                             return cb(err);
-
+                        }
                         return cb(null, body.data.movie_suggestions);
                     });
             }
-        }, function (err, results) {
-            if (err)
+        }, (err, results) => {
+            if (err) {
                 return next(err);
+            }
 
-            var movie = results.movie;
-            var tor = movie.torrents[0];
-            var magnet = torrent.magnetize({
+            let movie = results.movie;
+            let tor = movie.torrents[0];
+            let magnet = torrent.magnetize({
                 name: movie.title_long,
                 hash: tor.hash
             });
 
-            var imdb_code = movie.imdb_code;
+            let imdb_code = movie.imdb_code;
 
-            var dataRender = {
+            let dataRender = {
                 title: movie.title,
                 synopsis: movie.description_full,
                 poster: movie.images.large_screenshot_image1,
@@ -150,9 +156,10 @@ exports.show = function (req, res, next) {
                 imdb_code: imdb_code
             };
 
-            subtitle.getMovieSubs(imdb_code, function (err, subtitles) {
-                if (err)
+            subtitle.getMovieSubs(imdb_code, (err, subtitles) => {
+                if (err) {
                     return next(err);
+                }
 
                 dataRender.subtitles = subtitles;
 
@@ -165,22 +172,22 @@ exports.show = function (req, res, next) {
     });
 };
 
-exports.search = function (req, res, next) {
-    var search = req.query.q;
-    var uri = provider.movie('list_movies.json');
+exports.search = (req, res, next) => {
+    let search = req.query.q;
     request
         .get({
-            uri: uri,
+            uri: provider.movie('list_movies.json'),
             json: true,
             qs: {
                 sort_by: 'seeds',
                 query_term: search
             }
-        }, function (err, response, body) {
-            if (err)
+        }, (err, response, body) => {
+            if (err) {
                 return next(err);
+            }
 
-            var movies = body.data.movies;
+            let movies = body.data.movies;
 
             return res.render('dashboard/index', {
                 movies: movies,
