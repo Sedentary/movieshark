@@ -37,7 +37,7 @@ exports.index = (req, res, next) => {
                         }
 
                         if (!body) {
-                            return cb({ message : 'Temporarily unavailable movies. Try again :)' });
+                            return cb({ message : 'Movies are temporarily unavailable. Try again later :)' });
                         }
 
                         let movies = body.data.movies;
