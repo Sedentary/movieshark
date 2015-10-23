@@ -251,7 +251,8 @@ exports.getMovieSubs = (imdb_code, cb) => {
  */
 exports.getSerieSubs = (query, cb) => {
     query.extensions = ['srt', 'vtt'];
-    OpenSubtitles.search(query)
+    OpenSubtitles
+        .search(query)
         .then(subtitles => {
             console.log('SUBTITLES: ', subtitles);
         });
