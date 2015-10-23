@@ -4,14 +4,12 @@ block meta
     include ../includes/meta/video
 
 block stylesheets
-    link(rel='stylesheet', href='/bower_components/videojs/dist/video-js/video-js.css')
+    link(rel='stylesheet', href='//vjs.zencdn.net/5.0.0/video-js.css')
     link(rel='stylesheet', href='/stylesheets/stream.css')
+    script(src='//vjs.zencdn.net/ie8/1.1.0/videojs-ie8.min.js')
 
 block javascripts
-    script(src='/bower_components/videojs/dist/video-js/video.js')
-    script(type='text/javascript').
-        videojs.options.flash.swf = 'video-js.swf';
-        videojs('video');
+    script(src='//vjs.zencdn.net/5.0.0/video.js')
 
 block content
     .row
