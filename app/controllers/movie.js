@@ -52,6 +52,10 @@ exports.index = (req, res, next) => {
                     return next(err);
                 }
 
+                if (!body) {
+                    return next({ message : 'Movies are temporarily unavailable. Try again later :)' });
+                }
+
                 let data = body.data;
                 client.set(key, JSON.stringify(data));
                 client.expire(key, (5 * 60));
