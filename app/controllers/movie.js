@@ -132,25 +132,25 @@ exports.show = (req, res, next) => {
             }
 
             let movie = results.movie;
-            let tor = movie.torrents[0];
-            let magnet = torrent.magnetize({
-                name: movie.title_long,
-                hash: tor.hash
-            });
+            let tor = movie.torrents[movie.quality];
+            // let magnet = torrent.magnetize({
+            //     name: movie.title_long,
+            //     hash: tor.hash
+            // });
 
-            let imdb_code = movie.imdb_code;
-
+            let imdb_code = movie.imdb;
+            
             let dataRender = {
                 title: movie.title,
                 synopsis: movie.description_full,
-                poster: movie.images.large_screenshot_image1,
-                magnet: magnet,
+                // poster: movie.images.large_screenshot_image1,
+                // magnet: magnet,
                 rating: movie.rating,
                 comments: results.comments,
                 suggestions: results.suggestions,
-                peers: tor.peers,
-                seeds: tor.seeds,
-                ratio: (tor.seeds / tor.peers),
+                peers: tor.peer,
+                seeds: tor.seed,
+                ratio: ((tor.seed > 0) && (tor.peer > 0)) ? (tor.seed / tor.peer) : 0,
                 imdb_code: imdb_code
             };
 

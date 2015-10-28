@@ -7,7 +7,6 @@ const async = require('async');
 const URL = 'https://archive.org/';
 
 const _format = movie => {
-    let aid = movie.aid;
     let id = movie.metadata.identifier[0];
     let metadata = movie.metadata;
 
@@ -52,7 +51,6 @@ const _format = movie => {
     let peers = 0; //XXX movie.TorrentPeers;
     movie.Quality = '480p'; // XXX
 
-
     let torrents = {};
     torrents[movie.Quality] = {
         url: url + turl,
@@ -66,7 +64,6 @@ const _format = movie => {
     }
 
     return {
-        aid: aid,
         type: 'movie',
         imdb: id,
         title: metadata.title[0],
@@ -78,6 +75,7 @@ const _format = movie => {
         cover: movie.misc.image,
         torrents: torrents,
         synopsis: metadata.description,
+        quality: movie.Quality,
         subtitle: {} // TODO
     };
 };
