@@ -37,10 +37,15 @@ exports.index = (req, res, next) => {
         }
 
         async.parallel({
-                archive: async.apply(archive.movies),
-                vodo: async.apply(vodo.movies)
-        }, function (err, result) {
+            archive: function (cb) {
+                archive.movies({
+                    page: current
+                }, cb);
+            },
+            vodo: async.apply(vodo.movies)
+        }, function(err, result) {
             if (err) {
+                console.log(err);
                 return next(err);
             }
 

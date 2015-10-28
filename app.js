@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride(req => {
     if (req.body && typeof req.body === 'object' && '_method'.hasOwnProperty(req.body)) {
         // look in urlencoded POST bodies and delete it
-        var method = req.body._method;
+        let method = req.body._method;
         delete req.body._method;
         return method;
     }
@@ -43,9 +43,10 @@ app.use(expressStatic(path.join(__dirname, 'app/public')));
 // routes
 require('./config/routes')(app);
 
+let ip = process.env.IP || '127.0.0.1';
 app.set('port', process.env.PORT || 8080);
-var server = app.listen(app.get('port'), () => {
-    log.info(`Express server worker listening on port ${app.get('port')}`);
+app.listen(app.get('port'), ip, () => {
+    log.info(`Express server worker listening on ${ip}:${app.get('port')}`);
 });
 
 module.exports = app;
