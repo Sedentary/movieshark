@@ -21,8 +21,8 @@ block content
     #gallery
         if movies
             each movie in movies
-                a(href="/movie/#{movie.id}")
-                    img.img-responsive(src='#{movie.medium_cover_image}', alt='#{movie.title}')
+                a(href="/movie/#{movie.imdb}")
+                    img.img-responsive(src='#{movie.cover || "/img/no-image.png"}', alt='#{movie.title}')
 
         if series
             each serie in series

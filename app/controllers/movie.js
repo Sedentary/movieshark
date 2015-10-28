@@ -7,18 +7,19 @@ const torrent = require('../services/torrent');
 const redis = require('../services/redis');
 let client = redis.getClient();
 const subtitle = require('../services/subtitle');
+const archive = require('../providers/archive');
+const vodo = require('../providers/vodo');
 
-let _renderMovies = (res, current, data) => {
-    let movies = data.movies;
-    let total_pages = Math.round(data.movie_count / data.limit);
-    let total_pagination = current + data.limit;
-
+let _renderMovies = (res, current, movies) => {
+    // let total_pages = Math.round(movies.movie_count / data.limit);
+    // let total_pagination = current + data.limit;
+    //
     let pagination = [];
-    for (let i = current; i < total_pagination; i++) {
-        if (i < total_pages) {
-            pagination.push(String(i));
-        }
-    }
+    // for (let i = current; i < total_pagination; i++) {
+    //     if (i < total_pages) {
+    //         pagination.push(String(i));
+    //     }
+    // }
 
     return res.render('dashboard/index', {
         movies: movies,
@@ -35,38 +36,26 @@ exports.index = (req, res, next) => {
             return next(err);
         }
 
-        if (data) {
-            return _renderMovies(res, current, JSON.parse(data));
-        }
+        async.parallel({
+                archive: async.apply(archive.movies),
+                vodo: async.apply(vodo.movies)
+        }, function (err, result) {
+            if (err) {
+                return next(err);
+            }
 
-        request
-            .get({
-                url: provider.movie('list_movies.json'),
-                json: true,
-                qs: {
-                    page: current,
-                    sort_by: 'seeds'
-                }
-            }, (err, response, body) => {
-                if (err) {
-                    return next(err);
-                }
+            let data = result.archive.concat(result.vodo);
 
-                if (response.statusCode !== 200 || !body) {
-                    return next({ message : 'Movies are temporarily unavailable. Try again later :)' });
-                }
+            client.set(key, JSON.stringify(data));
+            client.expire(key, (5 * 60));
 
-                let data = body.data;
-                client.set(key, JSON.stringify(data));
-                client.expire(key, (5 * 60));
-
-                return _renderMovies(res, current, data);
-            });
+            return _renderMovies(res, current, data);
+        });
     });
 };
 
 exports.show = (req, res, next) => {
-    let movie_id = req.params.id;
+    let movie_id = req.params.imdb;
 
     let key = `movie-${movie_id}`;
     client.get(key, (err, data) => {
