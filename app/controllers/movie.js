@@ -104,6 +104,9 @@ exports.show = (req, res, next) => {
                         if (err) {
                             return cb(err);
                         }
+                        if (!body.data) {
+                            return cb({ message: 'Failed to load movie details' });
+                        }
                         let data = body.data;
                         return cb(null, {
                             list: data.comments,
@@ -122,6 +125,9 @@ exports.show = (req, res, next) => {
                     }, (err, response, body) => {
                         if (err) {
                             return cb(err);
+                        }
+                        if (!body.data) {
+                            return cb({ message: 'Failed to load movie details' });
                         }
                         return cb(null, body.data.movie_suggestions);
                     });
