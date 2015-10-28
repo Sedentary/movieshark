@@ -75,11 +75,11 @@ exports.show = (req, res, next) => {
 
         async.parallel({
             movie: cb => {
-                archive.getDetails(movie_id, (err, response, body) => {
+                archive.getDetails(movie_id, (err, movie) => {
                     if (err) {
                         return cb(err);
                     }
-                    return cb(null, body.data);
+                    return cb(null, movie);
                 });
             }/*,
             comments: cb => {

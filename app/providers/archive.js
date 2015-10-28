@@ -7,6 +7,7 @@ const async = require('async');
 const URL = 'https://archive.org/';
 
 const _format = movie => {
+    let aid = movie.aid;
     let id = movie.metadata.identifier[0];
     let metadata = movie.metadata;
 
@@ -65,6 +66,7 @@ const _format = movie => {
     }
 
     return {
+        aid: aid,
         type: 'movie',
         imdb: id,
         title: metadata.title[0],
