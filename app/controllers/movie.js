@@ -37,15 +37,14 @@ exports.index = (req, res, next) => {
         }
 
         async.parallel({
-            archive: function (cb) {
+            archive: cb => {
                 archive.movies({
                     page: current
                 }, cb);
             },
             vodo: async.apply(vodo.movies)
-        }, function(err, result) {
+        }, (err, result) => {
             if (err) {
-                console.log(err);
                 return next(err);
             }
 
@@ -76,22 +75,13 @@ exports.show = (req, res, next) => {
 
         async.parallel({
             movie: cb => {
-                request
-                    .get({
-                        url: provider.movie('movie_details.json'),
-                        json: true,
-                        qs: {
-                            movie_id: movie_id,
-                            with_images: true,
-                            with_cast: true
-                        }
-                    }, (err, response, body) => {
-                        if (err) {
-                            return cb(err);
-                        }
-                        return cb(null, body.data);
-                    });
-            },
+                archive.getDetails(movie_id, (err, response, body) => {
+                    if (err) {
+                        return cb(err);
+                    }
+                    return cb(null, body.data);
+                });
+            }/*,
             comments: cb => {
                 request
                     .get({
@@ -105,7 +95,9 @@ exports.show = (req, res, next) => {
                             return cb(err);
                         }
                         if (!body.data) {
-                            return cb({ message: 'Failed to load movie details' });
+                            return cb({
+                                message: 'Failed to load movie details'
+                            });
                         }
                         let data = body.data;
                         return cb(null, {
@@ -127,11 +119,13 @@ exports.show = (req, res, next) => {
                             return cb(err);
                         }
                         if (!body.data) {
-                            return cb({ message: 'Failed to load movie details' });
+                            return cb({
+                                message: 'Failed to load movie details'
+                            });
                         }
                         return cb(null, body.data.movie_suggestions);
                     });
-            }
+            }*/
         }, (err, results) => {
             if (err) {
                 return next(err);

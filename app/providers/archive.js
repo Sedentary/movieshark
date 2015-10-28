@@ -6,7 +6,7 @@ const async = require('async');
 
 const URL = 'https://archive.org/';
 
-let _format = function(movie) {
+const _format = movie => {
     let id = movie.metadata.identifier[0];
     let metadata = movie.metadata;
 
@@ -80,16 +80,19 @@ let _format = function(movie) {
     };
 };
 
-let _getDetails = function(items, cb) {
+/**
+ * @param {Object[]|Number} arg Movies list or movie identifier
+ */
+const _getDetails = (items, cb) => {
     let movies = [];
-    async.each(items, function(movie, cbMovie) {
+    async.each(items, (movie, cbMovie) => {
         request({
             url: `${URL}details/${movie.identifier}`,
             json: true,
             qs: {
                 output: 'json'
             }
-        }, function(err, response, body) {
+        }, (err, response, body) => {
             if (err) {
                 console.log(err);
                 //return cbMovie(err);
@@ -104,7 +107,7 @@ let _getDetails = function(items, cb) {
 
             return cbMovie();
         });
-    }, function(err) {
+    }, err => {
         if (err) {
             return cb(err);
         }
@@ -113,7 +116,28 @@ let _getDetails = function(items, cb) {
     });
 };
 
-exports.movies = function(filters, cb) {
+exports.getDetails = (arg, cb) => {
+    let singleResult = false;
+    if (typeof arg === 'string') {
+        singleResult = true;
+        arg = [{
+            identifier: arg
+        }];
+    }
+
+    _getDetails(arg, (err, movies) => {
+        if (err) {
+            cb(err);
+        }
+        if (singleResult) {
+            movies = movies[0];
+        }
+        
+        return cb(null, movies);
+    });
+};
+
+exports.movies = (filters, cb) => {
     if (typeof filters === 'function') {
         cb = filters;
         filters = {};
