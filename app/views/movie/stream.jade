@@ -23,35 +23,37 @@ block content
             p #{synopsis}
         .col-md-12
             include ../includes/video
-    .row
-        hr
-        section.col-md-12.suggestions
-            h3 Related movies
-            each suggestion, index in suggestions
-                if index % 4 == 0
-                    hr.col-md-12
-                .col-md-3
-                    a(href="/movie/#{suggestion.id}")
-                        img.img-responsive(src='#{suggestion.medium_cover_image}', alt='#{suggestion.title}')
-    .row
-        hr
-        section.col-md-12
-            #accordion.panel-group(role='tablist', aria-multiselectable='false')
-                .panel.panel-default
-                    #headingOne.panel-heading(role='tab')
-                      h4.panel-title
-                        a(role='button', data-toggle='collapse', data-parent='#accordion', href='#collapseOne', aria-expanded='false', aria-controls='collapseOne') #{comments.count} comments
-                    #collapseOne.panel-collapse.collapse.comments(role='tabpanel', aria-labelledby='headingOne')
-                        .panel-body
-                            each comment in comments.list
-                                article.comment
-                                    header
-                                        div.comment__img
-                                            img(src="#{comment.small_user_avatar_image}")
-                                        div.comment__media
-                                            span.comment__username #{comment.username}
-                                            span.comment__date
-                                                strong Posted
-                                                !{moment(comment.date_added).fromNow()}
-                                    p.comment__body !{comment.comment_text}
-                                hr
+    if suggestions
+        .row
+            hr
+            section.col-md-12.suggestions
+                h3 Related movies
+                each suggestion, index in suggestions
+                    if index % 4 == 0
+                        hr.col-md-12
+                    .col-md-3
+                        a(href="/movie/#{suggestion.id}")
+                            img.img-responsive(src='#{suggestion.medium_cover_image}', alt='#{suggestion.title}')
+    if comments
+        .row
+            hr
+            section.col-md-12
+                #accordion.panel-group(role='tablist', aria-multiselectable='false')
+                    .panel.panel-default
+                        #headingOne.panel-heading(role='tab')
+                          h4.panel-title
+                            a(role='button', data-toggle='collapse', data-parent='#accordion', href='#collapseOne', aria-expanded='false', aria-controls='collapseOne') #{comments.count} comments
+                        #collapseOne.panel-collapse.collapse.comments(role='tabpanel', aria-labelledby='headingOne')
+                            .panel-body
+                                each comment in comments.list
+                                    article.comment
+                                        header
+                                            div.comment__img
+                                                img(src="#{comment.small_user_avatar_image}")
+                                            div.comment__media
+                                                span.comment__username #{comment.username}
+                                                span.comment__date
+                                                    strong Posted
+                                                    !{moment(comment.date_added).fromNow()}
+                                        p.comment__body !{comment.comment_text}
+                                    hr
