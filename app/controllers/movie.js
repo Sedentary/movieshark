@@ -4,11 +4,12 @@ const async = require('async');
 const request = require('request');
 const provider = require('../services/provider');
 const torrent = require('../services/torrent');
-const redis = require('../services/redis');
-let client = redis.getClient();
 const subtitle = require('../services/subtitle');
 const archive = require('../providers/archive');
 const vodo = require('../providers/vodo');
+const parseTorrent = require('parse-torrent');
+const redis = require('../services/redis');
+let client = redis.getClient();
 
 let _renderMovies = (res, current, movies) => {
     // let total_pages = Math.round(movies.movie_count / data.limit);
@@ -37,11 +38,7 @@ exports.index = (req, res, next) => {
         }
 
         async.parallel({
-            archive: cb => {
-                archive.movies({
-                    page: current
-                }, cb);
-            },
+            archive: async.apply(archive.movies, { page: current }),
             vodo: async.apply(vodo.movies)
         }, (err, result) => {
             if (err) {
@@ -133,38 +130,42 @@ exports.show = (req, res, next) => {
 
             let movie = results.movie;
             let tor = movie.torrents[movie.quality];
-            // let magnet = torrent.magnetize({
-            //     name: movie.title_long,
-            //     hash: tor.hash
-            // });
-
-            let imdb_code = movie.imdb;
             
-            let dataRender = {
-                title: movie.title,
-                synopsis: movie.description_full,
-                // poster: movie.images.large_screenshot_image1,
-                // magnet: magnet,
-                rating: movie.rating,
-                comments: results.comments,
-                suggestions: results.suggestions,
-                peers: tor.peer,
-                seeds: tor.seed,
-                ratio: ((tor.seed > 0) && (tor.peer > 0)) ? (tor.seed / tor.peer) : 0,
-                imdb_code: imdb_code
-            };
-
-            subtitle.getMovieSubs(imdb_code, (err, subtitles) => {
+            if (!tor) {
+                return next({ message: 'No torrent file available. This movie can\'t be streamed! :(' });
+            }
+            
+            parseTorrent.remote(tor.url, function (err, parsedTorrent) {
                 if (err) {
                     return next(err);
                 }
-
-                dataRender.subtitles = subtitles;
-
-                client.set(key, JSON.stringify(dataRender));
-                client.expire(key, (2 * 60));
-
-                return res.render('movie/stream', dataRender);
+                
+                let dataRender = {
+                    title: movie.title,
+                    synopsis: movie.synopsis,
+                    poster: movie.cover,
+                    magnet: parseTorrent.toMagnetURI(parsedTorrent),
+                    rating: movie.rating,
+                    //XXX comments: results.comments,
+                    //XXX suggestions: results.suggestions,
+                    peers: tor.peer,
+                    seeds: tor.seed,
+                    ratio: ((tor.seed > 0) && (tor.peer > 0)) ? (tor.seed / tor.peer) : 0,
+                    imdb_code: movie.imdb
+                };
+                
+                subtitle.getMovieSubs(movie.imdb, (err, subtitles) => {
+                    if (err) {
+                        return next(err);
+                    }
+    
+                    dataRender.subtitles = subtitles;
+    
+                    client.set(key, JSON.stringify(dataRender));
+                    client.expire(key, (2 * 60));
+    
+                    return res.render(template, dataRender);
+                });
             });
         });
     });
